@@ -13,12 +13,11 @@ import javafx.fxml.Initializable;
  *
  * @author samue
  */
-public class FXMLAdministracionInventarioProductosController implements Initializable {
+public class FXMLInventarioProveedorController implements Initializable {
 
     /**
-     * 
+     * Initializes the controller class.
      */
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
