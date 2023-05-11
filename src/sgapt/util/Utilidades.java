@@ -1,4 +1,4 @@
-package sgapt.utils;
+package sgapt.util;
 
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;

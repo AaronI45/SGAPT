@@ -1,4 +1,4 @@
-package sgapt.controladores;
+package sgapt.vistas;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,8 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.SesionDAO;
 import sgapt.modelo.pojo.Usuario;
-import sgapt.utils.Constantes;
-import sgapt.utils.Utilidades;
+import sgapt.util.Constantes;
+import sgapt.util.Utilidades;
 
 public class FXMLInicioSesionController implements Initializable {
 
