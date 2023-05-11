@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import sgapt.modelo.ConexionBD;
 import sgapt.modelo.pojo.Usuario;
-import sgapt.utils.Constantes;
+import sgapt.util.Constantes;
 
 public class SesionDAO 
 {

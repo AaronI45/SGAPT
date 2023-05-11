@@ -1,4 +1,4 @@
-package sgapt.utils;
+package sgapt.util;
 
 public class Constantes {
     
