@@ -8,19 +8,19 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.vistas.FXMLAdministracionPedidosController">
    <children>
-      <TableView fx:id="tvPedidos" layoutX="100.0" layoutY="128.0" prefHeight="277.0" prefWidth="603.0">
+      <TableView layoutX="100.0" layoutY="128.0" prefHeight="277.0" prefWidth="603.0">
          <columns>
-            <TableColumn fx:id="colNumeroPedido" prefWidth="127.0" text="Numero pedido" />
-            <TableColumn fx:id="colNombreProveedor" prefWidth="156.0" text="Nombre proveedor" />
-            <TableColumn fx:id="colFechaEntrega" prefWidth="169.0" text="Fecha de entrega" />
-            <TableColumn fx:id="colCiudadEntrega" prefWidth="150.0" text="Ciudad entrega" />
+            <TableColumn prefWidth="127.0" text="Numero pedido" />
+            <TableColumn prefWidth="156.0" text="Nombre proveedor" />
+            <TableColumn prefWidth="169.0" text="Fecha de realizacion" />
+            <TableColumn prefWidth="150.0" text="Destino" />
          </columns>
       </TableView>
-      <Button layoutX="14.0" layoutY="21.0" mnemonicParsing="false" onAction="#clicBtnRegresar" text="Regresar" />
+      <Button layoutX="14.0" layoutY="21.0" mnemonicParsing="false" text="Regresar" />
       <Label layoutX="311.0" layoutY="26.0" text="Administración de pedidos" />
-      <Button layoutX="269.0" layoutY="71.0" mnemonicParsing="false" onAction="#clicBtnRealizarPedido" text="Realizar pedido" />
-      <Button layoutX="521.0" layoutY="71.0" mnemonicParsing="false" onAction="#clicBtnModificar" text="Modificar" />
-      <Button layoutX="416.0" layoutY="71.0" mnemonicParsing="false" onAction="#clicBtnConsultar" text="Consultar" />
-      <Button layoutX="626.0" layoutY="71.0" mnemonicParsing="false" onAction="#clicBtnCancelar" text="Cancelar" />
+      <Button layoutX="269.0" layoutY="71.0" mnemonicParsing="false" text="Realizar pedido" />
+      <Button layoutX="521.0" layoutY="71.0" mnemonicParsing="false" text="Modificar" />
+      <Button layoutX="416.0" layoutY="71.0" mnemonicParsing="false" text="Consultar" />
+      <Button layoutX="626.0" layoutY="71.0" mnemonicParsing="false" text="Cancelar" />
    </children>
 </AnchorPane>

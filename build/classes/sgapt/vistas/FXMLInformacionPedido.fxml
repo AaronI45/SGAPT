@@ -6,17 +6,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.vistas.FXMLInformacionPedidoController">
    <children>
-      <Label layoutX="324.0" layoutY="36.0" text="Información de pedido" />
+      <Label layoutX="313.0" layoutY="36.0" text="Información de pedido" />
       <Button layoutX="38.0" layoutY="31.0" mnemonicParsing="false" text="Regresar" />
-      <TableView fx:id="tvLotesPedido" layoutX="38.0" layoutY="134.0" prefHeight="311.0" prefWidth="725.0">
+      <TableView layoutX="38.0" layoutY="134.0" prefHeight="311.0" prefWidth="725.0">
         <columns>
-          <TableColumn fx:id="colNumeroLote" prefWidth="107.0" text="Numero lote" />
-          <TableColumn fx:id="colNombreProducto" prefWidth="254.0" text="Nombre producto" />
-            <TableColumn fx:id="colTipoProducto" prefWidth="150.0" text="Tipo producto" />
-            <TableColumn fx:id="colCantidadProducto" prefWidth="86.0" text="Cantidad" />
-            <TableColumn fx:id="colPrecio" prefWidth="127.0" text="Precio" />
+          <TableColumn prefWidth="239.0" text="Nombre" />
+          <TableColumn prefWidth="147.0" text="Tipo de producto" />
+            <TableColumn prefWidth="111.0" text="Cantidad" />
+            <TableColumn prefWidth="100.0" text="Lote" />
+            <TableColumn prefWidth="127.0" text="Precio" />
         </columns>
       </TableView>
    </children>
