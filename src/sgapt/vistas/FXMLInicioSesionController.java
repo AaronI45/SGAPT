@@ -11,7 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.SesionDAO;
-import sgapt.modelo.pojo.Usuario;
+import sgapt.modelo.pojo.Empleado;
 import sgapt.util.Constantes;
 import sgapt.util.Utilidades;
 
@@ -56,7 +56,7 @@ public class FXMLInicioSesionController implements Initializable {
     }
     
     private void validarCredencialesUsuario(String usuario, String password) {
-        Usuario usuarioRespuesta = SesionDAO.verificarUsuarioSesion(usuario, password);
+        Empleado usuarioRespuesta = SesionDAO.verificarUsuarioSesion(usuario, password);
         switch (usuarioRespuesta.getCodigoRespuesta())
         {
             case Constantes.ERROR_CONEXION:
@@ -72,7 +72,7 @@ public class FXMLInicioSesionController implements Initializable {
                 break;
             
             case Constantes.OPERACION_EXITOSA:
-                if (usuarioRespuesta.getIdUsuario() > 0) {
+                if (usuarioRespuesta.getIdEmpleado() > 0) {
                     Utilidades.mostrarDialogoSimple("Bienvenido(a)", 
                         "Bienvenido(a) "+usuarioRespuesta.toString()+"al sistema...", 
                         Alert.AlertType.INFORMATION);
@@ -93,7 +93,7 @@ public class FXMLInicioSesionController implements Initializable {
     
     private void irPantallaPrincipal() {        
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLPrincipal.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipal.fxml"));
         escenarioBase.setTitle("Home");
         escenarioBase.show();
     }
