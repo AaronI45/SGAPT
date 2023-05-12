@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.vistas.FXMLFormularioPromocionController">
+   <children>
+      <Label layoutX="308.0" layoutY="39.0" text="Formulario de promociones" />
+      <TextField layoutX="65.0" layoutY="172.0" />
+      <Label layoutX="65.0" layoutY="141.0" text="Tipo" />
+      <Label layoutX="65.0" layoutY="240.0" text="Fecha inicio" />
+      <TextField layoutX="65.0" layoutY="269.0" promptText="dd/mm/yy" />
+      <Label layoutX="63.0" layoutY="342.0" text="Fecha fin" />
+      <TextField layoutX="65.0" layoutY="373.0" promptText="dd/mm/yy" />
+      <Button layoutX="688.0" layoutY="438.0" mnemonicParsing="false" text="Guardar" />
+      <Button layoutX="584.0" layoutY="438.0" mnemonicParsing="false" text="Cancelar" />
+   </children>
+</AnchorPane>
