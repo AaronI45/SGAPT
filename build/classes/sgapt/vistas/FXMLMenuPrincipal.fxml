@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.vistas.FXMLMenuPrincipalController">
+   <children>
+      <Button layoutX="306.0" layoutY="132.0" mnemonicParsing="false" text="Administrar promociones" />
+      <Button layoutX="313.0" layoutY="219.0" mnemonicParsing="false" text="Administrar empleados" />
+      <Button layoutX="271.0" layoutY="307.0" mnemonicParsing="false" text="Administrar inventario de productos" />
+      <Label layoutX="350.0" layoutY="39.0" text="Menú principal" />
+      <Button layoutX="376.0" layoutY="392.0" mnemonicParsing="false" text="Salir" />
+   </children>
+</AnchorPane>
