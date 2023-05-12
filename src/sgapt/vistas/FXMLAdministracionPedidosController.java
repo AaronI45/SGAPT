@@ -1,15 +1,21 @@
 package sgapt.vistas;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import sgapt.modelo.dao.PedidoDAO;
 import sgapt.modelo.dao.PedidoRespuesta;
 import sgapt.modelo.pojo.Pedido;
@@ -27,14 +33,27 @@ public class FXMLAdministracionPedidosController implements Initializable {
     @FXML
     private TableColumn colFechaEntrega;
     @FXML
-    private TableColumn colCiudadEntrega;
+    private TableColumn colCiudadEntrega;    
+    private ObservableList<Pedido> pedidos;    
     
-    private ObservableList<Pedido> pedidos;
+    private static int posicionPedidoEnTabla;
+
+    public static int getPosicionPedidoEnTabla() {
+        return posicionPedidoEnTabla;
+    }
+
+    public static void setPosicionPedidoEnTabla(int posicionPedidoEnTabla) {
+        FXMLAdministracionPedidosController.posicionPedidoEnTabla = posicionPedidoEnTabla;
+    }
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarInformacionTabla();
+        
+        final ObservableList<Pedido> tablaPedidoSel = tvPedidos.getSelectionModel().getSelectedItems();
+        tablaPedidoSel.addListener(selectorTablaPedidos);
     }    
     
     private void configurarTabla() {
@@ -63,6 +82,57 @@ public class FXMLAdministracionPedidosController implements Initializable {
                     tvPedidos.setItems(pedidos);
                 break;
         }
+    }
+    
+    private final ListChangeListener<Pedido> selectorTablaPedidos = 
+            new ListChangeListener<Pedido>() {
+                @Override
+                public void onChanged(ListChangeListener.Change<? extends Pedido> c) {
+                    ponerPedidoSeleccionado();
+                }                
+            };
+    
+    public Pedido getTablaPedidosSeleccionada() {
+        if (tvPedidos != null) {
+            List<Pedido> tabla = tvPedidos.getSelectionModel().getSelectedItems();
+            if (tabla.size() == 1) {
+                final Pedido pedidoSeleccionado = tabla.get(0);
+                return pedidoSeleccionado;
+            }
+        }
+        return null;
+    }
+    
+    private void ponerPedidoSeleccionado() {
+        final Pedido pedido = getTablaPedidosSeleccionada();
+        posicionPedidoEnTabla = pedidos.indexOf(pedido) + 1;
+    }
+
+    @FXML
+    private void clicBtnRegresar(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicBtnRealizarPedido(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicBtnModificar(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicBtnConsultar(ActionEvent event) {
+        Stage escenarioInformacionPedido = new Stage();
+        Scene esceneInformacionPedido = Utilidades.inicializarEscena("vistas/FXMLInformacionPedido.fxml");        
+        escenarioInformacionPedido.setScene(esceneInformacionPedido);
+        escenarioInformacionPedido.setTitle("Información de pedido");
+        escenarioInformacionPedido.initModality(Modality.APPLICATION_MODAL);
+        escenarioInformacionPedido.showAndWait();
+        
+    }
+
+    @FXML
+    private void clicBtnCancelar(ActionEvent event) {
     }
     
 }
