@@ -25,13 +25,7 @@ public class PromocionDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idPromocion, alumno.nombre, apellidoPaterno, "+
-                        "apellidoMaterno, matricula, correo, fechaNacimiento, " +
-                        "alumno.idCarrera, carrera.nombre AS nombreCarrera, "+
-                        "carrera.idFacultad, facultad.nombre AS nombreFacultad " +
-                        "FROM Alumno " +
-                        "INNER JOIN carrera ON alumno.idCarrera = carrera.idCarrera " +
-                        "INNER JOIN facultad ON carrera.idFacultad = facultad.idFacultad";
+                String consulta = "";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Promocion> promocionesConsulta = new ArrayList();
