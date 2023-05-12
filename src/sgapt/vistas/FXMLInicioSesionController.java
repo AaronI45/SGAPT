@@ -1,6 +1,7 @@
 package sgapt.vistas;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -56,45 +57,60 @@ public class FXMLInicioSesionController implements Initializable {
     }
     
     private void validarCredencialesUsuario(String usuario, String password) {
-        Empleado usuarioRespuesta = SesionDAO.verificarUsuarioSesion(usuario, password);
-        switch (usuarioRespuesta.getCodigoRespuesta())
-        {
-            case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexión", 
-                        "Por el momento no hay conexión, intentelo más tarde", 
-                        Alert.AlertType.ERROR);
-                break;
-            
-            case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error en la solicitud", 
-                        "Por el momento no se puede procesar la solicitud de verificación", 
-                        Alert.AlertType.ERROR);
-                break;
-            
-            case Constantes.OPERACION_EXITOSA:
-                if (usuarioRespuesta.getIdEmpleado() > 0) {
+        try{
+            Empleado usuarioRespuesta = SesionDAO.verificarUsuarioSesion(usuario, password);
+            switch (usuarioRespuesta.getTipoEmpleado())
+            {
+                case Empleado.ADMINISTRADOR:
+                        Utilidades.mostrarDialogoSimple("Bienvenido(a)", 
+                            "Bienvenido(a) "+usuarioRespuesta.toString()+"al sistema...", 
+                            Alert.AlertType.INFORMATION);
+                        irPantallaAdministrador();
+                    break;
+
+                case Empleado.ENCARGADO:
                     Utilidades.mostrarDialogoSimple("Bienvenido(a)", 
-                        "Bienvenido(a) "+usuarioRespuesta.toString()+"al sistema...", 
-                        Alert.AlertType.INFORMATION);
-                    irPantallaPrincipal();
-                } else {
+                            "Bienvenido(a) "+usuarioRespuesta.toString()+"al sistema...", 
+                            Alert.AlertType.INFORMATION);
+                    irPantallaEncargado();
+                    break;
+
+                case Empleado.EMPLEADO:
+                    Utilidades.mostrarDialogoSimple("Bienvenido(a)", 
+                            "Bienvenido(a) "+usuarioRespuesta.toString()+"al sistema...", 
+                            Alert.AlertType.INFORMATION);
+                    irPantallaEmpleado();
+                    break;
+
+                default:
                     Utilidades.mostrarDialogoSimple("Credenciales incorrectas", 
                             "El usuario y/o contraseña no son correctos, por favor verifica la información", 
                             Alert.AlertType.WARNING);
-                }
-                break;
-            
-            default:
-                Utilidades.mostrarDialogoSimple("Error de petición", 
-                        "El sistema no está disponible por el momento", 
-                        Alert.AlertType.ERROR);
+            }
+        }catch (SQLException e){
+            Utilidades.mostrarDialogoSimple("No hay conexión a la base de datos", 
+                    "No existe conexión con la base de datos", Alert.AlertType.ERROR);
         }
     }
     
-    private void irPantallaPrincipal() {        
+    private void irPantallaEmpleado() {        
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipal.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalEmpleado.fxml"));
         escenarioBase.setTitle("Home");
         escenarioBase.show();
+    }
+    
+    private void irPantallaEncargado(){
+        Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalEncargado.fxml"));
+        escenarioBase.setTitle("Home");
+        escenarioBase.show();
+    }
+    
+    private void irPantallaAdministrador(){
+        Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdministrador.fxml"));
+        escenarioBase.setTitle("Home");
+        escenarioBase.show();        
     }
 }

@@ -1,32 +1,39 @@
 package sgapt.modelo.pojo;
 
-public class Empleado {
+import java.util.Date;
 
+public class Empleado {
+    public static final int NO_ENCONTRADO = -1;
+    public static final int ADMINISTRADOR = 1;
+    public static final int ENCARGADO = 2;
+    public static final int EMPLEADO = 3;
+    
     private int idEmpleado;
-    private int Farmacia_idFarmacia;
-    private String nombres;
+    private int idFarmacia;
+    private String nombre;
     private String apellidoPaterno;
     private String apellidoMaterno;
-    private String correoElectronico;
-    private int esAdministrador;
     private String username;
     private String password;
-    private int codigoRespuesta;
-
+    private String correo;
+    private byte[] foto;
+    private int tipoEmpleado;
+    
     public Empleado() {
+        
     }
 
-    public Empleado(int idEmpleado, int Farmacia_idFarmacia, String nombres, String apellidoPaterno, String apellidoMaterno, String correoElectronico, int esAdministrador, String username, String password, int codigoRespuesta) {
+    public Empleado(int idEmpleado, int idFarmacia, String nombre, String apellidoPaterno, String apellidoMaterno, String username, String password, String correo, byte[] foto, int tipoEmpleado) {
         this.idEmpleado = idEmpleado;
-        this.Farmacia_idFarmacia = Farmacia_idFarmacia;
-        this.nombres = nombres;
+        this.idFarmacia = idFarmacia;
+        this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
-        this.correoElectronico = correoElectronico;
-        this.esAdministrador = esAdministrador;
         this.username = username;
         this.password = password;
-        this.codigoRespuesta = codigoRespuesta;
+        this.correo = correo;
+        this.foto = foto;
+        this.tipoEmpleado = tipoEmpleado;
     }
 
     public int getIdEmpleado() {
@@ -37,20 +44,20 @@ public class Empleado {
         this.idEmpleado = idEmpleado;
     }
 
-    public int getFarmacia_idFarmacia() {
-        return Farmacia_idFarmacia;
+    public int getIdFarmacia() {
+        return idFarmacia;
     }
 
-    public void setFarmacia_idFarmacia(int Farmacia_idFarmacia) {
-        this.Farmacia_idFarmacia = Farmacia_idFarmacia;
+    public void setIdFarmacia(int idFarmacia) {
+        this.idFarmacia = idFarmacia;
     }
 
-    public String getNombres() {
-        return nombres;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getApellidoPaterno() {
@@ -69,22 +76,6 @@ public class Empleado {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
-
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
-    }
-
-    public int getEsAdministrador() {
-        return esAdministrador;
-    }
-
-    public void setEsAdministrador(int esAdministrador) {
-        this.esAdministrador = esAdministrador;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -101,19 +92,46 @@ public class Empleado {
         this.password = password;
     }
 
-    public int getCodigoRespuesta() {
-        return codigoRespuesta;
+    public int getTipoEmpleado() {
+        return tipoEmpleado;
     }
 
-    public void setCodigoRespuesta(int codigoRespuesta) {
-        this.codigoRespuesta = codigoRespuesta;
+    public void setTipoEmpleado(int tipoEmpleado) {
+        this.tipoEmpleado = tipoEmpleado;
     }
 
-    
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
     
     @Override
     public String toString() {
-        return nombres+" "+apellidoPaterno+" "+apellidoMaterno;
+        return nombre+" "+apellidoPaterno+" "+apellidoMaterno;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean sonIguales = false;
+        if (this == obj){
+            sonIguales = true;
+        }
+        if (obj != null & obj instanceof Empleado){
+            Empleado otro = (Empleado) obj;
+            sonIguales = this.getIdEmpleado() == otro.getIdEmpleado();
+        }
+        return sonIguales;
     }
     
 }

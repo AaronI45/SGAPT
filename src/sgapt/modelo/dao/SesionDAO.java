@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import sgapt.modelo.ConexionBD;
 import sgapt.modelo.pojo.Empleado;
-import sgapt.util.Constantes;
+import sgapt.util.ShaConversor;
 
 public class SesionDAO 
 {
-    public static Empleado verificarUsuarioSesion(String usuario, String password)
+    public static Empleado verificarUsuarioSesion(String usuario, String password) throws SQLException
     {
         Empleado usuarioVerificado = new Empleado();
         Connection conexion = ConexionBD.abrirConexionBD();
@@ -21,27 +21,28 @@ public class SesionDAO
                 String consulta = "SELECT * FROM empleado WHERE username = ? AND password = ?";
                 PreparedStatement prepararSentencia = conexion.prepareStatement(consulta);
                 prepararSentencia.setString(1, usuario);
-                prepararSentencia.setString(2, password);
+                prepararSentencia.setString(2, ShaConversor.sha256(password));
                 ResultSet resultado = prepararSentencia.executeQuery();
-                usuarioVerificado.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
                 if (resultado.next()) 
                 {
                     usuarioVerificado.setIdEmpleado(resultado.getInt("idEmpleado"));
-                    usuarioVerificado.setFarmacia_idFarmacia(resultado.getInt("Farmacia_idFarmacia"));
-                    usuarioVerificado.setNombres(resultado.getString("nombres"));
+                    usuarioVerificado.setIdFarmacia(resultado.getInt("Farmacia_idFarmacia"));
+                    usuarioVerificado.setNombre(resultado.getString("nombres"));
                     usuarioVerificado.setApellidoPaterno(resultado.getString("apellidoPaterno"));
                     usuarioVerificado.setApellidoMaterno(resultado.getString("apellidoMaterno"));
-                    usuarioVerificado.setCorreoElectronico(resultado.getString("correoElectronico"));
-                    usuarioVerificado.setEsAdministrador(resultado.getInt("esAdministrador"));
-                    usuarioVerificado.setUsername(resultado.getString("username"));
-                    usuarioVerificado.setPassword(resultado.getString("password"));
+                    usuarioVerificado.setCorreo(resultado.getString("correoElectronico"));
+                    usuarioVerificado.setTipoEmpleado(resultado.getInt("Tipo_Empleado_idTipo_Empleado"));
+                    usuarioVerificado.setFoto(resultado.getBytes("fotografia"));
                 }
-                conexion.close();
+                else
+                {
+                    usuarioVerificado.setTipoEmpleado(Empleado.NO_ENCONTRADO);
+                }
             } catch (SQLException ex) {
-                usuarioVerificado.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+                System.out.println(ex.getMessage());
+            }finally{
+                conexion.close();
             }
-        } else {
-            usuarioVerificado.setCodigoRespuesta(Constantes.ERROR_CONEXION);
         }
         return usuarioVerificado;
     }

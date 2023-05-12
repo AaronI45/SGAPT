@@ -10,7 +10,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sgapt.util.Utilidades;
 
-public class FXMLMenuPrincipalController implements Initializable {
+public class FXMLMenuPrincipalEmpleadoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
