@@ -9,15 +9,19 @@
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.vistas.FXMLFormularioPromocionController">
    <children>
       <Label fx:id="lbTitulo" layoutX="308.0" layoutY="39.0" text="Formulario de promociones" />
-      <TextField fx:id="tfTipo" layoutX="65.0" layoutY="172.0" />
-      <Label layoutX="65.0" layoutY="141.0" text="Tipo" />
+      <TextField fx:id="tfTipo" layoutX="65.0" layoutY="157.0" promptText="combo, descuento" />
+      <Label layoutX="65.0" layoutY="131.0" text="Tipo" />
       <Label layoutX="65.0" layoutY="240.0" text="Fecha inicio" />
-      <TextField fx:id="tfFechaInicio" layoutX="65.0" layoutY="269.0" promptText="dd/mm/yy" />
+      <TextField fx:id="tfFechaInicio" layoutX="65.0" layoutY="269.0" promptText="yy/mm/dd" />
       <Label layoutX="63.0" layoutY="342.0" text="Fecha fin" />
-      <TextField fx:id="tfFechaFin" layoutX="65.0" layoutY="373.0" promptText="dd/mm/yy" />
+      <TextField fx:id="tfFechaFin" layoutX="65.0" layoutY="373.0" promptText="yy/mm/dd" />
       <Button layoutX="688.0" layoutY="438.0" mnemonicParsing="false" onAction="#clicBtnGuardar" text="Guardar" />
       <Button layoutX="584.0" layoutY="438.0" mnemonicParsing="false" onAction="#clicBtnCancelar" text="Cancelar" />
-      <Label layoutX="426.0" layoutY="141.0" text="IdPromocion" />
-      <TextField fx:id="tfIdPromocion" layoutX="418.0" layoutY="172.0" />
+      <Label layoutX="427.0" layoutY="131.0" text="IdPromocion" />
+      <TextField fx:id="tfIdPromocion" layoutX="419.0" layoutY="157.0" />
+      <Label fx:id="lbErrorTipo" layoutX="63.0" layoutY="193.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+      <Label fx:id="lbErrorFechaInicio" layoutX="63.0" layoutY="312.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+      <Label fx:id="lbErrorFechaFin" layoutX="63.0" layoutY="417.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+      <Label fx:id="lbErrorIdPromocion" layoutX="419.0" layoutY="193.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
    </children>
 </AnchorPane>
