@@ -1,6 +1,5 @@
 dist/SGAPT.html
 dist/SGAPT.jar
 dist/SGAPT.jnlp
-nbproject/private/private.xml
 src/sgapt/mnodelo/conexionBD.java
 
