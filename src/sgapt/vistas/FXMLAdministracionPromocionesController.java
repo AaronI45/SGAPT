@@ -23,7 +23,7 @@ import sgapt.util.Utilidades;
 public class FXMLAdministracionPromocionesController implements Initializable {
 
     @FXML
-    private TableColumn columnIdProducto;
+    private TableColumn columnIdPromocion;
     @FXML
     private TableColumn columnPromocion;
     @FXML
@@ -36,7 +36,8 @@ public class FXMLAdministracionPromocionesController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        configurarTabla();
+        cargarInformacionTabla();
     }    
 
     @FXML
@@ -56,7 +57,7 @@ public class FXMLAdministracionPromocionesController implements Initializable {
     }
     
      private void configurarTabla() {
-        columnFechaFin.setCellValueFactory(new PropertyValueFactory("idPromocion"));
+        columnIdPromocion.setCellValueFactory(new PropertyValueFactory("idPromocion"));
         columnPromocion.setCellValueFactory(new PropertyValueFactory("tipoPromocion")); //nombre de atribut en pojo
         columnFechaInicio.setCellValueFactory(new PropertyValueFactory("fechaInicio"));
         columnFechaFin.setCellValueFactory(new PropertyValueFactory("fechaFin"));
@@ -81,6 +82,10 @@ public class FXMLAdministracionPromocionesController implements Initializable {
                     tvPromocion.setItems(promociones);
                 break;
         }
+    }
+
+    @FXML
+    private void clicBtnExpirar(ActionEvent event) {
     }
     
 }

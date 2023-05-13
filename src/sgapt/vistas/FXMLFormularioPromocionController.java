@@ -26,6 +26,14 @@ public class FXMLFormularioPromocionController implements Initializable {
     private Label lbTitulo;
     @FXML
     private TextField tfIdPromocion;
+    @FXML
+    private Label lbErrorTipo;
+    @FXML
+    private Label lbErrorFechaInicio;
+    @FXML
+    private Label lbErrorFechaFin;
+    @FXML
+    private Label lbErrorIdPromocion;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -34,16 +42,35 @@ public class FXMLFormularioPromocionController implements Initializable {
 
     @FXML
     private void clicBtnGuardar(ActionEvent event) {
-        
+        validarCamposRegistros();
     }
     
      private void validarCamposRegistros(){
+        String idPromocion =  tfIdPromocion.getText();
         String tipoPromocion = tfTipo.getText();
         String fechInicio = tfFechaInicio.getText();
         String fechFin = tfFechaFin.getText();
-        
+        boolean sonValidos=true;
         //TODO Validaciones
+        if(idPromocion.isEmpty()){
+            sonValidos=false;
+            lbErrorIdPromocion.setText("El campo es obligatorio");
+        }
+        if(tipoPromocion.isEmpty()){
+            sonValidos=false;
+            lbErrorTipo.setText("El campo es obligatorio");
+        }
+        if(fechInicio.isEmpty()){
+            sonValidos=false;
+            lbErrorFechaInicio.setText("El campo es obligatorio");
+        }
+        if(fechFin.isEmpty()){
+            sonValidos=false;
+            lbErrorFechaFin.setText("El campo es obligatorio");
+        }
+        //
         Promocion promocionValidada = new Promocion();
+        promocionValidada.setIdPromocion(Integer.parseInt(idPromocion));
         promocionValidada.setTipoPromocion(tipoPromocion);
         promocionValidada.setFechaInicio(fechInicio);
         promocionValidada.setFechaFin(fechFin);
@@ -52,6 +79,7 @@ public class FXMLFormularioPromocionController implements Initializable {
 
     @FXML
     private void clicBtnCancelar(ActionEvent event) {
+        cerrarVentana();
     }
     
     private void cerrarVentana(){
@@ -63,15 +91,15 @@ public class FXMLFormularioPromocionController implements Initializable {
         int codigoRespuesta = PromocionDAO.guardarPromocion(promocionRegistro);
         switch(codigoRespuesta){
             case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "El alumno no pudo ser guardadp debido a un error en su conexión...", 
+                Utilidades.mostrarDialogoSimple("Error de conexion", "La promocion no pudo ser guardada debido a un error en su conexión...", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error en la información", "La información del alumno no puede ser guardada, por favor verifique su información", 
+                Utilidades.mostrarDialogoSimple("Error en la información", "La información de la promocion no puede ser guardada, por favor verifique su información", 
                         Alert.AlertType.WARNING);
                 break;
             case Constantes.OPERACION_EXITOSA:
-                Utilidades.mostrarDialogoSimple("Alumno registrado", "La información del alumno fue guardada correctamente", 
+                Utilidades.mostrarDialogoSimple("Promocion registrada", "La información de la promocion fue guardada correctamente", 
                         Alert.AlertType.INFORMATION);
                 cerrarVentana();
                 break;

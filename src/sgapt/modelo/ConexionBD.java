@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 public class ConexionBD {
     private static String driver = "com.mysql.jdbc.Driver";
-    private static String nombreBase = "mydb";
+    private static String nombreBase = "pharmatech";
     private static String hostname = "localhost";
     private static String puerto = "3306";
     
-    private static String usuario = "SamuelMtz";
-    private static String password = "cpktnwty1";
+    private static String usuario = "root";
+    private static String password = "Xhantusz17@";
     
     private static String urlConexion = "jdbc:mysql://"+hostname+":"+puerto+
             "/"+nombreBase+"?allowPublicKeyRetrieval=true&useSSL=false";

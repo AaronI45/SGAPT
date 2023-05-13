@@ -54,13 +54,14 @@ public class PromocionDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "INSERT INTO promocion (idPromocion, Producto_idProducto, "+
-                        "tipoPromocion, fechaInicio, fechaFin) "+ 
-                        "VALUES (?, ?, ?, ?, ?)";
+                String sentencia = "INSERT INTO promocion (idPromocion, " +
+                        " tipoPromocion, fechaInicio, fechaFin) " + 
+                        " VALUES (?, ?, ?, ?)";
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setString(1, promocionNueva.getTipoPromocion());
-                prepararSentencia.setString(2, promocionNueva.getFechaInicio());
-                prepararSentencia.setString(3, promocionNueva.getFechaFin());
+                prepararSentencia.setInt(1, promocionNueva.getIdPromocion());
+                prepararSentencia.setString(2, promocionNueva.getTipoPromocion());
+                prepararSentencia.setString(3, promocionNueva.getFechaInicio());
+                prepararSentencia.setString(4, promocionNueva.getFechaFin());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
