@@ -25,7 +25,7 @@ public class PromocionDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "";
+                String consulta = "SELECT * FROM promocion ";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Promocion> promocionesConsulta = new ArrayList();
@@ -48,4 +48,30 @@ public class PromocionDAO {
         }
         return respuesta;
     }
+    
+    public static int guardarPromocion(Promocion promocionNueva) {
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "INSERT INTO promocion (idPromocion, Producto_idProducto, "+
+                        "tipoPromocion, fechaInicio, fechaFin) "+ 
+                        "VALUES (?, ?, ?, ?, ?)";
+                PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
+                prepararSentencia.setString(1, promocionNueva.getTipoPromocion());
+                prepararSentencia.setString(2, promocionNueva.getFechaInicio());
+                prepararSentencia.setString(3, promocionNueva.getFechaFin());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
+                        Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }
+    
 }

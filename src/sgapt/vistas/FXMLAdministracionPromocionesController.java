@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.PromocionDAO;
 import sgapt.modelo.pojo.Promocion;
@@ -47,10 +48,15 @@ public class FXMLAdministracionPromocionesController implements Initializable {
 
     @FXML
     private void clicBtnCrearProm(ActionEvent event) {
- 
+        Stage escenarioFormulario = new Stage();
+        escenarioFormulario.setScene(Utilidades.inicializarEscena("vistas/FXMLFormularioPromocion.fxml"));
+        escenarioFormulario.setTitle("Formulario");
+        escenarioFormulario.initModality(Modality.APPLICATION_MODAL);
+        escenarioFormulario.showAndWait();
     }
     
      private void configurarTabla() {
+        columnFechaFin.setCellValueFactory(new PropertyValueFactory("idPromocion"));
         columnPromocion.setCellValueFactory(new PropertyValueFactory("tipoPromocion")); //nombre de atribut en pojo
         columnFechaInicio.setCellValueFactory(new PropertyValueFactory("fechaInicio"));
         columnFechaFin.setCellValueFactory(new PropertyValueFactory("fechaFin"));
@@ -60,7 +66,7 @@ public class FXMLAdministracionPromocionesController implements Initializable {
         promociones = FXCollections.observableArrayList();
         PromocionRespuesta respuestaBD = PromocionDAO.obtenerInformacionPromocion();
         switch (respuestaBD.getCodigoRespuesta()) {
-            case Constantes.ERROR_CONEXION:
+            case Constantes.ERROR_CONEXION: 
                     Utilidades.mostrarDialogoSimple("Sin conexión", 
                     "Lo sentimos, por el momento no hay conexión para poder cargar la información", 
                     Alert.AlertType.ERROR);
