@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.SesionDAO;
 import sgapt.modelo.pojo.Empleado;
-import sgapt.util.Constantes;
 import sgapt.util.Utilidades;
 
 public class FXMLInicioSesionController implements Initializable {
@@ -75,13 +74,6 @@ public class FXMLInicioSesionController implements Initializable {
                     irPantallaEncargado();
                     break;
 
-                case Empleado.EMPLEADO:
-                    Utilidades.mostrarDialogoSimple("Bienvenido(a)", 
-                            "Bienvenido(a) "+usuarioRespuesta.toString()+"al sistema...", 
-                            Alert.AlertType.INFORMATION);
-                    irPantallaEmpleado();
-                    break;
-
                 default:
                     Utilidades.mostrarDialogoSimple("Credenciales incorrectas", 
                             "El usuario y/o contraseña no son correctos, por favor verifica la información", 
@@ -93,13 +85,6 @@ public class FXMLInicioSesionController implements Initializable {
         }
     }
     
-    private void irPantallaEmpleado() {        
-        Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalEmpleado.fxml"));
-        escenarioBase.setTitle("Home");
-        escenarioBase.show();
-    }
-    
     private void irPantallaEncargado(){
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
         escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalEncargado.fxml"));
@@ -109,8 +94,10 @@ public class FXMLInicioSesionController implements Initializable {
     
     private void irPantallaAdministrador(){
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdministrador.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));
         escenarioBase.setTitle("Home");
         escenarioBase.show();        
     }
+    
+    
 }

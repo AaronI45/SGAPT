@@ -1,10 +1,12 @@
 package sgapt.util;
 
 import java.io.IOException;
+import java.util.Optional;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import sgapt.SGAPT;
 
 public class Utilidades {
@@ -16,6 +18,15 @@ public class Utilidades {
         alertaSimple.setContentText(mensaje);
         alertaSimple.setHeaderText(null);
         alertaSimple.showAndWait();
+    }
+    
+    public static boolean mostrarDialogoConfirmacion(String titulo, String mensaje){
+        Alert alertaConfirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        alertaConfirmacion.setTitle(titulo);
+        alertaConfirmacion.setContentText(mensaje);
+        alertaConfirmacion.setHeaderText(null);
+        Optional<ButtonType> respuesta = alertaConfirmacion.showAndWait();
+        return (respuesta.get() == ButtonType.OK);
     }
     
     public static Scene inicializarEscena(String ruta) {
