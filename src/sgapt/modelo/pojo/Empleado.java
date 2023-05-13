@@ -3,10 +3,6 @@ package sgapt.modelo.pojo;
 import java.util.Date;
 
 public class Empleado {
-    public static final int NO_ENCONTRADO = -1;
-    public static final int ADMINISTRADOR = 1;
-    public static final int ENCARGADO = 2;
-    public static final int EMPLEADO = 3;
     
     private int idEmpleado;
     private int idFarmacia;
