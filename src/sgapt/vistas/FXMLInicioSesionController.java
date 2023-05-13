@@ -18,6 +18,11 @@ import sgapt.util.Utilidades;
 
 public class FXMLInicioSesionController implements Initializable {
 
+    enum TipoEmpleado{
+        ADMINISTRADOR,
+        EMPLEADO;
+    }
+    
     @FXML
     private TextField tfUsuario;
     @FXML
@@ -74,10 +79,27 @@ public class FXMLInicioSesionController implements Initializable {
             
             case Constantes.OPERACION_EXITOSA:
                 if (usuarioRespuesta.getIdEmpleado()> 0) {
-                    Utilidades.mostrarDialogoSimple("Bienvenido(a)", 
-                        "Bienvenido(a) "+usuarioRespuesta.toString()+"al sistema...", 
-                        Alert.AlertType.INFORMATION);
-                    irPantallaPrincipal();
+                    String tipoUsuario = usuarioRespuesta.getTipoEmpleado().toUpperCase();
+                    TipoEmpleado tipoLogin = Enum.valueOf(TipoEmpleado.class, tipoUsuario);
+                    switch (tipoLogin){
+                        case ADMINISTRADOR:
+                            Utilidades.mostrarDialogoSimple("Bienvenido(a)", 
+                                    "Bienvenido(a) "+usuarioRespuesta.toString()+"al sistema...", 
+                                Alert.AlertType.INFORMATION);   
+                            irPantallaAdmin();
+                            break;
+                        case EMPLEADO:
+                            Utilidades.mostrarDialogoSimple("Bienvenido(a)", 
+                                    "Bienvenido(a) "+usuarioRespuesta.toString()+"al sistema...", 
+                                Alert.AlertType.INFORMATION);
+                            irPantallaEmpleado();
+                            break;
+                            
+                        default:
+                            Utilidades.mostrarDialogoSimple("Usuario no soportado", 
+                                    "Por favor comuníquese con los administradores del sistema...", 
+                                Alert.AlertType.ERROR);
+                    }
                 } else {
                     Utilidades.mostrarDialogoSimple("Credenciales incorrectas", 
                             "El usuario y/o contraseña no son correctos, por favor verifica la información", 
@@ -92,10 +114,17 @@ public class FXMLInicioSesionController implements Initializable {
         }
     }
     
-    private void irPantallaPrincipal() {        
+    private void irPantallaAdmin() {        
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
         escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));
         escenarioBase.setTitle("Home");
         escenarioBase.show();
+    }
+    
+    private void irPantallaEmpleado(){
+        Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalEncargado.fxml"));
+        escenarioBase.setTitle("Home");
+        escenarioBase.show();        
     }
 }
