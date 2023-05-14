@@ -1,3 +1,4 @@
+
 package sgapt.modelo.pojo;
 
 public class Sucursal {

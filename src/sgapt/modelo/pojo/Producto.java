@@ -1,3 +1,4 @@
+
 package sgapt.modelo.pojo;
 
 import java.util.Date;
@@ -118,3 +119,4 @@ public class Producto {
 
     
 }
+
