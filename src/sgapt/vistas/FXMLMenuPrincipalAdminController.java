@@ -47,12 +47,15 @@ public class FXMLMenuPrincipalAdminController implements Initializable {
 
     @FXML
     private void clicIrAdminInventario(ActionEvent event) {
-        Stage escenarioInventario = new Stage();
-        Scene esceneAdminInventario = Utilidades.inicializarEscena("vistas/FXMLAdministracionInventarioProductos.fxml");
-        escenarioInventario.setScene(esceneAdminInventario);
-        escenarioInventario.setTitle("Administración de inventario");
-        escenarioInventario.initModality(Modality.APPLICATION_MODAL);
-        escenarioInventario.showAndWait();
+        try {
+            Parent vista = FXMLLoader.load(getClass().getResource("/sgapt/vistas/FXMLAdministracionInventarioProductos.fxml"));
+            Scene escenaAdminInventario = Utilidades.inicializarEscena("/sgapt/vistas/FXMLAdministracionInventarioProductos.fxml");
+            Stage stagePrincipal = (Stage) btnSalir.getScene().getWindow();
+            stagePrincipal.setScene(escenaAdminInventario);
+        } catch (IOException e) {
+            Utilidades.mostrarDialogoSimple("Error", "No se puede mostrar la pantalla de administracion de inventario", 
+                    Alert.AlertType.ERROR);
+        }
     }
 
     @FXML
@@ -67,7 +70,7 @@ public class FXMLMenuPrincipalAdminController implements Initializable {
             stagePrincipal.setScene(escenaInicioSesion);
             } catch (IOException e) {
                 Utilidades.mostrarDialogoSimple("Error", "No se puede mostrar la pantalla de inicio de sesión", 
-                        Alert.AlertType.ERROR);;
+                        Alert.AlertType.ERROR);
             }  
         }
         
