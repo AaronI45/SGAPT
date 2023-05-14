@@ -1,5 +1,6 @@
-package sgapt.vistas;
+package sgapt.controladores;
 
+import sgapt.controladores.FXMLAdministracionPedidosController;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
