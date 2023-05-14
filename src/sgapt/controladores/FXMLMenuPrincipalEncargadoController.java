@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package sgapt.controladores;
 
 import java.net.URL;
@@ -14,19 +10,11 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import sgapt.util.Utilidades;
 
-/**
- * FXML Controller class
- *
- * @author super
- */
 public class FXMLMenuPrincipalEncargadoController implements Initializable {
 
     @FXML
     private Label lbTitulo;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -57,7 +45,11 @@ public class FXMLMenuPrincipalEncargadoController implements Initializable {
     }
 
     @FXML
-    private void clicAdministrarPromociones(ActionEvent event) {
-        irPantallaAministracionPromociones();
+    private void clicBtnAdministrarPromociones(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPromociones.fxml"));
+        stagePrincipal.setTitle("Administración de promociones");
+        stagePrincipal.show();
     }
 }

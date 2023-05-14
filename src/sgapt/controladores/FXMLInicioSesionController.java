@@ -1,11 +1,14 @@
 package sgapt.controladores;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -40,8 +43,23 @@ public class FXMLInicioSesionController implements Initializable {
     private void clicIniciarSesion(ActionEvent event) {
         lbErrorUsuario.setText("");
         lbErrorPassword.setText("");
-        tfUsuario.setText("brendamar");
-        tfPassword.setText("abcd123");
+        
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Tipo de usuario");
+        alert.setHeaderText("Seleccione el tipo de usuario");
+
+        ButtonType btnEncargado = new ButtonType("Encargado");
+        ButtonType btnAdministrador = new ButtonType("Administrador");
+        alert.getButtonTypes().setAll(btnEncargado, btnAdministrador);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == btnEncargado) {            
+            tfUsuario.setText("jamez");
+            tfPassword.setText("hola");
+        } else {
+            tfUsuario.setText("brendamar");
+            tfPassword.setText("abcd123");
+        }        
         validarCampos();
     }
     

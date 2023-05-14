@@ -22,15 +22,6 @@ public class FXMLMenuPrincipalAdminController implements Initializable {
     }    
 
     @FXML
-    private void clicIrAdminPromociones(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPromociones.fxml"));
-        stagePrincipal.setTitle("Administración de promociones");
-        stagePrincipal.show();
-    }
-
-    @FXML
     private void clicIrAdminEmpleados(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
