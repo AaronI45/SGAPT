@@ -1,7 +1,6 @@
 package sgapt.vistas;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,6 +40,8 @@ public class FXMLInicioSesionController implements Initializable {
     private void clicIniciarSesion(ActionEvent event) {
         lbErrorUsuario.setText("");
         lbErrorPassword.setText("");
+        tfUsuario.setText("brendamar");
+        tfPassword.setText("abcd123");
         validarCampos();
     }
     
@@ -111,16 +112,16 @@ public class FXMLInicioSesionController implements Initializable {
     }
     
     private void irPantallaAdmin() {        
-        Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));
-        escenarioBase.setTitle("Home");
-        escenarioBase.show();
+        Stage stagePrincipal = (Stage) tfUsuario.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));
+        stagePrincipal.setTitle("Home");
+        stagePrincipal.show();
     }
     
     private void irPantallaEmpleado(){
-        Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalEncargado.fxml"));
-        escenarioBase.setTitle("Home");
-        escenarioBase.show();        
+        Stage stagePrincipal = (Stage) tfUsuario.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalEncargado.fxml"));
+        stagePrincipal.setTitle("Home");
+        stagePrincipal.show();        
     }
 }
