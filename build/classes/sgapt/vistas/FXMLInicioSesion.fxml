@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -9,39 +14,44 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #ececec;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.vistas.FXMLInicioSesionController">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #ececec;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.vistas.FXMLInicioSesionController">
    <children>
-      <ImageView fitHeight="163.0" fitWidth="511.0" layoutX="145.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="163.0" fitWidth="511.0" layoutX="683.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../img/fondo_login.png" />
+            <Image url="@../img/logo.png" />
          </image>
       </ImageView>
-      <Label layoutX="202.0" layoutY="207.0" text="Usuario">
+      <Label layoutX="740.0" layoutY="336.0" text="Usuario">
          <font>
             <Font name="Berlin Sans FB" size="25.0" />
          </font>
       </Label>
-      <Label layoutX="200.0" layoutY="285.0" text="Contraseña">
+      <Label layoutX="738.0" layoutY="414.0" text="Contraseña">
          <font>
             <Font name="Berlin Sans FB" size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="tfUsuario" layoutX="332.0" layoutY="202.0" prefHeight="39.0" prefWidth="281.0" styleClass="textField" stylesheets="@../css/estilos.css" />
-      <PasswordField fx:id="tfPassword" layoutX="334.0" layoutY="280.0" prefHeight="39.0" prefWidth="281.0" styleClass="textField" stylesheets="@../css/estilos.css" />
-      <Button layoutX="287.0" layoutY="387.0" mnemonicParsing="false" onAction="#clicIniciarSesion" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Iniciar sesión" textFill="WHITE">
+      <TextField fx:id="tfUsuario" layoutX="870.0" layoutY="331.0" prefHeight="39.0" prefWidth="281.0" styleClass="textField" stylesheets="@../css/estilos.css" />
+      <PasswordField fx:id="tfPassword" layoutX="872.0" layoutY="409.0" prefHeight="39.0" prefWidth="281.0" styleClass="textField" stylesheets="@../css/estilos.css" />
+      <Button layoutX="825.0" layoutY="516.0" mnemonicParsing="false" onAction="#clicIniciarSesion" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Iniciar sesión" textFill="WHITE">
          <font>
             <Font name="Berlin Sans FB" size="35.0" />
          </font>
       </Button>
-      <Label fx:id="lbErrorPassword" layoutX="332.0" layoutY="328.0" prefHeight="20.0" prefWidth="281.0" textFill="RED">
+      <Label fx:id="lbErrorPassword" layoutX="870.0" layoutY="457.0" prefHeight="20.0" prefWidth="281.0" textFill="RED">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lbErrorUsuario" layoutX="334.0" layoutY="249.0" prefHeight="20.0" prefWidth="281.0" textFill="RED">
+      <Label fx:id="lbErrorUsuario" layoutX="872.0" layoutY="378.0" prefHeight="20.0" prefWidth="281.0" textFill="RED">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
+      <ImageView fitHeight="720.0" fitWidth="786.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/Fondo_login.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
