@@ -9,6 +9,9 @@
             <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGAPT/src/sgapt/modelo/pojo/Producto.java</file>
             <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGAPT/src/sgapt/vistas/FXMLAdministracionPromocionesController.java</file>
             <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGAPT/src/sgapt/vistas/FXMLFormularioPromocionController.java</file>
+            <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGAPT/src/sgapt/modelo/dao/SesionDAO.java</file>
+            <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGAPT/src/sgapt/vistas/FXMLInicioSesionController.java</file>
+            <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGAPT/src/sgapt/modelo/dao/ProductoDAO.java</file>
         </group>
     </open-files>
 </project-private>
