@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import sgapt.util.Utilidades;
@@ -31,9 +32,8 @@ public class FXMLMenuPrincipalEncargadoController implements Initializable {
         // TODO
     }    
 
-    @FXML
     private void clicAdmProm(ActionEvent event) {
-        irPantallaAministracionPromociones();
+        
     }
     
     private void irPantallaAministracionPromociones(){
@@ -41,5 +41,23 @@ public class FXMLMenuPrincipalEncargadoController implements Initializable {
         escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPromociones.fxml"));
         escenarioBase.setTitle("Administracion promociones");
         escenarioBase.show();
+    }
+
+    @FXML
+    private void clicBtnSalir(ActionEvent event) {
+        boolean validarCierreSesion = Utilidades.mostrarDialogoConfirmacion("Cerrar sesión", 
+                "¿Está seguro de cerrar la sesión?");
+        if (validarCierreSesion) {
+            Node source = (Node) event.getSource();
+            Stage stagePrincipal = (Stage) source.getScene().getWindow();
+            stagePrincipal.setScene(Utilidades.inicializarEscena("/sgapt/vistas/FXMLInicioSesion.fxml"));
+            stagePrincipal.setTitle("Inicio de sesión");
+            stagePrincipal.show();
+        }
+    }
+
+    @FXML
+    private void clicAdministrarPromociones(ActionEvent event) {
+        irPantallaAministracionPromociones();
     }
 }

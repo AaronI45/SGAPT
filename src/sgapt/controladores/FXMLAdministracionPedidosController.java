@@ -122,24 +122,27 @@ public class FXMLAdministracionPedidosController implements Initializable {
     private void clicBtnRealizarPedido(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));
-        stagePrincipal.setTitle("Home");
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLProveedoresExternos.fxml"));
+        stagePrincipal.setTitle("Proveedores externos");
         stagePrincipal.show();
     }
 
     @FXML
     private void clicBtnModificar(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLModificacionPedido.fxml"));
+        stagePrincipal.setTitle("Modificación de pedido");
+        stagePrincipal.show();
     }
 
     @FXML
     private void clicBtnConsultar(ActionEvent event) {
-        Stage escenarioInformacionPedido = new Stage();
-        Scene esceneInformacionPedido = Utilidades.inicializarEscena("vistas/FXMLInformacionPedido.fxml");        
-        escenarioInformacionPedido.setScene(esceneInformacionPedido);
-        escenarioInformacionPedido.setTitle("Información de pedido");
-        escenarioInformacionPedido.initModality(Modality.APPLICATION_MODAL);
-        escenarioInformacionPedido.showAndWait();
-        
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLInformacionPedido.fxml"));
+        stagePrincipal.setTitle("Información de pedido");
+        stagePrincipal.show();
     }
 
     @FXML

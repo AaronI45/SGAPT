@@ -5,12 +5,15 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import sgapt.modelo.dao.LoteDAO;
 import sgapt.modelo.dao.LoteRespuesta;
 import sgapt.modelo.pojo.Lote;
@@ -66,6 +69,15 @@ public class FXMLInformacionPedidoController implements Initializable {
                     tvLotesPedido.setItems(lotes);
                 break;
         }
+    }
+
+    @FXML
+    private void clicBtnRegresar(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPedidos.fxml"));
+        stagePrincipal.setTitle("Administracion de pedidos");
+        stagePrincipal.show();
     }
     
     

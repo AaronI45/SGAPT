@@ -23,5 +23,6 @@
       <Label fx:id="lbErrorFechaInicio" layoutX="63.0" layoutY="312.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
       <Label fx:id="lbErrorFechaFin" layoutX="63.0" layoutY="417.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
       <Label fx:id="lbErrorIdPromocion" layoutX="419.0" layoutY="193.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+      <Button layoutX="31.0" layoutY="24.0" mnemonicParsing="false" onAction="#clicBtnRegresar" text="Regresar" />
    </children>
 </AnchorPane>

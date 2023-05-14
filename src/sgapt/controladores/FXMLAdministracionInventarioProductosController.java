@@ -49,20 +49,24 @@ public class FXMLAdministracionInventarioProductosController implements Initiali
 
     @FXML
     private void clicIrConsultarProductos(ActionEvent event) {
-        Stage escenarioReadquisiciones = new Stage();
-        Scene esceneAdminReadquisiciones = Utilidades.inicializarEscena("vistas/FXMLInformacionInventario.fxml");
-        escenarioReadquisiciones.setScene(esceneAdminReadquisiciones);
-        escenarioReadquisiciones.setTitle("Administración de inventario");
-        escenarioReadquisiciones.initModality(Modality.APPLICATION_MODAL);
-        escenarioReadquisiciones.showAndWait();
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLInformacionInventario.fxml"));
+        stagePrincipal.setTitle("Información de inventario");
+        stagePrincipal.show();
     }
 
     @FXML
     private void clicIrEliminarProductos(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLEliminacionProductos.fxml"));
+        stagePrincipal.setTitle("Eliminacion de productos");
+        stagePrincipal.show();
     }
 
     @FXML
-    private void clicVolver(ActionEvent event) {
+    private void clicRegresar(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
         stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));

@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -79,13 +80,12 @@ public class FXMLFormularioPromocionController implements Initializable {
 
     @FXML
     private void clicBtnCancelar(ActionEvent event) {
-        cerrarVentana();
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPromociones.fxml"));
+        stagePrincipal.setTitle("Administración de promociones");
+        stagePrincipal.show();
     }
-    
-    private void cerrarVentana(){
-        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.close();
-    } 
     
     private void registrarPromocion(Promocion promocionRegistro){
         int codigoRespuesta = PromocionDAO.guardarPromocion(promocionRegistro);
@@ -101,9 +101,21 @@ public class FXMLFormularioPromocionController implements Initializable {
             case Constantes.OPERACION_EXITOSA:
                 Utilidades.mostrarDialogoSimple("Promocion registrada", "La información de la promocion fue guardada correctamente", 
                         Alert.AlertType.INFORMATION);
-                cerrarVentana();
+                Stage stagePrincipal = (Stage) tfTipo.getScene().getWindow();
+                stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPromociones.fxml"));
+                stagePrincipal.setTitle("Administración de promociones");
+                stagePrincipal.show();
                 break;
         }
+    }
+
+    @FXML
+    private void clicBtnRegresar(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPromociones.fxml"));
+        stagePrincipal.setTitle("Administración de promociones");
+        stagePrincipal.show();
     }
     
 }
