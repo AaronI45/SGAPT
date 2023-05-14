@@ -1,10 +1,10 @@
-package sgapt.vistas;
+package sgapt.controladores;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
-public class FXMLInformacionEmpleadoController implements Initializable {
+public class FXMLInventarioProveedorExternoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

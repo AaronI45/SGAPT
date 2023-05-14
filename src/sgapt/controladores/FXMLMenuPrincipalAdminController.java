@@ -1,4 +1,4 @@
-package sgapt.vistas;
+package sgapt.controladores;
 
 import java.net.URL;
 import java.util.ResourceBundle;
