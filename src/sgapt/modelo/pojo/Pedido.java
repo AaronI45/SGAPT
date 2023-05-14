@@ -3,22 +3,26 @@ package sgapt.modelo.pojo;
 public class Pedido {
     
     private int idPedido;
-    private int proveedor_idProveedor;
     private String nombreProveedor;
-    private int farmacia_idFarmacia;
-    private String ciudadEntrega;
+    private String direccionEntrega;
+    private String fechaPedido;
+    private String fechaEnvio;
     private String fechaEntrega;
+    private String estadoRastreo;
+    private double montoTotal;
 
     public Pedido() {
     }
 
-    public Pedido(int idPedido, int proveedor_idProveedor, String nombreProveedor, int farmacia_idFarmacia, String ciudadEntrega, String fechaEntrega) {
+    public Pedido(int idPedido, String nombreProveedor, String direccionEntrega, String fechaPedido, String fechaEnvio, String fechaEntrega, String estadoRastreo, double montoTotal) {
         this.idPedido = idPedido;
-        this.proveedor_idProveedor = proveedor_idProveedor;
         this.nombreProveedor = nombreProveedor;
-        this.farmacia_idFarmacia = farmacia_idFarmacia;
-        this.ciudadEntrega = ciudadEntrega;
+        this.direccionEntrega = direccionEntrega;
+        this.fechaPedido = fechaPedido;
+        this.fechaEnvio = fechaEnvio;
         this.fechaEntrega = fechaEntrega;
+        this.estadoRastreo = estadoRastreo;
+        this.montoTotal = montoTotal;
     }
 
     public int getIdPedido() {
@@ -29,14 +33,6 @@ public class Pedido {
         this.idPedido = idPedido;
     }
 
-    public int getProveedor_idProveedor() {
-        return proveedor_idProveedor;
-    }
-
-    public void setProveedor_idProveedor(int proveedor_idProveedor) {
-        this.proveedor_idProveedor = proveedor_idProveedor;
-    }
-
     public String getNombreProveedor() {
         return nombreProveedor;
     }
@@ -45,20 +41,28 @@ public class Pedido {
         this.nombreProveedor = nombreProveedor;
     }
 
-    public int getFarmacia_idFarmacia() {
-        return farmacia_idFarmacia;
+    public String getDireccionEntrega() {
+        return direccionEntrega;
     }
 
-    public void setFarmacia_idFarmacia(int farmacia_idFarmacia) {
-        this.farmacia_idFarmacia = farmacia_idFarmacia;
+    public void setDireccionEntrega(String direccionEntrega) {
+        this.direccionEntrega = direccionEntrega;
     }
 
-    public String getCiudadEntrega() {
-        return ciudadEntrega;
+    public String getFechaPedido() {
+        return fechaPedido;
     }
 
-    public void setCiudadEntrega(String ciudadEntrega) {
-        this.ciudadEntrega = ciudadEntrega;
+    public void setFechaPedido(String fechaPedido) {
+        this.fechaPedido = fechaPedido;
+    }
+
+    public String getFechaEnvio() {
+        return fechaEnvio;
+    }
+
+    public void setFechaEnvio(String fechaEnvio) {
+        this.fechaEnvio = fechaEnvio;
     }
 
     public String getFechaEntrega() {
@@ -69,11 +73,25 @@ public class Pedido {
         this.fechaEntrega = fechaEntrega;
     }
 
-    
+    public String getEstadoRastreo() {
+        return estadoRastreo;
+    }
+
+    public void setEstadoRastreo(String estadoRastreo) {
+        this.estadoRastreo = estadoRastreo;
+    }
+
+    public double getMontoTotal() {
+        return montoTotal;
+    }
+
+    public void setMontoTotal(double montoTotal) {
+        this.montoTotal = montoTotal;
+    }    
 
     @Override
     public String toString() {
-        return "Pedido{" + "idPedido=" + idPedido + ", proveedor_idProveedor=" + proveedor_idProveedor + ", farmacia_idFarmacia=" + farmacia_idFarmacia + ", fechaEntrega=" + fechaEntrega + '}';
-    }
+        return "Pedido{" + "idPedido=" + idPedido + ", nombreProveedor=" + nombreProveedor + ", direccionEntrega=" + direccionEntrega + ", fechaPedido=" + fechaPedido + ", fechaEnvio=" + fechaEnvio + ", fechaEntrega=" + fechaEntrega + ", estadoRastreo=" + estadoRastreo + ", montoTotal=" + montoTotal + '}';
+    }    
     
 }

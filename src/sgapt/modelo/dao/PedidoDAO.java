@@ -17,15 +17,12 @@ public class PedidoDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idPedido, " + 
-                        "proveedor.idProveedor AS proveedor_idProveedor, " + 
-                        "proveedor.nombre AS nombreProveedor, " + 
-                        "farmacia.idFarmacia AS farmacia_idFarmacia, " + 
-                        "farmacia.ciudad AS ciudadEntrega, " + 
-                        "fechaEntrega " +
-                        "FROM Pedido " + 
-                        "INNER JOIN Proveedor ON Pedido.Proveedor_idProveedor = Proveedor.idProveedor " + 
-                        "INNER JOIN Farmacia ON Pedido.Farmacia_idFarmacia = Farmacia.idFarmacia"; 
+                String consulta = "SELECT idPedido, Proveedor.nombre AS nombreProveedor, "
+                        + "direccionEntrega, fechaPedido, fechaEnvio, fechaEntrega, " + 
+                        "estadoRastreo, montoTotal " + 
+                        "FROM Pedido " +  
+                        "INNER JOIN Proveedor " + 
+                        "ON Pedido.Proveedor_idProveedor = Proveedor.idProveedor";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Pedido> pedidosConsulta = new ArrayList();
@@ -33,11 +30,13 @@ public class PedidoDAO {
                 {
                     Pedido pedido = new Pedido();
                     pedido.setIdPedido(resultado.getInt("idPedido"));
-                    pedido.setProveedor_idProveedor(resultado.getInt("proveedor_idProveedor"));
                     pedido.setNombreProveedor(resultado.getString("nombreProveedor"));
-                    pedido.setFarmacia_idFarmacia(resultado.getInt("farmacia_idFarmacia"));
-                    pedido.setCiudadEntrega(resultado.getString("ciudadEntrega"));
+                    pedido.setDireccionEntrega(resultado.getString("direccionEntrega"));
+                    pedido.setFechaPedido(resultado.getString("fechaPedido"));
+                    pedido.setFechaEnvio(resultado.getString("fechaEnvio"));
                     pedido.setFechaEntrega(resultado.getString("fechaEntrega"));
+                    pedido.setEstadoRastreo(resultado.getString("estadoRastreo"));
+                    pedido.setMontoTotal(resultado.getDouble("montoTotal"));
                     pedidosConsulta.add(pedido);
                 }
                 respuesta.setPedidos(pedidosConsulta);
