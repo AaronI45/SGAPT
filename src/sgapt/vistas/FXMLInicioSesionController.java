@@ -100,17 +100,13 @@ public class FXMLInicioSesionController implements Initializable {
                                     "Por favor comuníquese con los administradores del sistema...", 
                                 Alert.AlertType.ERROR);
                     }
-                } else {
-                    Utilidades.mostrarDialogoSimple("Credenciales incorrectas", 
-                            "El usuario y/o contraseña no son correctos, por favor verifica la información", 
-                            Alert.AlertType.WARNING);
-                }
+                } 
                 break;
             
             default:
-                Utilidades.mostrarDialogoSimple("Error de petición", 
-                        "El sistema no está disponible por el momento", 
-                        Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Credenciales incorrectas", 
+                        "El usuario y/o contraseña no son correctos, por favor verifica la información", 
+                        Alert.AlertType.WARNING);
         }
     }
     
