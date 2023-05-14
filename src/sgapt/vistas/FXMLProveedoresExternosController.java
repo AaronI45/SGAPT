@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
-public class FXMLInventarioProveedoresExternosController implements Initializable {
+public class FXMLProveedoresExternosController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

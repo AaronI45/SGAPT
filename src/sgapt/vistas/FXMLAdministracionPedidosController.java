@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
@@ -110,10 +111,20 @@ public class FXMLAdministracionPedidosController implements Initializable {
 
     @FXML
     private void clicBtnRegresar(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionInventarioProductos.fxml"));
+        stagePrincipal.setTitle("Administración de inventario");
+        stagePrincipal.show();
     }
 
     @FXML
     private void clicBtnRealizarPedido(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));
+        stagePrincipal.setTitle("Home");
+        stagePrincipal.show();
     }
 
     @FXML

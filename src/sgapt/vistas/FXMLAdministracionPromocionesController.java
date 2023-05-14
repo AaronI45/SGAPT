@@ -12,7 +12,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.PromocionDAO;
 import sgapt.modelo.pojo.Promocion;
@@ -43,17 +42,19 @@ public class FXMLAdministracionPromocionesController implements Initializable {
     @FXML
     private void clicBtnRegresar(ActionEvent event) {
         Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));
+        stagePrincipal.setTitle("Home");
+        stagePrincipal.show();
     }
 
     @FXML
     private void clicBtnCrearProm(ActionEvent event) {
-        Stage escenarioFormulario = new Stage();
-        escenarioFormulario.setScene(Utilidades.inicializarEscena("vistas/FXMLFormularioPromocion.fxml"));
-        escenarioFormulario.setTitle("Formulario");
-        escenarioFormulario.initModality(Modality.APPLICATION_MODAL);
-        escenarioFormulario.showAndWait();
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLFormularioPromocion.fxml"));
+        stagePrincipal.setTitle("Formulario de promoción");
+        stagePrincipal.show();
     }
     
      private void configurarTabla() {
