@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGAPT/src/sgapt/modelo/dao/PromocionDAO.java</file>
             <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGAPT/src/sgapt/modelo/pojo/Promocion.java</file>
+            <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGAPT/src/sgapt/modelo/ConexionBD.java</file>
             <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGAPT/src/sgapt/modelo/pojo/Producto.java</file>
             <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGAPT/src/sgapt/vistas/FXMLAdministracionPromocionesController.java</file>
             <file>file:/C:/Users/king_/OneDrive/Escritorio/Escuela/Construccion/JavaFX/SGAPT/src/sgapt/vistas/FXMLFormularioPromocionController.java</file>

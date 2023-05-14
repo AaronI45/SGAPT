@@ -18,6 +18,11 @@ import sgapt.util.Utilidades;
 
 public class FXMLInicioSesionController implements Initializable {
 
+    enum TipoEmpleado{
+        ADMINISTRADOR,
+        EMPLEADO;
+    }
+    
     @FXML
     private TextField tfUsuario;
     @FXML
@@ -57,59 +62,64 @@ public class FXMLInicioSesionController implements Initializable {
     }
     
     private void validarCredencialesUsuario(String usuario, String password) {
-        try{
-            Empleado usuarioRespuesta = SesionDAO.verificarUsuarioSesion(usuario, password);
-            switch (usuarioRespuesta.getTipoEmpleado())
-            {
-                case Empleado.ADMINISTRADOR:
-                        Utilidades.mostrarDialogoSimple("Bienvenido(a)", 
-                            "Bienvenido(a) "+usuarioRespuesta.toString()+"al sistema...", 
-                            Alert.AlertType.INFORMATION);
-                        irPantallaAdministrador();
-                    break;
-
-                case Empleado.ENCARGADO:
-                    Utilidades.mostrarDialogoSimple("Bienvenido(a)", 
-                            "Bienvenido(a) "+usuarioRespuesta.toString()+"al sistema...", 
-                            Alert.AlertType.INFORMATION);
-                    irPantallaEncargado();
-                    break;
-
-                case Empleado.EMPLEADO:
-                    Utilidades.mostrarDialogoSimple("Bienvenido(a)", 
-                            "Bienvenido(a) "+usuarioRespuesta.toString()+"al sistema...", 
-                            Alert.AlertType.INFORMATION);
-                    irPantallaEmpleado();
-                    break;
-
-                default:
-                    Utilidades.mostrarDialogoSimple("Credenciales incorrectas", 
-                            "El usuario y/o contraseña no son correctos, por favor verifica la información", 
-                            Alert.AlertType.WARNING);
-            }
-        }catch (SQLException e){
-            Utilidades.mostrarDialogoSimple("No hay conexión a la base de datos", 
-                    "No existe conexión con la base de datos", Alert.AlertType.ERROR);
+        Empleado usuarioRespuesta = SesionDAO.verificarUsuarioSesion(usuario, password);
+        switch (usuarioRespuesta.getCodigoRespuesta())
+        {
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexión", 
+                        "Por el momento no hay conexión, intentelo más tarde", 
+                        Alert.AlertType.ERROR);
+                break;
+            
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error en la solicitud", 
+                        "Por el momento no se puede procesar la solicitud de verificación", 
+                        Alert.AlertType.ERROR);
+                break;
+            
+            case Constantes.OPERACION_EXITOSA:
+                if (usuarioRespuesta.getIdEmpleado()> 0) {
+                    String tipoUsuario = usuarioRespuesta.getTipoEmpleado().toUpperCase();
+                    TipoEmpleado tipoLogin = Enum.valueOf(TipoEmpleado.class, tipoUsuario);
+                    switch (tipoLogin){
+                        case ADMINISTRADOR:
+                            Utilidades.mostrarDialogoSimple("Bienvenido(a)", 
+                                    "Bienvenido(a) "+usuarioRespuesta.toString()+"al sistema...", 
+                                Alert.AlertType.INFORMATION);   
+                            irPantallaAdmin();
+                            break;
+                        case EMPLEADO:
+                            Utilidades.mostrarDialogoSimple("Bienvenido(a)", 
+                                    "Bienvenido(a) "+usuarioRespuesta.toString()+"al sistema...", 
+                                Alert.AlertType.INFORMATION);
+                            irPantallaEmpleado();
+                            break;
+                            
+                        default:
+                            Utilidades.mostrarDialogoSimple("Usuario no soportado", 
+                                    "Por favor comuníquese con los administradores del sistema...", 
+                                Alert.AlertType.ERROR);
+                    }
+                } 
+                break;
+            
+            default:
+                Utilidades.mostrarDialogoSimple("Credenciales incorrectas", 
+                        "El usuario y/o contraseña no son correctos, por favor verifica la información", 
+                        Alert.AlertType.WARNING);
         }
     }
     
-    private void irPantallaEmpleado() {        
+    private void irPantallaAdmin() {        
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalEmpleado.fxml"));
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));
         escenarioBase.setTitle("Home");
         escenarioBase.show();
     }
     
-    private void irPantallaEncargado(){
+    private void irPantallaEmpleado(){
         Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
         escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalEncargado.fxml"));
-        escenarioBase.setTitle("Home");
-        escenarioBase.show();
-    }
-    
-    private void irPantallaAdministrador(){
-        Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdministrador.fxml"));
         escenarioBase.setTitle("Home");
         escenarioBase.show();        
     }

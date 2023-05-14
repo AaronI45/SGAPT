@@ -7,16 +7,18 @@ public class Producto {
     private int idProducto;
     private String nombre;
     private String tipoProducto;
-    private boolean disponibilidad;
+    private String disponibilidad;
     private int cantidad;
     private Sucursal sucursal;
     private boolean requiereReceta;
+    private int precio;
+    private int numeroLote;
     private Date fechaCaducidad;
 
     public Producto() {
     }
 
-    public Producto(int idProducto, String nombre, String tipoProducto, boolean disponibilidad, int cantidad, Sucursal sucursal, boolean requiereReceta, Date fechaCaducidad) {
+    public Producto(int idProducto, String nombre, String tipoProducto, String disponibilidad, int cantidad, Sucursal sucursal, boolean requiereReceta, int precio, int numeroLote, Date fechaCaducidad) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.tipoProducto = tipoProducto;
@@ -24,9 +26,11 @@ public class Producto {
         this.cantidad = cantidad;
         this.sucursal = sucursal;
         this.requiereReceta = requiereReceta;
+        this.precio = precio;
+        this.numeroLote = numeroLote;
         this.fechaCaducidad = fechaCaducidad;
     }
-
+    
     public int getIdProducto() {
         return idProducto;
     }
@@ -51,11 +55,11 @@ public class Producto {
         this.tipoProducto = tipoProducto;
     }
 
-    public boolean isDisponibilidad() {
+    public String getDisponibilidad() {
         return disponibilidad;
     }
 
-    public void setDisponibilidad(boolean disponibilidad) {
+    public void setDisponibilidad(String disponibilidad) {
         this.disponibilidad = disponibilidad;
     }
 
@@ -91,6 +95,22 @@ public class Producto {
         this.fechaCaducidad = fechaCaducidad;
     }
 
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+
+    public int getNumeroLote() {
+        return numeroLote;
+    }
+
+    public void setNumeroLote(int numeroLote) {
+        this.numeroLote = numeroLote;
+    }
+    
     @Override
     public String toString() {
         return "Producto{" + "idProducto=" + idProducto + ", nombre=" + nombre + ", tipoProducto=" + tipoProducto + ", disponibilidad=" + disponibilidad + ", cantidad=" + cantidad + ", sucursal=" + sucursal + ", requiereReceta=" + requiereReceta + ", fechaCaducidad=" + fechaCaducidad + '}';
