@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.vistas.FXMLFormularioPromocionController">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.controladores.FXMLFormularioPromocionController">
    <children>
       <Label fx:id="lbTitulo" layoutX="308.0" layoutY="39.0" text="Formulario de promociones" />
       <TextField fx:id="tfTipo" layoutX="65.0" layoutY="157.0" promptText="combo, descuento" />
@@ -23,5 +23,6 @@
       <Label fx:id="lbErrorFechaInicio" layoutX="63.0" layoutY="312.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
       <Label fx:id="lbErrorFechaFin" layoutX="63.0" layoutY="417.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
       <Label fx:id="lbErrorIdPromocion" layoutX="419.0" layoutY="193.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+      <Button layoutX="31.0" layoutY="24.0" mnemonicParsing="false" onAction="#clicBtnRegresar" text="Regresar" />
    </children>
 </AnchorPane>
