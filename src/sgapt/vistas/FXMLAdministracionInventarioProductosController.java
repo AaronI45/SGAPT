@@ -26,5 +26,23 @@ public class FXMLAdministracionInventarioProductosController implements Initiali
         escenarioReadquisiciones.initModality(Modality.APPLICATION_MODAL);
         escenarioReadquisiciones.showAndWait();
     }
+
+    @FXML
+    private void clicIrConsultarProductos(ActionEvent event) {
+        Stage escenarioReadquisiciones = new Stage();
+        Scene esceneAdminReadquisiciones = Utilidades.inicializarEscena("vistas/FXMLInformacionInventario.fxml");
+        escenarioReadquisiciones.setScene(esceneAdminReadquisiciones);
+        escenarioReadquisiciones.setTitle("Administración de inventario");
+        escenarioReadquisiciones.initModality(Modality.APPLICATION_MODAL);
+        escenarioReadquisiciones.showAndWait();
+    }
+
+    @FXML
+    private void clicIrEliminarProductos(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicVolver(ActionEvent event) {
+    }
     
 }
