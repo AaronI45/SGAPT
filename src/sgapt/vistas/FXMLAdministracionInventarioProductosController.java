@@ -39,6 +39,12 @@ public class FXMLAdministracionInventarioProductosController implements Initiali
 
     @FXML
     private void clicIrEliminarProductos(ActionEvent event) {
+        Stage escenarioReadquisiciones = new Stage();
+        Scene esceneAdminReadquisiciones = Utilidades.inicializarEscena("vistas/FXMLEliminacionProductos.fxml");
+        escenarioReadquisiciones.setScene(esceneAdminReadquisiciones);
+        escenarioReadquisiciones.setTitle("Administración de inventario");
+        escenarioReadquisiciones.initModality(Modality.APPLICATION_MODAL);
+        escenarioReadquisiciones.showAndWait();        
     }
 
     @FXML

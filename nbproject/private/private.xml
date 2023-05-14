@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/util/Utilidades.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/SGAPT.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/vistas/FXMLMenuPrincipalAdminController.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/dao/PromocionDAO.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/css/estilos.css</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/vistas/FXMLInformacionInventarioController.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/ConexionBD.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/pojo/Sucursal.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/img/PaletaColores.png</file>
@@ -18,15 +15,12 @@
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/vistas/FXMLAdministracionInventarioProductosController.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/dao/ProductoDAO.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/dao/ProductoRespuesta.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/vistas/FXMLInicioSesionController.java</file>
+            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLInicioSesionController.java</file>
+            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLInformacionInventarioController.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/pojo/Empleado.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/dao/SucursalDAO.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/pojo/Lote.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/pojo/Producto.java</file>
-=======
-            <file>file:/C:/Users/samue/OneDrive%20-%20Universidad%20Veracruzana/UV/Semestre%204/Procesos%20para%20ingeniería%20de%20software/Codigo%20Proyecto/SGAPT/src/sgapt/controladores/FXMLAdministracionInventarioProductosController.java</file>
-            <file>file:/C:/Users/samue/OneDrive%20-%20Universidad%20Veracruzana/UV/Semestre%204/Procesos%20para%20ingeniería%20de%20software/Codigo%20Proyecto/SGAPT/src/sgapt/controladores/FXMLInicioSesionController.java</file>
->>>>>>> 19ba58c5d80eefef3d24075faff0dccf3603d241
         </group>
     </open-files>
 </project-private>
