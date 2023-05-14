@@ -17,17 +17,13 @@ public class LoteDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT lote.numeroDeLote AS NumeroLote, " + 
-                        "producto.nombre AS nombreProducto, " + 
-                        "tipo_producto.tipo AS tipoProducto, " + 
-                        "lote.cantidad AS cantidad, " + 
-                        "producto.precio AS precio " + 
-                        "FROM Pedido " + 
-                        "INNER JOIN Lote ON idPedido = lote.Pedido_idPedido " +
-                        "INNER JOIN Producto ON lote.Producto_idProducto = Producto.idProducto " + 
-                        "INNER JOIN tipo_producto ON Producto.tipo_producto_idTipo_Producto = " + 
-                        "tipo_producto.idTipo_producto " + 
-                        "WHERE idPedido = ?";
+                String consulta = "SELECT numeroDeLote, producto.nombre, producto.tipoProducto, " + 
+                        "fechaDeCaducidad, cantidad, (lote.cantidad * producto.precio) " + 
+                        "AS 'precioLote' " + 
+                        "FROM lote " + 
+                        "INNER JOIN producto " + 
+                        "ON lote.Producto_idProducto = producto.idProducto " + 
+                        "WHERE lote.Pedido_idPedido = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idPedido);
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -35,11 +31,12 @@ public class LoteDAO {
                 while (resultado.next())
                 {
                     Lote lote = new Lote();
-                    lote.setNumeroLote(resultado.getString("numeroLote"));
-                    lote.setNombreProducto(resultado.getString("nombreProducto"));
+                    lote.setNumeroDeLote(resultado.getString("numeroDeLote"));
+                    lote.setNombre(resultado.getString("nombre"));
                     lote.setTipoProducto(resultado.getString("tipoProducto"));
+                    lote.setFechaDeCaducidad(resultado.getString("fechaDeCaducidad"));
                     lote.setCantidad(resultado.getInt("cantidad"));
-                    lote.setPrecio(resultado.getDouble("precio"));
+                    lote.setPrecioLote(resultado.getDouble("precioLote"));
                     lotesConsulta.add(lote);
                 }
                 respuesta.setLotes(lotesConsulta);

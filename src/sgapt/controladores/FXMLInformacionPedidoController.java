@@ -1,6 +1,5 @@
 package sgapt.controladores;
 
-import sgapt.controladores.FXMLAdministracionPedidosController;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -33,20 +32,25 @@ public class FXMLInformacionPedidoController implements Initializable {
     @FXML
     private TableColumn colCantidadProducto;
     @FXML
-    private TableColumn colPrecio;
+    private TableColumn colFechaCaducidad;
+    @FXML
+    private TableColumn colPrecioLote;
+    
     private ObservableList<Lote> lotes;   
-    @Override
+        
+    @Override        
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarInformacionTabla();
     }
     
     private void configurarTabla() {
-        colNumeroLote.setCellValueFactory(new PropertyValueFactory("numeroLote"));
-        colNombreProducto.setCellValueFactory(new PropertyValueFactory("nombreProducto"));
+        colNumeroLote.setCellValueFactory(new PropertyValueFactory("numeroDeLote"));
+        colNombreProducto.setCellValueFactory(new PropertyValueFactory("nombre"));
         colTipoProducto.setCellValueFactory(new PropertyValueFactory("tipoProducto"));
+        colFechaCaducidad.setCellValueFactory(new PropertyValueFactory("fechaDeCaducidad"));
         colCantidadProducto.setCellValueFactory(new PropertyValueFactory("cantidad"));
-        colPrecio.setCellValueFactory(new PropertyValueFactory("precio"));
+        colPrecioLote.setCellValueFactory(new PropertyValueFactory("precioLote"));
     }
     
     private void cargarInformacionTabla() {
