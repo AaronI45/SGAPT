@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -22,26 +23,29 @@ public class FXMLMenuPrincipalAdminController implements Initializable {
 
     @FXML
     private void clicIrAdminPromociones(ActionEvent event) {
-        Stage stagePrincipal = (Stage) btnSalir.getScene().getWindow();
-        Scene esceneAdminPromociones = Utilidades.inicializarEscena("vistas/FXMLAdministracionPromociones.fxml");
-        stagePrincipal.setScene(esceneAdminPromociones);
-        stagePrincipal.setTitle("Administración de promociones");        
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPromociones.fxml"));
+        stagePrincipal.setTitle("Administración de promociones");
+        stagePrincipal.show();
     }
 
     @FXML
     private void clicIrAdminEmpleados(ActionEvent event) {
-        Stage stagePrincipal = (Stage) btnSalir.getScene().getWindow();
-        Scene esceneAdminEmpleados = Utilidades.inicializarEscena("vistas/FXMLAdministracionEmpleados.fxml");
-        stagePrincipal.setScene(esceneAdminEmpleados);
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionEmpleados.fxml"));
         stagePrincipal.setTitle("Administración de empleados");
+        stagePrincipal.show();        
     }
 
     @FXML
     private void clicIrAdminInventario(ActionEvent event) {
-        Stage stagePrincipal = (Stage) btnSalir.getScene().getWindow();
-        Scene escenaAdminInventario = Utilidades.inicializarEscena("/sgapt/vistas/FXMLAdministracionInventarioProductos.fxml");
-        stagePrincipal.setScene(escenaAdminInventario);
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("/sgapt/vistas/FXMLAdministracionInventarioProductos.fxml"));
         stagePrincipal.setTitle("Administración de inventario");
+        stagePrincipal.show();
     }
 
     @FXML
@@ -49,9 +53,11 @@ public class FXMLMenuPrincipalAdminController implements Initializable {
         boolean validarCierreSesion = Utilidades.mostrarDialogoConfirmacion("Cerrar sesión", 
                 "¿Está seguro de cerrar la sesión?");
         if (validarCierreSesion) {
-            Stage stagePrincipal = (Stage) btnSalir.getScene().getWindow();
-            Scene escenaInicioSesion = Utilidades.inicializarEscena("/sgapt/vistas/FXMLInicioSesion.fxml");
-            stagePrincipal.setScene(escenaInicioSesion);  
+            Node source = (Node) event.getSource();
+            Stage stagePrincipal = (Stage) source.getScene().getWindow();
+            stagePrincipal.setScene(Utilidades.inicializarEscena("/sgapt/vistas/FXMLInicioSesion.fxml"));
+            stagePrincipal.setTitle("Inicio de sesión");
+            stagePrincipal.show();
         }
     }    
 }

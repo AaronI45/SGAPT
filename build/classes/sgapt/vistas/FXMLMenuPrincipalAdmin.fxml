@@ -7,7 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.vistas.FXMLMenuPrincipalAdminController">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.controladores.FXMLMenuPrincipalAdminController">
    <children>
       <Button layoutX="306.0" layoutY="132.0" mnemonicParsing="false" onAction="#clicIrAdminPromociones" text="Administrar promociones" />
       <Button layoutX="313.0" layoutY="219.0" mnemonicParsing="false" onAction="#clicIrAdminEmpleados" text="Administrar empleados" />
