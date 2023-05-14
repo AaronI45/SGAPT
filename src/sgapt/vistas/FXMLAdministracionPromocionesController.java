@@ -46,6 +46,11 @@ public class FXMLAdministracionPromocionesController implements Initializable {
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
+    
+    /* private void cerrarVentana(){
+        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
+        escenarioBase.close();
+    }*/ 
 
     @FXML
     private void clicBtnCrearProm(ActionEvent event) {

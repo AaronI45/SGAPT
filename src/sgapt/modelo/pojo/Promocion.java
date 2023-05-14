@@ -14,6 +14,17 @@ public class Promocion {
     private String fechaInicio;
     private String fechaFin;
 
+    public Promocion(int idPromocion, String tipoPromocion, String fechaInicio, String fechaFin) {
+        this.idPromocion = idPromocion;
+        this.tipoPromocion = tipoPromocion;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+    }
+    
+    public Promocion(){
+        
+    }
+
     public int getIdPromocion() {
         return idPromocion;
     }

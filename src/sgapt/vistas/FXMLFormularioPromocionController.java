@@ -2,14 +2,17 @@ package sgapt.vistas;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.PromocionDAO;
+import sgapt.modelo.pojo.Producto;
 import sgapt.modelo.pojo.Promocion;
 import sgapt.util.Constantes;
 import sgapt.util.Utilidades;
@@ -25,8 +28,6 @@ public class FXMLFormularioPromocionController implements Initializable {
     @FXML
     private Label lbTitulo;
     @FXML
-    private TextField tfIdPromocion;
-    @FXML
     private Label lbErrorTipo;
     @FXML
     private Label lbErrorFechaInicio;
@@ -34,6 +35,8 @@ public class FXMLFormularioPromocionController implements Initializable {
     private Label lbErrorFechaFin;
     @FXML
     private Label lbErrorIdPromocion;
+    @FXML
+    private ComboBox<Producto> cbIdProducto;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -46,16 +49,11 @@ public class FXMLFormularioPromocionController implements Initializable {
     }
     
      private void validarCamposRegistros(){
-        String idPromocion =  tfIdPromocion.getText();
         String tipoPromocion = tfTipo.getText();
         String fechInicio = tfFechaInicio.getText();
         String fechFin = tfFechaFin.getText();
         boolean sonValidos=true;
         //TODO Validaciones
-        if(idPromocion.isEmpty()){
-            sonValidos=false;
-            lbErrorIdPromocion.setText("El campo es obligatorio");
-        }
         if(tipoPromocion.isEmpty()){
             sonValidos=false;
             lbErrorTipo.setText("El campo es obligatorio");
@@ -70,7 +68,6 @@ public class FXMLFormularioPromocionController implements Initializable {
         }
         //
         Promocion promocionValidada = new Promocion();
-        promocionValidada.setIdPromocion(Integer.parseInt(idPromocion));
         promocionValidada.setTipoPromocion(tipoPromocion);
         promocionValidada.setFechaInicio(fechInicio);
         promocionValidada.setFechaFin(fechFin);
@@ -105,5 +102,24 @@ public class FXMLFormularioPromocionController implements Initializable {
                 break;
         }
     }
+    
+    /*private void cargarInformacionProducto(int idProducto){
+        producto = FXCollections.observableArrayList();
+        ProductpRespuesta productoBD=ProductoDAO.obtenerInformacionProducto(idProducto);
+        switch(productoBD.getCodigoRespuesta()){
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexion", "Error en la conexion con la base de datos", 
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se pudo obtener la informacion", 
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                producto.addAll(productoBD.getCarreras());
+                cbIdProducto.setItems(producto);
+                break;
+        }
+    }*/
     
 }

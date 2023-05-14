@@ -17,11 +17,11 @@
       <TextField fx:id="tfFechaFin" layoutX="65.0" layoutY="373.0" promptText="yy/mm/dd" />
       <Button layoutX="688.0" layoutY="438.0" mnemonicParsing="false" onAction="#clicBtnGuardar" text="Guardar" />
       <Button layoutX="584.0" layoutY="438.0" mnemonicParsing="false" onAction="#clicBtnCancelar" text="Cancelar" />
-      <Label layoutX="427.0" layoutY="131.0" text="IdPromocion" />
-      <TextField fx:id="tfIdPromocion" layoutX="419.0" layoutY="157.0" />
       <Label fx:id="lbErrorTipo" layoutX="63.0" layoutY="193.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
       <Label fx:id="lbErrorFechaInicio" layoutX="63.0" layoutY="312.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
       <Label fx:id="lbErrorFechaFin" layoutX="63.0" layoutY="417.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
       <Label fx:id="lbErrorIdPromocion" layoutX="419.0" layoutY="193.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
+      <ComboBox fx:id="cbIdProducto" layoutX="492.0" layoutY="157.0" prefWidth="150.0" />
+      <Label layoutX="492.0" layoutY="131.0" text="Producto (ID)" />
    </children>
 </AnchorPane>
