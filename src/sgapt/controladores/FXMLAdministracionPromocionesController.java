@@ -43,7 +43,7 @@ public class FXMLAdministracionPromocionesController implements Initializable {
     private void clicBtnRegresar(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalEncargado.fxml"));
         stagePrincipal.setTitle("Home");
         stagePrincipal.show();
     }
