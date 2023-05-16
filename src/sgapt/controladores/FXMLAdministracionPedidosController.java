@@ -10,15 +10,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.PedidoDAO;
-import sgapt.modelo.dao.PedidoRespuesta;
+import sgapt.modelo.pojo.PedidoRespuesta;
 import sgapt.modelo.pojo.Pedido;
 import sgapt.util.Constantes;
 import sgapt.util.Utilidades;
@@ -30,23 +28,26 @@ public class FXMLAdministracionPedidosController implements Initializable {
     @FXML
     private TableColumn colNumeroPedido;
     @FXML
-    private TableColumn colNombreProveedor;
+    private TableColumn colProveedor;
+    @FXML
+    private TableColumn colMontoTotal;
+    @FXML
+    private TableColumn colDirEntrega;
+    @FXML
+    private TableColumn colFechaPedido;
+    @FXML
+    private TableColumn colFechaEnvio;
+    @FXML
+    private TableColumn colEstadoRastreo;
     @FXML
     private TableColumn colFechaEntrega;
-    @FXML
-    private TableColumn colCiudadEntrega;    
+    
     private ObservableList<Pedido> pedidos;    
-    
-    private static int posicionPedidoEnTabla;
+    private static int idPedidoSeleccionadoEnTabla;
 
-    public static int getPosicionPedidoEnTabla() {
-        return posicionPedidoEnTabla;
+    public static int getIdPedidoSeleccionadoEnTabla() {
+        return idPedidoSeleccionadoEnTabla;
     }
-
-    public static void setPosicionPedidoEnTabla(int posicionPedidoEnTabla) {
-        FXMLAdministracionPedidosController.posicionPedidoEnTabla = posicionPedidoEnTabla;
-    }
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -58,10 +59,15 @@ public class FXMLAdministracionPedidosController implements Initializable {
     }    
     
     private void configurarTabla() {
-        colNumeroPedido.setCellValueFactory(new PropertyValueFactory("idPedido")); //nombre de atribut en pojo
-        colNombreProveedor.setCellValueFactory(new PropertyValueFactory("nombreProveedor"));
+        colNumeroPedido.setCellValueFactory(new PropertyValueFactory("idPedido"));
+        colProveedor.setCellValueFactory(new PropertyValueFactory("nombreProveedor"));
         colFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaEntrega"));
-        colCiudadEntrega.setCellValueFactory(new PropertyValueFactory("ciudadEntrega"));
+        colDirEntrega.setCellValueFactory(new PropertyValueFactory("direccionEntrega"));
+        colFechaPedido.setCellValueFactory(new PropertyValueFactory("fechaPedido"));
+        colFechaEnvio.setCellValueFactory(new PropertyValueFactory("fechaEnvio"));
+        colFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaEntrega"));
+        colEstadoRastreo.setCellValueFactory(new PropertyValueFactory("estadoRastreo"));
+        colMontoTotal.setCellValueFactory(new PropertyValueFactory("montoTotal"));        
     }
     
     private void cargarInformacionTabla() {
@@ -89,9 +95,15 @@ public class FXMLAdministracionPedidosController implements Initializable {
             new ListChangeListener<Pedido>() {
                 @Override
                 public void onChanged(ListChangeListener.Change<? extends Pedido> c) {
-                    ponerPedidoSeleccionado();
-                }                
+                    recuperarIdPedidoSeleccionado();
+                }
             };
+    
+    private void recuperarIdPedidoSeleccionado() {
+        final Pedido pedido = getTablaPedidosSeleccionada();
+        idPedidoSeleccionadoEnTabla = pedido.getIdPedido();
+        System.out.println("Cambio de id de pedido a = " + idPedidoSeleccionadoEnTabla);
+    }
     
     public Pedido getTablaPedidosSeleccionada() {
         if (tvPedidos != null) {
@@ -104,10 +116,6 @@ public class FXMLAdministracionPedidosController implements Initializable {
         return null;
     }
     
-    private void ponerPedidoSeleccionado() {
-        final Pedido pedido = getTablaPedidosSeleccionada();
-        posicionPedidoEnTabla = pedidos.indexOf(pedido) + 1;
-    }
 
     @FXML
     private void clicBtnRegresar(ActionEvent event) {

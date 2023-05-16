@@ -2,37 +2,39 @@ package sgapt.modelo.pojo;
 
 public class Lote {
     
-    private String numeroLote;
-    private String nombreProducto;
+    private String numeroDeLote;
+    private String nombre;
     private String tipoProducto;
+    private String fechaDeCaducidad;
     private int cantidad;
-    private double precio;
+    private double precioLote;
 
     public Lote() {
     }
 
-    public Lote(String numeroLote, String nombreProducto, String tipoProducto, int cantidad, double precio) {
-        this.numeroLote = numeroLote;
-        this.nombreProducto = nombreProducto;
+    public Lote(String numeroDeLote, String nombre, String tipoProducto, String fechaDeCaducidad, int cantidad, double precioLote) {
+        this.numeroDeLote = numeroDeLote;
+        this.nombre = nombre;
         this.tipoProducto = tipoProducto;
+        this.fechaDeCaducidad = fechaDeCaducidad;
         this.cantidad = cantidad;
-        this.precio = precio;
+        this.precioLote = precioLote;
     }
 
-    public String getNumeroLote() {
-        return numeroLote;
+    public String getNumeroDeLote() {
+        return numeroDeLote;
     }
 
-    public void setNumeroLote(String numeroLote) {
-        this.numeroLote = numeroLote;
+    public void setNumeroDeLote(String numeroDeLote) {
+        this.numeroDeLote = numeroDeLote;
     }
 
-    public String getNombreProducto() {
-        return nombreProducto;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreProducto(String nombreProducto) {
-        this.nombreProducto = nombreProducto;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getTipoProducto() {
@@ -43,6 +45,14 @@ public class Lote {
         this.tipoProducto = tipoProducto;
     }
 
+    public String getFechaDeCaducidad() {
+        return fechaDeCaducidad;
+    }
+
+    public void setFechaDeCaducidad(String fechaDeCaducidad) {
+        this.fechaDeCaducidad = fechaDeCaducidad;
+    }
+
     public int getCantidad() {
         return cantidad;
     }
@@ -51,17 +61,17 @@ public class Lote {
         this.cantidad = cantidad;
     }
 
-    public double getPrecio() {
-        return precio;
+    public double getPrecioLote() {
+        return precioLote;
     }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public void setPrecioLote(double precioLote) {
+        this.precioLote = precioLote;
     }
 
     @Override
     public String toString() {
-        return "Lote{" + "numeroLote=" + numeroLote + ", nombreProducto=" + nombreProducto + ", tipoProducto=" + tipoProducto + ", cantidad=" + cantidad + ", precio=" + precio + '}';
+        return "Lote{" + "numeroDeLote=" + numeroDeLote + ", nombre=" + nombre + ", tipoProducto=" + tipoProducto + ", fechaDeCaducidad=" + fechaDeCaducidad + ", cantidad=" + cantidad + ", precioLote=" + precioLote + '}';
     }
     
 }

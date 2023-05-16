@@ -1,4 +1,4 @@
-package sgapt.modelo.dao;
+package sgapt.modelo.pojo;
 
 import java.util.ArrayList;
 import sgapt.modelo.pojo.Pedido;

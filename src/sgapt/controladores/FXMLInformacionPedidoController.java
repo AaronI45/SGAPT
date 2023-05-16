@@ -1,6 +1,5 @@
 package sgapt.controladores;
 
-import sgapt.controladores.FXMLAdministracionPedidosController;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -15,7 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.LoteDAO;
-import sgapt.modelo.dao.LoteRespuesta;
+import sgapt.modelo.pojo.LoteRespuesta;
 import sgapt.modelo.pojo.Lote;
 import sgapt.util.Constantes;
 import sgapt.util.Utilidades;
@@ -33,26 +32,31 @@ public class FXMLInformacionPedidoController implements Initializable {
     @FXML
     private TableColumn colCantidadProducto;
     @FXML
-    private TableColumn colPrecio;
+    private TableColumn colFechaCaducidad;
+    @FXML
+    private TableColumn colPrecioLote;
+    
     private ObservableList<Lote> lotes;   
-    @Override
+        
+    @Override        
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarInformacionTabla();
     }
     
     private void configurarTabla() {
-        colNumeroLote.setCellValueFactory(new PropertyValueFactory("numeroLote"));
-        colNombreProducto.setCellValueFactory(new PropertyValueFactory("nombreProducto"));
+        colNumeroLote.setCellValueFactory(new PropertyValueFactory("numeroDeLote"));
+        colNombreProducto.setCellValueFactory(new PropertyValueFactory("nombre"));
         colTipoProducto.setCellValueFactory(new PropertyValueFactory("tipoProducto"));
+        colFechaCaducidad.setCellValueFactory(new PropertyValueFactory("fechaDeCaducidad"));
         colCantidadProducto.setCellValueFactory(new PropertyValueFactory("cantidad"));
-        colPrecio.setCellValueFactory(new PropertyValueFactory("precio"));
+        colPrecioLote.setCellValueFactory(new PropertyValueFactory("precioLote"));
     }
     
     private void cargarInformacionTabla() {
         lotes = FXCollections.observableArrayList();
         LoteRespuesta respuestaBD = LoteDAO.obtenerInformacionLotePorPedido(
-                FXMLAdministracionPedidosController.getPosicionPedidoEnTabla());
+                FXMLAdministracionPedidosController.getIdPedidoSeleccionadoEnTabla());
         switch (respuestaBD.getCodigoRespuesta()) {
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Sin conexión", 

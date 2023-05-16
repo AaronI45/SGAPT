@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package sgapt.modelo.dao;
 
+import sgapt.modelo.pojo.SucursalRespuesta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,10 +10,6 @@ import sgapt.modelo.ConexionBD;
 import sgapt.modelo.pojo.Sucursal;
 import sgapt.util.Constantes;
 
-/**
- *
- * @author super
- */
 public class SucursalDAO {
     public static SucursalRespuesta recuperarSucursales (){
         SucursalRespuesta sucursales = new SucursalRespuesta();
