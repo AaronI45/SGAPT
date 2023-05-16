@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import sgapt.modelo.ConexionBD;
 import sgapt.modelo.pojo.Producto;
+import sgapt.modelo.pojo.ResultadoOperacion;
 import sgapt.modelo.pojo.Sucursal;
 import sgapt.util.Constantes;
 
@@ -60,5 +61,25 @@ public class ProductoDAO {
             productos.setCodigoRespuesta(Constantes.ERROR_CONEXION);
         }
         return productos;
+    }
+    
+    public static ResultadoOperacion eliminarProducto (Producto productoAEliminar){
+        ResultadoOperacion resultadoEliminacion = new ResultadoOperacion();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        try{
+            String consulta = "";
+            PreparedStatement prepararConsulta = conexionBD.prepareStatement(consulta);
+            prepararConsulta.setInt(1, 0);
+            prepararConsulta.setString(2, "Eliminado");
+        }catch(SQLException e){
+            resultadoEliminacion.setMensaje("Error de conexión");
+        }
+        return resultadoEliminacion;
+    }
+    
+    public static ResultadoOperacion editarEstadoProducto (Producto productoAEditar){
+        ResultadoOperacion resultadoEdicion = new ResultadoOperacion();
+        
+        return resultadoEdicion;
     }
 }

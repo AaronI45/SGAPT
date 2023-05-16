@@ -7,6 +7,7 @@
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLInformacionPedidoController.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/SGAPT.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/dao/PromocionDAO.java</file>
+            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/vistas/FXMLEliminacionProductos.fxml</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/css/estilos.css</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/ConexionBD.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/pojo/Sucursal.java</file>
@@ -18,6 +19,7 @@
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLAdministracionPedidosController.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/dao/ProductoDAO.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/dao/ProductoRespuesta.java</file>
+            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/pojo/ResultadoOperacion.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLInicioSesionController.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLInformacionInventarioController.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/pojo/Empleado.java</file>

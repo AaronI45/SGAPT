@@ -60,8 +60,6 @@ public class FXMLInformacionInventarioController implements Initializable {
     private ComboBox<Sucursal> cbSucursales;
     private ObservableList<Sucursal> listaSucursales;
     private ObservableList<Producto> listaProductos;
-    @FXML
-    private Button clicEliminarProductos;
 
     /**
      * Initializes the controller class.
@@ -86,7 +84,7 @@ public class FXMLInformacionInventarioController implements Initializable {
         colNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
         colTipoProducto.setCellValueFactory(new PropertyValueFactory("tipoProducto"));
         colDisponibilidad.setCellValueFactory(new PropertyValueFactory("disponibilidad"));
-        colCantidad.setCellValueFactory(new PropertyValueFactory("cantidad")); ;
+        colCantidad.setCellValueFactory(new PropertyValueFactory("cantidad"));
         colRequiereReceta.setCellValueFactory(new PropertyValueFactory("requiereReceta"));
         colNumeroLote.setCellValueFactory(new PropertyValueFactory("numeroLote"));
         colPrecio.setCellValueFactory(new PropertyValueFactory("precio"));
