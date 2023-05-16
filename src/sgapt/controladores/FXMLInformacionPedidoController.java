@@ -14,7 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.LoteDAO;
-import sgapt.modelo.dao.LoteRespuesta;
+import sgapt.modelo.pojo.LoteRespuesta;
 import sgapt.modelo.pojo.Lote;
 import sgapt.util.Constantes;
 import sgapt.util.Utilidades;
@@ -56,7 +56,7 @@ public class FXMLInformacionPedidoController implements Initializable {
     private void cargarInformacionTabla() {
         lotes = FXCollections.observableArrayList();
         LoteRespuesta respuestaBD = LoteDAO.obtenerInformacionLotePorPedido(
-                FXMLAdministracionPedidosController.getPosicionPedidoEnTabla());
+                FXMLAdministracionPedidosController.getIdPedidoSeleccionadoEnTabla());
         switch (respuestaBD.getCodigoRespuesta()) {
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Sin conexión", 

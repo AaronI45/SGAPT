@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package sgapt.modelo.pojo;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author king_
- */
 public class PromocionRespuesta {
-     private int codigoRespuesta;
+    private int codigoRespuesta;
     private ArrayList<Promocion> promociones;
 
     public PromocionRespuesta() {

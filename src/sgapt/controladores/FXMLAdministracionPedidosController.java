@@ -16,7 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.PedidoDAO;
-import sgapt.modelo.dao.PedidoRespuesta;
+import sgapt.modelo.pojo.PedidoRespuesta;
 import sgapt.modelo.pojo.Pedido;
 import sgapt.util.Constantes;
 import sgapt.util.Utilidades;
@@ -43,16 +43,11 @@ public class FXMLAdministracionPedidosController implements Initializable {
     private TableColumn colFechaEntrega;
     
     private ObservableList<Pedido> pedidos;    
-    private static int posicionPedidoEnTabla;
+    private static int idPedidoSeleccionadoEnTabla;
 
-    public static int getPosicionPedidoEnTabla() {
-        return posicionPedidoEnTabla;
+    public static int getIdPedidoSeleccionadoEnTabla() {
+        return idPedidoSeleccionadoEnTabla;
     }
-
-    public static void setPosicionPedidoEnTabla(int posicionPedidoEnTabla) {
-        FXMLAdministracionPedidosController.posicionPedidoEnTabla = posicionPedidoEnTabla;
-    }
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -104,6 +99,12 @@ public class FXMLAdministracionPedidosController implements Initializable {
                 }
             };
     
+    private void recuperarIdPedidoSeleccionado() {
+        final Pedido pedido = getTablaPedidosSeleccionada();
+        idPedidoSeleccionadoEnTabla = pedido.getIdPedido();
+        System.out.println("Cambio de id de pedido a = " + idPedidoSeleccionadoEnTabla);
+    }
+    
     public Pedido getTablaPedidosSeleccionada() {
         if (tvPedidos != null) {
             List<Pedido> tabla = tvPedidos.getSelectionModel().getSelectedItems();
@@ -115,10 +116,6 @@ public class FXMLAdministracionPedidosController implements Initializable {
         return null;
     }
     
-    private void recuperarIdPedidoSeleccionado() {
-        final Pedido pedido = getTablaPedidosSeleccionada();
-        posicionPedidoEnTabla = pedido.getIdPedido();
-    }
 
     @FXML
     private void clicBtnRegresar(ActionEvent event) {

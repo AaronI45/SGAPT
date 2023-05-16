@@ -1,5 +1,6 @@
 package sgapt.modelo.dao;
 
+import sgapt.modelo.pojo.PedidoRespuesta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
