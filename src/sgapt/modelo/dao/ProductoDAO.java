@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import sgapt.modelo.ConexionBD;
 import sgapt.modelo.pojo.Producto;
+import sgapt.modelo.pojo.ProductoRespuesta;
 import sgapt.modelo.pojo.Sucursal;
 import sgapt.util.Constantes;
 

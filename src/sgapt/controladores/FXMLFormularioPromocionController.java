@@ -18,13 +18,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import static jdk.nashorn.internal.objects.NativeRegExp.source;
 import sgapt.modelo.dao.ProductoDAO;
-import sgapt.modelo.dao.ProductoRespuesta;
 import sgapt.modelo.dao.PromocionDAO;
 import sgapt.modelo.dao.SucursalDAO;
-import sgapt.modelo.dao.SucursalRespuesta;
 import sgapt.modelo.pojo.Producto;
+import sgapt.modelo.pojo.ProductoRespuesta;
 import sgapt.modelo.pojo.Promocion;
 import sgapt.modelo.pojo.Sucursal;
+import sgapt.modelo.pojo.SucursalRespuesta;
 import sgapt.util.Constantes;
 import sgapt.util.Utilidades;
 
