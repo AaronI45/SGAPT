@@ -78,7 +78,7 @@ public class FXMLAdministracionPromocionesController implements Initializable {
      private void configurarTabla() {
         columnNomProd.setCellValueFactory(new PropertyValueFactory("producto"));
         columnPrecio.setCellValueFactory(new PropertyValueFactory("productoPrecio"));
-        columnDescuento.setCellValueFactory(new PropertyValueFactory("porcentajeDescuento")); //nombre de atribut en pojo
+        columnDescuento.setCellValueFactory(new PropertyValueFactory("porcentajeDescuento")); 
         columnFechaInicio.setCellValueFactory(new PropertyValueFactory("fechaInicio"));
         columnFechaFin.setCellValueFactory(new PropertyValueFactory("fechaFin"));
         columnPreDesc.setCellValueFactory(new PropertyValueFactory("precioDescuento"));
