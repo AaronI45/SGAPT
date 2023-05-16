@@ -138,7 +138,7 @@ public class FXMLInicioSesionController implements Initializable {
     
     private void irPantallaEmpleado(){
         Stage stagePrincipal = (Stage) tfUsuario.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalEncargado.fxml"));
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalEncargado1.fxml"));
         stagePrincipal.setTitle("Home");
         stagePrincipal.show();        
     }

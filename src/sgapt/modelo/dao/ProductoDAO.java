@@ -60,4 +60,33 @@ public class ProductoDAO {
         }
         return productos;
     }
+    
+    public static ProductoRespuesta mostrarDisponibilidad (Producto product){
+        ProductoRespuesta productos = new ProductoRespuesta(); 
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null)
+        {
+            try{
+                String consulta = "SELECT idProducto, disponibilidad FROM producto";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Producto> productosConsulta = new ArrayList();
+                while(resultado.next()){
+                    Producto producto = new Producto();
+                    producto.setIdProducto(resultado.getInt("idProducto"));
+                    producto.setDisponibilidad(resultado.getString("disponibilidad"));
+                    producto.getDisponibilidad();
+                }
+                productos.setProductos(productosConsulta);
+                productos.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+            }catch(SQLException e){
+                productos.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }      
+        }
+        else{
+            productos.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return productos;
+    }
+    
 }
