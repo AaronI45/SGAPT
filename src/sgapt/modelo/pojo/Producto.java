@@ -1,4 +1,3 @@
-
 package sgapt.modelo.pojo;
 
 import java.util.Date;
@@ -114,9 +113,8 @@ public class Producto {
     
     @Override
     public String toString() {
-        return "Producto{" + "idProducto=" + idProducto + ", nombre=" + nombre + ", tipoProducto=" + tipoProducto + ", disponibilidad=" + disponibilidad + ", cantidad=" + cantidad + ", sucursal=" + sucursal + ", requiereReceta=" + requiereReceta + ", fechaCaducidad=" + fechaCaducidad + '}';
+        return nombre;
     }
 
     
 }
-

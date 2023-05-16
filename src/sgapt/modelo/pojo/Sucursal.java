@@ -1,4 +1,3 @@
-
 package sgapt.modelo.pojo;
 
 public class Sucursal {
@@ -51,7 +50,8 @@ public class Sucursal {
     
     @Override
     public String toString() {
-        return estado + " " + ciudad;
+        return estado;
+        //estado + " " + ciudad;
     }
     
     

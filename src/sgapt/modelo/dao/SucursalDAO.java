@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import sgapt.modelo.ConexionBD;
 import sgapt.modelo.pojo.Sucursal;
+import sgapt.modelo.pojo.SucursalRespuesta;
 import sgapt.util.Constantes;
 
 /**
@@ -50,4 +51,3 @@ public class SucursalDAO {
         return sucursales;
     }
 }
-

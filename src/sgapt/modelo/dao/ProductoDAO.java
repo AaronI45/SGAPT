@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import sgapt.modelo.ConexionBD;
 import sgapt.modelo.pojo.Producto;
+import sgapt.modelo.pojo.ProductoRespuesta;
 import sgapt.modelo.pojo.ResultadoOperacion;
 import sgapt.modelo.pojo.Sucursal;
 import sgapt.util.Constantes;
@@ -63,6 +64,34 @@ public class ProductoDAO {
         return productos;
     }
     
+    public static ProductoRespuesta mostrarDisponibilidad (Producto product){
+        ProductoRespuesta productos = new ProductoRespuesta(); 
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null)
+        {
+            try{
+                String consulta = "SELECT idProducto, disponibilidad FROM producto";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Producto> productosConsulta = new ArrayList();
+                while(resultado.next()){
+                    Producto producto = new Producto();
+                    producto.setIdProducto(resultado.getInt("idProducto"));
+                    producto.setDisponibilidad(resultado.getString("disponibilidad"));
+                    producto.getDisponibilidad();
+                }
+                productos.setProductos(productosConsulta);
+                productos.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+            }catch(SQLException e){
+                productos.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }      
+        }
+        else{
+            productos.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return productos;
+    }
+    
     public static ResultadoOperacion eliminarProducto (Producto productoAEliminar){
         ResultadoOperacion resultadoEliminacion = new ResultadoOperacion();
         Connection conexionBD = ConexionBD.abrirConexionBD();
@@ -81,5 +110,5 @@ public class ProductoDAO {
         ResultadoOperacion resultadoEdicion = new ResultadoOperacion();
         
         return resultadoEdicion;
-    }
+    }   
 }
