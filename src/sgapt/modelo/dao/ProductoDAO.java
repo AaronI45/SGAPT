@@ -1,6 +1,9 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package sgapt.modelo.dao;
 
-import sgapt.modelo.pojo.ProductoRespuesta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,9 +11,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import sgapt.modelo.ConexionBD;
 import sgapt.modelo.pojo.Producto;
+import sgapt.modelo.pojo.ProductoRespuesta;
 import sgapt.modelo.pojo.Sucursal;
 import sgapt.util.Constantes;
 
+/**
+ *
+ * @author super
+ */
 public class ProductoDAO {
     public static ProductoRespuesta recuperarProductosEnSucursal (Sucursal sucursal){
         ProductoRespuesta productos = new ProductoRespuesta(); 
@@ -41,6 +49,34 @@ public class ProductoDAO {
                     producto.setNumeroLote(resultado.getInt("idLote"));
                     producto.setPrecio(resultado.getInt("precio"));
                     productosConsulta.add(producto);
+                }
+                productos.setProductos(productosConsulta);
+                productos.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+            }catch(SQLException e){
+                productos.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }      
+        }
+        else{
+            productos.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return productos;
+    }
+    
+    public static ProductoRespuesta mostrarDisponibilidad (Producto product){
+        ProductoRespuesta productos = new ProductoRespuesta(); 
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null)
+        {
+            try{
+                String consulta = "SELECT idProducto, disponibilidad FROM producto";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Producto> productosConsulta = new ArrayList();
+                while(resultado.next()){
+                    Producto producto = new Producto();
+                    producto.setIdProducto(resultado.getInt("idProducto"));
+                    producto.setDisponibilidad(resultado.getString("disponibilidad"));
+                    producto.getDisponibilidad();
                 }
                 productos.setProductos(productosConsulta);
                 productos.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);

@@ -10,9 +10,28 @@ package sgapt.modelo.pojo;
  */
 public class Promocion {
     private int idPromocion;
-    private String tipoPromocion;
+    private double porcentajeDescuento;
     private String fechaInicio;
     private String fechaFin;
+    private int idProducto;
+    private String producto;
+    private float productoPrecio;
+    private float precioDescuento;
+
+    public Promocion(int idPromocion, double porcentajeDescuento, String fechaInicio, String fechaFin, int idProducto, String producto, float productoPrecio, float precioDescuento) {
+        this.idPromocion = idPromocion;
+        this.porcentajeDescuento = porcentajeDescuento;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.idProducto = idProducto;
+        this.producto = producto;
+        this.productoPrecio = productoPrecio;
+        this.precioDescuento = precioDescuento;
+    }
+
+    public Promocion(){
+        
+    }
 
     public int getIdPromocion() {
         return idPromocion;
@@ -22,12 +41,12 @@ public class Promocion {
         this.idPromocion = idPromocion;
     }
 
-    public String getTipoPromocion() {
-        return tipoPromocion;
+    public double getPorcentajeDescuento() {
+        return porcentajeDescuento;
     }
 
-    public void setTipoPromocion(String tipoPromocion) {
-        this.tipoPromocion = tipoPromocion;
+    public void setPorcentajeDescuento(double porcentajeDescuento) {
+        this.porcentajeDescuento = porcentajeDescuento;
     }
 
     public String getFechaInicio() {
@@ -45,5 +64,43 @@ public class Promocion {
     public void setFechaFin(String fechaFin) {
         this.fechaFin = fechaFin;
     }
+
+    public int getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
+    }
+
+    public String getProducto() {
+        return producto;
+    }
+
+    public void setProducto(String producto) {
+        this.producto = producto;
+    }
+
+    public float getProductoPrecio() {
+        return productoPrecio;
+    }
+
+    public void setProductoPrecio(float productoPrecio) {
+        this.productoPrecio = productoPrecio;
+    }
+
+    public float getPrecioDescuento() {
+        return precioDescuento;
+    }
+
+    public void setPrecioDescuento(float precioDescuento) {
+        this.precioDescuento = precioDescuento;
+    }
     
+    /*private float descuento(float productoPrecio, double porcentajeDescuento){
+        float descuentoPro;
+        float porDesc=(float)porcentajeDescuento;
+        descuentoPro = productoPrecio * porDesc;
+        return descuentoPro;
+    }*/
 }

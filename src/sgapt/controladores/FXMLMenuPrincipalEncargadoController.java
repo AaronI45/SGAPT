@@ -20,17 +20,6 @@ public class FXMLMenuPrincipalEncargadoController implements Initializable {
         // TODO
     }    
 
-    private void clicAdmProm(ActionEvent event) {
-        
-    }
-    
-    private void irPantallaAministracionPromociones(){
-        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPromociones.fxml"));
-        escenarioBase.setTitle("Administracion promociones");
-        escenarioBase.show();
-    }
-
     @FXML
     private void clicBtnSalir(ActionEvent event) {
         boolean validarCierreSesion = Utilidades.mostrarDialogoConfirmacion("Cerrar sesión", 
@@ -48,7 +37,7 @@ public class FXMLMenuPrincipalEncargadoController implements Initializable {
     private void clicBtnAdministrarPromociones(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPromociones.fxml"));
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPromociones1.fxml"));
         stagePrincipal.setTitle("Administración de promociones");
         stagePrincipal.show();
     }
