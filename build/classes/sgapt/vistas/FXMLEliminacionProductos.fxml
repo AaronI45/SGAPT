@@ -25,6 +25,6 @@
       <Label layoutX="562.0" layoutY="48.0" text="Inventario de farmacia" />
       <ComboBox fx:id="cbSucursales" layoutX="454.0" layoutY="89.0" prefHeight="25.0" prefWidth="336.0" promptText="Seleccionar sucursal" />
       <Label layoutX="377.0" layoutY="93.0" text="Sucursal" />
-      <Button fx:id="clicEliminarProductos" layoutX="1089.0" layoutY="89.0" mnemonicParsing="false" text="Eliminar productos" />
+      <Button layoutX="1089.0" layoutY="89.0" mnemonicParsing="false" onAction="#clicEliminarProductos" text="Eliminar productos" />
    </children>
 </AnchorPane>

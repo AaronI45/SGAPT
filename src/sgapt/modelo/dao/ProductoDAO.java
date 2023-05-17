@@ -92,16 +92,33 @@ public class ProductoDAO {
         return productos;
     }
     
-    public static ResultadoOperacion eliminarProducto (Producto productoAEliminar){
+    public static ResultadoOperacion eliminarProducto (Producto productoAEliminar) throws SQLException{
         ResultadoOperacion resultadoEliminacion = new ResultadoOperacion();
+        resultadoEliminacion.setError(true);
         Connection conexionBD = ConexionBD.abrirConexionBD();
-        try{
-            String consulta = "";
-            PreparedStatement prepararConsulta = conexionBD.prepareStatement(consulta);
-            prepararConsulta.setInt(1, 0);
-            prepararConsulta.setString(2, "Eliminado");
-        }catch(SQLException e){
-            resultadoEliminacion.setMensaje("Error de conexión");
+        if (conexionBD != null)
+        {
+            try{
+                String consulta = "UPDATE producto SET disponibilidad = ? WHERE idProducto = ?";
+                PreparedStatement prepararConsulta = conexionBD.prepareStatement(consulta);
+                prepararConsulta.setString(1, "eliminado");
+                prepararConsulta.setInt(2, productoAEliminar.getIdProducto());
+                int filasAfectadas = prepararConsulta.executeUpdate();
+                if (filasAfectadas > 0){
+                    resultadoEliminacion.setMensaje("El producto ha sido eliminado correctamente");
+                    resultadoEliminacion.setError(false);
+                }else{
+                    resultadoEliminacion.setMensaje("No se pudo eliminar el producto de manera correcta");
+                }
+            }catch(SQLException e){
+                resultadoEliminacion.setMensaje("Error de conexión");
+            }
+            finally{
+                conexionBD.close();
+            }
+        }else{
+            resultadoEliminacion.setMensaje("No hay conexión a la base de datos");
+            
         }
         return resultadoEliminacion;
     }

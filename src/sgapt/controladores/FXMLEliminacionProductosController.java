@@ -5,6 +5,7 @@
 package sgapt.controladores;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -25,6 +26,7 @@ import sgapt.modelo.pojo.ProductoRespuesta;
 import sgapt.modelo.dao.SucursalDAO;
 import sgapt.modelo.pojo.SucursalRespuesta;
 import sgapt.modelo.pojo.Producto;
+import sgapt.modelo.pojo.ResultadoOperacion;
 import sgapt.modelo.pojo.Sucursal;
 import sgapt.util.Constantes;
 import sgapt.util.Utilidades;
@@ -72,7 +74,7 @@ public class FXMLEliminacionProductosController implements Initializable {
             public void changed(ObservableValue<? extends Sucursal> observable, 
                     Sucursal oldValue, Sucursal newValue) {
                 if(newValue != null){
-                    cargarDatosTabla(newValue);
+                    cargarProductosDisponibles(newValue);
                 }
             }
         });
@@ -89,12 +91,16 @@ public class FXMLEliminacionProductosController implements Initializable {
         colFechaCaducidad.setCellValueFactory(new PropertyValueFactory("fechaCaducidad"));
     }
     
-    public void cargarDatosTabla(Sucursal sucursalSeleccionada){
+    public void cargarProductosDisponibles(Sucursal sucursalSeleccionada){
             listaProductos = FXCollections.observableArrayList();
             ProductoRespuesta pr = ProductoDAO.recuperarProductosEnSucursal(sucursalSeleccionada);
             switch (pr.getCodigoRespuesta()){
                     case Constantes.OPERACION_EXITOSA:
-                        listaProductos.addAll(pr.getProductos());
+                        for (Producto producto : pr.getProductos()){
+                            if (producto.getDisponibilidad().equals("disponible")){
+                                listaProductos.add(producto);
+                            }
+                        }
                         tvProductos.setItems(listaProductos);
                     break;
                     case Constantes.ERROR_CONSULTA:
@@ -118,13 +124,51 @@ public class FXMLEliminacionProductosController implements Initializable {
         listaSucursales.addAll(sr.getSucursales());
         cbSucursales.setItems(listaSucursales);
     }
-
-    @FXML
-    private void clicBtnRegresar(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+    
+    private Producto verificarProductoSeleccionado(){
+        int filaSeleccionada = tvProductos.getSelectionModel().getSelectedIndex();
+        return (filaSeleccionada >= 0)? listaProductos.get(filaSeleccionada) : null;
+    }
+    
+    public void regresarAventanaAnterior(){
+        Stage stagePrincipal = (Stage) tvProductos.getScene().getWindow();
         stagePrincipal.setScene(Utilidades.inicializarEscena("/sgapt/vistas/FXMLAdministracionInventarioProductos.fxml"));
         stagePrincipal.setTitle("Administración de inventario");
         stagePrincipal.show();
+    }
+
+    @FXML
+    private void clicBtnRegresar(ActionEvent event) {
+        regresarAventanaAnterior();
+    }
+
+    @FXML
+    private void clicEliminarProductos(ActionEvent event) {
+        Producto productoSeleccionado = verificarProductoSeleccionado();
+        if(productoSeleccionado != null){
+            boolean seleccion = Utilidades.mostrarDialogoConfirmacion("Confirmar selección", 
+                    "Está seguro de que desea eliminar estos productos del inventario?, hacer esto hará que no estén disponibles para su venta al público");
+            if (seleccion){
+                try{
+                    ResultadoOperacion resultado = ProductoDAO.eliminarProducto(productoSeleccionado);
+                    if (!resultado.isError()){
+                        Utilidades.mostrarDialogoSimple("Éxito en la operación", 
+                                resultado.getMensaje(), 
+                                Alert.AlertType.INFORMATION); 
+                        regresarAventanaAnterior();
+                    }else{
+                        Utilidades.mostrarDialogoSimple("Error en la operación", 
+                                resultado.getMensaje(), Alert.AlertType.ERROR);
+                    }
+                }
+                catch(SQLException e){
+                    
+                }
+            }
+        }else{
+            Utilidades.mostrarDialogoSimple("Error de selección", 
+                    "Por favor seleccione los distintos productos a eliminar y vuelva a intentarlo", 
+                    Alert.AlertType.ERROR);
+        }
     }
 }
