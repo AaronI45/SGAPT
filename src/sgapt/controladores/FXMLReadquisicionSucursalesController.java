@@ -137,32 +137,15 @@ public class FXMLReadquisicionSucursalesController implements Initializable {
             new ListChangeListener<Producto>() {
                 @Override
                 public void onChanged(ListChangeListener.Change<? extends Producto> c) {
-                    recuperarIdProductoSeleccionado();
+                    try {
+                        final Producto producto = tvProductos.
+                                getSelectionModel().getSelectedItems().get(0);
+                        idProductoSeleccionadoEnTabla = producto.getIdProducto();
+                    } catch (NullPointerException e) {
+                    }
                 }
             };
-    
-    private void recuperarIdProductoSeleccionado() {
-        try {
-            final Producto producto = getTablaProductosSeleccionada();
-            idProductoSeleccionadoEnTabla = producto.getIdProducto();      
-        } catch (NullPointerException e) {
-            
-        }
-    }
-    
-    public Producto getTablaProductosSeleccionada() {
-        if (tvProductos != null) {
-            List<Producto> tabla = tvProductos.getSelectionModel().getSelectedItems();
-            if (tabla.size() == 1) {
-                final Producto productoSeleccionado = tabla.get(0);
-                return productoSeleccionado;
-            }
-        }
-        return null;
-    }
 
-    
-    
     @FXML
     private void clicRealizarReadquisicion(ActionEvent event) {
         if (cbSucursalOrigen.getSelectionModel().getSelectedItem() != null &&
