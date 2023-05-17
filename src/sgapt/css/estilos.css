@@ -8,31 +8,35 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 */
 
 .buttonCancelar{
-    -fx-background-color:  #5EBDB7;
+    -fx-background-color:  #f30a49;
     -fx-text-fill: white;
 }
 
 .buttonCancelar:hover{
-    -fx-background-color: #5EBDB7;
+    -fx-background-color: #ff1a30;
     -fx-cursor: hand;
+    -fx-text-fill: white;
 }
 
 .buttonCancelar:pressed{
-    -fx-background-color: #5EBDB7;
+    -fx-background-color: #a2142b;
+    -fx-text-fill: white;
 }
 
 .buttonInicioSesion{
-   -fx-background-color: #5EBDB7;
+    -fx-background-color: #0c56a6; 
+   -fx-text-fill: white;
 }
 
 .buttonInicioSesion:hover{
-    -fx-background-color: #93D3CF;
+   -fx-background-color: #0c3c78;
     -fx-text-fill: white;
     -fx-cursor: hand;
 }
 
 .buttonInicioSesion:pressed{
-    -fx-background-color: #B7E1DF;
+    -fx-background-color: #090030;
+    -fx-text-fill: white;
 }
 
 .buttonGeneral{
@@ -77,4 +81,50 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .table-view .column-header .label{
     -fx-text-fill: white;
     -fx-alignment: CENTER;
+}
+
+.combo-box-base .text{
+    -fx-background-color: #0c3c78;
+    -fx-fill: white;
+}
+
+.combo-box-base .textField{
+    -fx-background-color: #0c3c78;
+    -fx-fill: white;
+}
+
+.combo-box .list-cell 
+{
+    /*-fx-background: #0c3c78;*/
+    -fx-background-color: #0c3c78;
+    -fx-text-fill: white;
+    /*-fx-padding: 3 0 2 7;*/
+    /*-fx-cell-size: 1.66667em;*/ 
+}
+
+.combo-box-popup .list-view .list-cell 
+{
+    /*-fx-padding: 4 0 4 5;*/
+
+    /* No alternate highlighting */
+    -fx-background-color: #00519E;
+    -fx-text-fill: white;
+}
+
+.combo-box-base:hover
+{
+    -fx-color: #0c3c78;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover 
+{
+    /*-fx-background: -fx-accent;*/
+    -fx-background-color: #a2142b;
+    -fx-text-fill: white;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover 
+{
+    -fx-background-color: #0c3c78;
+    -fx-text-fill: white;
 }

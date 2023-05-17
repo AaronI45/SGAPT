@@ -6,9 +6,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sgapt.controladores.FXMLProveedoresExternosController">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.controladores.FXMLProveedoresExternosController">
    <children>
-      <Button layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#clicBtnRegresar" text="Regresar" />
+      <Button layoutX="61.0" layoutY="52.0" mnemonicParsing="false" onAction="#clicBtnRegresar" text="Regresar" />
+      <TableView fx:id="tvProveedores" layoutX="61.0" layoutY="115.0" prefHeight="558.0" prefWidth="1165.0">
+        <columns>
+          <TableColumn fx:id="colNombre" prefWidth="231.0" text="Nombre" />
+          <TableColumn fx:id="colEstado" prefWidth="215.0" text="Estado" />
+            <TableColumn fx:id="colCiudad" prefWidth="196.0" text="Ciudad" />
+            <TableColumn fx:id="colDireccion" prefWidth="522.0" text="Dirección" />
+        </columns>
+      </TableView>
+      <Button layoutX="1059.0" layoutY="52.0" mnemonicParsing="false" onAction="#clicBtnSeleccionarProductos" text="Seleccionar productos" />
    </children>
 </AnchorPane>
