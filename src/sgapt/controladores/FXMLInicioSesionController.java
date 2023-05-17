@@ -1,3 +1,4 @@
+
 package sgapt.controladores;
 
 import java.net.URL;
@@ -129,10 +130,10 @@ public class FXMLInicioSesionController implements Initializable {
     }
     
     private void irPantallaAdmin() {        
-        Stage stagePrincipal = (Stage) tfUsuario.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));
-        stagePrincipal.setTitle("Home");
-        stagePrincipal.show();
+        Stage escenarioBase = (Stage) tfUsuario.getScene().getWindow();
+        escenarioBase.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));
+        escenarioBase.setTitle("Home");
+        escenarioBase.show();
     }
     
     private void irPantallaEmpleado(){
@@ -141,4 +142,5 @@ public class FXMLInicioSesionController implements Initializable {
         stagePrincipal.setTitle("Home");
         stagePrincipal.show();        
     }
+    
 }

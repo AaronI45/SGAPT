@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import sgapt.modelo.ConexionBD;
 import sgapt.modelo.pojo.Producto;
 import sgapt.modelo.pojo.ProductoRespuesta;
+import sgapt.modelo.pojo.ResultadoOperacion;
 import sgapt.modelo.pojo.Sucursal;
 import sgapt.util.Constantes;
 
@@ -90,4 +92,40 @@ public class ProductoDAO {
         return productos;
     }
     
+    public static ResultadoOperacion eliminarProducto (Producto productoAEliminar) throws SQLException{
+        ResultadoOperacion resultadoEliminacion = new ResultadoOperacion();
+        resultadoEliminacion.setError(true);
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null)
+        {
+            try{
+                String consulta = "UPDATE producto SET disponibilidad = ? WHERE idProducto = ?";
+                PreparedStatement prepararConsulta = conexionBD.prepareStatement(consulta);
+                prepararConsulta.setString(1, "eliminado");
+                prepararConsulta.setInt(2, productoAEliminar.getIdProducto());
+                int filasAfectadas = prepararConsulta.executeUpdate();
+                if (filasAfectadas > 0){
+                    resultadoEliminacion.setMensaje("El producto ha sido eliminado correctamente");
+                    resultadoEliminacion.setError(false);
+                }else{
+                    resultadoEliminacion.setMensaje("No se pudo eliminar el producto de manera correcta");
+                }
+            }catch(SQLException e){
+                resultadoEliminacion.setMensaje("Error de conexión");
+            }
+            finally{
+                conexionBD.close();
+            }
+        }else{
+            resultadoEliminacion.setMensaje("No hay conexión a la base de datos");
+            
+        }
+        return resultadoEliminacion;
+    }
+    
+    public static ResultadoOperacion editarEstadoProducto (Producto productoAEditar){
+        ResultadoOperacion resultadoEdicion = new ResultadoOperacion();
+        
+        return resultadoEdicion;
+    }   
 }
