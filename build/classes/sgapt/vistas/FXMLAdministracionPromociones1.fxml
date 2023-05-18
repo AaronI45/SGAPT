@@ -14,14 +14,14 @@
          <font>
             <Font name="System Bold" size="20.0" />
          </font></Button>
-      <TableView fx:id="tvPromocion" layoutX="52.0" layoutY="178.0" prefHeight="478.0" prefWidth="1181.0" stylesheets="@../css/estilos.css">
+      <TableView fx:id="tvPromocion" layoutX="52.0" layoutY="178.0" prefHeight="478.0" prefWidth="979.0" stylesheets="@../css/estilos.css">
         <columns>
-          <TableColumn fx:id="columnNomProd" prefWidth="406.0" text="Nombre del producto" />
-            <TableColumn fx:id="columnPrecio" prefWidth="134.0" text="Precio" />
-          <TableColumn fx:id="columnDescuento" prefWidth="158.0" text="Descuento" />
-            <TableColumn fx:id="columnPreDesc" prefWidth="163.0" text="Precio con descuento" />
-            <TableColumn fx:id="columnFechaInicio" prefWidth="162.0" text="Fecha inicio" />
-            <TableColumn fx:id="columnFechaFin" prefWidth="157.0" text="Fecha fin" />
+          <TableColumn fx:id="columnNomProd" prefWidth="330.0" text="Nombre del producto" />
+            <TableColumn fx:id="columnPrecio" prefWidth="127.0" text="Precio" />
+          <TableColumn fx:id="columnDescuento" prefWidth="109.0" text="Descuento" />
+            <TableColumn fx:id="columnPreDesc" prefWidth="181.0" text="Precio con descuento" />
+            <TableColumn fx:id="columnFechaInicio" prefWidth="112.0" text="Fecha inicio" />
+            <TableColumn fx:id="columnFechaFin" prefWidth="119.0" text="Fecha fin" />
         </columns>
       </TableView>
       <Button layoutX="927.0" layoutY="124.0" mnemonicParsing="false" onAction="#clicBtnExpirar" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Expirar">
@@ -50,5 +50,6 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
+      <ImageView fitHeight="206.0" fitWidth="200.0" layoutX="1048.0" layoutY="295.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
