@@ -205,5 +205,14 @@ public class FXMLFormularioPromocionController implements Initializable {
                 break;
         }
     }
+
+    @FXML
+    private void clicBtnRegresar(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPromociones1.fxml"));
+        stagePrincipal.setTitle("Home");
+        stagePrincipal.show();
+    }
     
 }
