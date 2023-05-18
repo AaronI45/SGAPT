@@ -50,6 +50,7 @@ public class ProductoDAO {
                     producto.setRequiereReceta(resultado.getBoolean("requiereReceta"));
                     producto.setNumeroLote(resultado.getInt("idLote"));
                     producto.setPrecio(resultado.getInt("precio"));
+                    producto.setFoto(resultado.getBytes("foto"));
                     productosConsulta.add(producto);
                 }
                 productos.setProductos(productosConsulta);

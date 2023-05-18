@@ -1,6 +1,7 @@
 package sgapt.modelo.pojo;
 
 import java.util.Date;
+import javafx.scene.image.ImageView;
 
 public class Producto {
     
@@ -14,11 +15,13 @@ public class Producto {
     private int precio;
     private int numeroLote;
     private Date fechaCaducidad;
+    private byte[] foto;
+    private ImageView visualizacionFoto;
 
     public Producto() {
     }
 
-    public Producto(int idProducto, String nombre, String tipoProducto, String disponibilidad, int cantidad, Sucursal sucursal, boolean requiereReceta, int precio, int numeroLote, Date fechaCaducidad) {
+    public Producto(int idProducto, String nombre, String tipoProducto, String disponibilidad, int cantidad, Sucursal sucursal, boolean requiereReceta, int precio, int numeroLote, Date fechaCaducidad, byte[] foto, ImageView visualizacionFoto) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.tipoProducto = tipoProducto;
@@ -29,6 +32,8 @@ public class Producto {
         this.precio = precio;
         this.numeroLote = numeroLote;
         this.fechaCaducidad = fechaCaducidad;
+        this.foto = foto;
+        this.visualizacionFoto = visualizacionFoto;
     }
     
     public int getIdProducto() {
@@ -109,6 +114,22 @@ public class Producto {
 
     public void setNumeroLote(int numeroLote) {
         this.numeroLote = numeroLote;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
+    public ImageView getVisualizacionFoto() {
+        return visualizacionFoto;
+    }
+
+    public void setVisualizacionFoto(ImageView visualizacionFoto) {
+        this.visualizacionFoto = visualizacionFoto;
     }
     
     @Override

@@ -5,6 +5,8 @@
  */
 package sgapt.controladores;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -16,11 +18,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.ProductoDAO;
 import sgapt.modelo.pojo.ProductoRespuesta;
@@ -57,6 +60,8 @@ public class FXMLInformacionInventarioController implements Initializable {
     @FXML
     private TableColumn<?, ?> colPrecio;
     @FXML
+    private TableColumn<?, ?> colImagen;
+    @FXML
     private ComboBox<Sucursal> cbSucursales;
     private ObservableList<Sucursal> listaSucursales;
     private ObservableList<Producto> listaProductos;
@@ -89,6 +94,7 @@ public class FXMLInformacionInventarioController implements Initializable {
         colNumeroLote.setCellValueFactory(new PropertyValueFactory("numeroLote"));
         colPrecio.setCellValueFactory(new PropertyValueFactory("precio"));
         colFechaCaducidad.setCellValueFactory(new PropertyValueFactory("fechaCaducidad"));
+        colImagen.setCellValueFactory(new PropertyValueFactory("visualizacionFoto"));
     }
     
     public void cargarDatosTabla(Sucursal sucursalSeleccionada){
@@ -96,7 +102,15 @@ public class FXMLInformacionInventarioController implements Initializable {
             ProductoRespuesta pr = ProductoDAO.recuperarProductosEnSucursal(sucursalSeleccionada);
             switch (pr.getCodigoRespuesta()){
                     case Constantes.OPERACION_EXITOSA:
-                        listaProductos.addAll(pr.getProductos());
+                        for (Producto produto : pr.getProductos()){
+                            ByteArrayInputStream input = new ByteArrayInputStream(produto.getFoto());
+                            Image imagenProducto = new Image(input);
+                            ImageView visualizacionProducto = new ImageView(imagenProducto);
+                            visualizacionProducto.setFitHeight(80);
+                            visualizacionProducto.setFitWidth(80);
+                            produto.setVisualizacionFoto(visualizacionProducto);
+                            listaProductos.add(produto);
+                        }
                         tvProductos.setItems(listaProductos);
                     break;
                     case Constantes.ERROR_CONSULTA:
