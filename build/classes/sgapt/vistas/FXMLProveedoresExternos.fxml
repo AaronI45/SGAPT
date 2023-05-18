@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -8,8 +10,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.controladores.FXMLProveedoresExternosController">
    <children>
-      <Button layoutX="61.0" layoutY="52.0" mnemonicParsing="false" onAction="#clicBtnRegresar" text="Regresar" />
-      <TableView fx:id="tvProveedores" layoutX="61.0" layoutY="115.0" prefHeight="558.0" prefWidth="1165.0">
+      <TableView fx:id="tvProveedores" layoutX="51.0" layoutY="189.0" prefHeight="484.0" prefWidth="1185.0" stylesheets="@../css/estilos.css">
         <columns>
           <TableColumn fx:id="colNombre" prefWidth="231.0" text="Nombre" />
           <TableColumn fx:id="colEstado" prefWidth="215.0" text="Estado" />
@@ -17,6 +18,31 @@
             <TableColumn fx:id="colDireccion" prefWidth="522.0" text="Dirección" />
         </columns>
       </TableView>
-      <Button layoutX="1059.0" layoutY="52.0" mnemonicParsing="false" onAction="#clicBtnSeleccionarProductos" text="Seleccionar productos" />
+      <Button layoutX="1000.0" layoutY="127.0" mnemonicParsing="false" onAction="#clicBtnSeleccionarProductos" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Seleccionar productos">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button layoutX="52.0" layoutY="47.0" mnemonicParsing="false" onAction="#clicBtnRegresar" prefHeight="60.0" prefWidth="61.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="37.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/back.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <ImageView fitHeight="61.0" fitWidth="220.0" layoutX="1040.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/FarmaTech.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="556.0" layoutY="55.0" text="Proveedores">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

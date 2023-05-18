@@ -1,20 +1,16 @@
 package sgapt.controladores;
 
 import java.net.URL;
-import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -60,8 +56,8 @@ public class FXMLReadquisicionSucursalesController implements Initializable {
     @FXML
     private TextField tfCantidad;
     
-    private ObservableList<Sucursal> listaSucursales;
-    private ObservableList<Producto> listaProductos;
+    private ObservableList<Sucursal> sucursales;
+    private ObservableList<Producto> productos;
     private int idProductoSeleccionadoEnTabla; 
     private int idAlmacenOrigenSeleccionado;
     private int idAlmacenDestinoSeleccionado;
@@ -70,10 +66,6 @@ public class FXMLReadquisicionSucursalesController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarListasSucursales();
-        
-        final ObservableList<Producto> tablaProductosSel = tvProductos.getSelectionModel().getSelectedItems();                    
-        tablaProductosSel.addListener(selectorTablaProductos);
-        
         cbSucursalOrigen.valueProperty().addListener(new ChangeListener<Sucursal>(){
             @Override
             public void changed(ObservableValue<? extends Sucursal> observable, 
@@ -83,8 +75,6 @@ public class FXMLReadquisicionSucursalesController implements Initializable {
                 }
             }
         });
-        
-        
     }    
 
     public void configurarTabla(){
@@ -99,21 +89,21 @@ public class FXMLReadquisicionSucursalesController implements Initializable {
     }
     
     private void cargarListasSucursales() {
-        listaSucursales = FXCollections.observableArrayList();
+        sucursales = FXCollections.observableArrayList();
         SucursalRespuesta sr = SucursalDAO.recuperarSucursales();
-        listaSucursales.addAll(sr.getSucursales());
-        cbSucursalOrigen.setItems(listaSucursales);
-        cbSucursalDestino.setItems(listaSucursales);
+        sucursales.addAll(sr.getSucursales());
+        cbSucursalOrigen.setItems(sucursales);
+        cbSucursalDestino.setItems(sucursales);
     }
     
     
     public void cargarDatosTabla(Sucursal sucursalSeleccionada){
-        listaProductos = FXCollections.observableArrayList();
+        productos = FXCollections.observableArrayList();
         ProductoRespuesta pr = ProductoDAO.recuperarProductosEnSucursal(sucursalSeleccionada);
         switch (pr.getCodigoRespuesta()){
                 case Constantes.OPERACION_EXITOSA:
-                    listaProductos.addAll(pr.getProductos());
-                    tvProductos.setItems(listaProductos);
+                    productos.addAll(pr.getProductos());
+                    tvProductos.setItems(productos);
                 break;
                 case Constantes.ERROR_CONSULTA:
                     Utilidades.mostrarDialogoSimple("Error en la solicitud", 
@@ -126,53 +116,42 @@ public class FXMLReadquisicionSucursalesController implements Initializable {
                             Alert.AlertType.ERROR);
                 break;
                 default:
-                    Utilidades.mostrarDialogoSimple("Error de petición 1", 
+                    Utilidades.mostrarDialogoSimple("Error de petición", 
                             "El sistema no está disponible por el momento", 
                             Alert.AlertType.ERROR);
                 break;
         }
     }
-    
-    private final ListChangeListener<Producto> selectorTablaProductos = 
-            new ListChangeListener<Producto>() {
-                @Override
-                public void onChanged(ListChangeListener.Change<? extends Producto> c) {
-                    try {
-                        final Producto producto = tvProductos.
-                                getSelectionModel().getSelectedItems().get(0);
-                        idProductoSeleccionadoEnTabla = producto.getIdProducto();
-                    } catch (NullPointerException e) {
-                    }
-                }
-            };
 
     @FXML
     private void clicRealizarReadquisicion(ActionEvent event) {
-        if (cbSucursalOrigen.getSelectionModel().getSelectedItem() != null &&
-            cbSucursalDestino.getSelectionModel().getSelectedItem() != null) {
-            Sucursal sucursalOrigen = cbSucursalOrigen.getSelectionModel().getSelectedItem();
-            Sucursal sucursalDestino = cbSucursalDestino.getSelectionModel().getSelectedItem();
-            
+        Sucursal sucursalOrigen = cbSucursalOrigen.getSelectionModel().getSelectedItem();
+        Sucursal sucursalDestino = cbSucursalDestino.getSelectionModel().getSelectedItem();
+        
+        if (sucursalOrigen != null && sucursalDestino != null) {
             if (sucursalOrigen.getIdInventario() == sucursalDestino.getIdInventario()) {
                 Utilidades.mostrarDialogoSimple("Error", "La sucursal de origen no puede ser " + 
                         "la misma que la sucursal de destino. Por favor, cambie la selección.",
                         Alert.AlertType.WARNING);
             } else {                
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmación de readquisición");
-                alert.setHeaderText("¿Está seguro de que desea realizar la readquisición?");
+                int posicionProductoSel = tvProductos.getSelectionModel().getSelectedIndex();
+                    if (posicionProductoSel != -1) {
+                        idProductoSeleccionadoEnTabla = productos.
+                                get(posicionProductoSel).getIdProducto();                        
+                        boolean realizarReadquisicion = Utilidades.mostrarDialogoConfirmacion(
+                                "Readquisición de productos", 
+                                "¿Está seguro de que desea realizar la readquisición?");
 
-                ButtonType btnConfirmar = new ButtonType("Confirmar");
-                ButtonType btnCancelar = new ButtonType("Cancelar");
-                alert.getButtonTypes().setAll(btnConfirmar, btnCancelar);
-
-                Optional<ButtonType> result = alert.showAndWait();
+                        if (realizarReadquisicion) {                    
+                            idAlmacenOrigenSeleccionado = sucursalOrigen.getIdInventario();
+                            idAlmacenDestinoSeleccionado = sucursalDestino.getIdInventario();
+                            validarCantidadReadquisicion();  
+                        }
+                    } else
+                        Utilidades.mostrarDialogoSimple("Selecciona un producto", 
+                                "Para realizar la readquisicion debes seleccionar el producto " + 
+                                        "de la tabla", Alert.AlertType.WARNING);
                 
-                if (result.isPresent() && result.get() == btnConfirmar) {                    
-                    idAlmacenOrigenSeleccionado = sucursalOrigen.getIdInventario();
-                    idAlmacenDestinoSeleccionado = sucursalDestino.getIdInventario();
-                    validarCantidadReadquisicion();  
-                }
             }
         }
     }
@@ -185,7 +164,7 @@ public class FXMLReadquisicionSucursalesController implements Initializable {
             if (cantidadProductoAlmacenado > 0) {
                 if (cantidadReadquisicion <= cantidadProductoAlmacenado) {
                     realizarActualizacionEnAlmacenDestino(cantidadReadquisicion);
-                    cargarDatosTabla(cbSucursalOrigen.getSelectionModel().getSelectedItem());
+                    cargarDatosTabla(cbSucursalOrigen.getSelectionModel().getSelectedItem());                        
                 } else {
                     Utilidades.mostrarDialogoSimple("Error", 
                         "Debe introducir una cantidad de productos menor o igual " + 
@@ -203,6 +182,7 @@ public class FXMLReadquisicionSucursalesController implements Initializable {
     }
     
     private void realizarActualizacionEnAlmacenDestino(int cantidad) {
+        
         Producto_Almacenado producto_Almacenado = Producto_AlmacenadoDAO.
             recuperarProductoAlmacenado(idProductoSeleccionadoEnTabla, 
                     idAlmacenDestinoSeleccionado);
@@ -231,7 +211,7 @@ public class FXMLReadquisicionSucursalesController implements Initializable {
                                 Alert.AlertType.ERROR);
                         break;
                     default:
-                        Utilidades.mostrarDialogoSimple("Error de petición 2", 
+                        Utilidades.mostrarDialogoSimple("Error de petición", 
                                 "El sistema no está disponible por el momento", 
                                 Alert.AlertType.ERROR);
                         break;
@@ -270,14 +250,14 @@ public class FXMLReadquisicionSucursalesController implements Initializable {
                                     Alert.AlertType.ERROR);
                             break;
                         default:
-                            Utilidades.mostrarDialogoSimple("Error de petición 4", 
+                            Utilidades.mostrarDialogoSimple("Error de petición", 
                                     "El sistema no está disponible por el momento", 
                                     Alert.AlertType.ERROR);
                             break;
                     }
                 break;
             default:
-                Utilidades.mostrarDialogoSimple("Error de petición 3", 
+                Utilidades.mostrarDialogoSimple("Error de petición", 
                         "El sistema no está disponible por el momento", 
                         Alert.AlertType.ERROR);
                 break;
@@ -292,6 +272,7 @@ public class FXMLReadquisicionSucursalesController implements Initializable {
         producto_almacenadoOrigen.setCantidad(cantidadProductoOriginal - cantidadSolicitada);
         
         int resultado = Producto_AlmacenadoDAO.modificarProducto_Almacenado(producto_almacenadoOrigen);        
+        
         switch (resultado) {
             case Constantes.OPERACION_EXITOSA:
                 break;
@@ -306,7 +287,7 @@ public class FXMLReadquisicionSucursalesController implements Initializable {
                         Alert.AlertType.ERROR);
                 break;
             default:
-                Utilidades.mostrarDialogoSimple("Error de petición 5", 
+                Utilidades.mostrarDialogoSimple("Error de petición", 
                         "El sistema no está disponible por el momento", 
                         Alert.AlertType.ERROR);
                 break;
@@ -340,14 +321,13 @@ public class FXMLReadquisicionSucursalesController implements Initializable {
                             Alert.AlertType.ERROR);
                     break;
                 default:
-                    Utilidades.mostrarDialogoSimple("Error de petición 6", 
+                    Utilidades.mostrarDialogoSimple("Error de petición", 
                             "El sistema no está disponible por el momento", 
                             Alert.AlertType.ERROR);
                     break;
             }
         return cantidadProductoAlmacenado;
-    }
-    
+    }   
     
     @FXML
     private void clicBtnRegresar(ActionEvent event) {

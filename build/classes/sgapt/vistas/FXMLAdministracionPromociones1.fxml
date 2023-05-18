@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -8,19 +10,45 @@
 
 <AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.controladores.FXMLAdministracionPromocionesController">
    <children>
-      <Label layoutX="547.0" layoutY="36.0" text="Administrador promociones" />
-      <Button layoutX="893.0" layoutY="655.0" mnemonicParsing="false" onAction="#clicBtnRegresar" text="Regresar" />
-      <Button layoutX="1105.0" layoutY="655.0" mnemonicParsing="false" onAction="#clicBtnCrearProm" text="Crear promocion" />
-      <TableView fx:id="tvPromocion" layoutX="112.0" layoutY="178.0" prefHeight="306.0" prefWidth="978.0">
+      <Button layoutX="1048.0" layoutY="124.0" mnemonicParsing="false" onAction="#clicBtnCrearProm" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Crear promocion">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <TableView fx:id="tvPromocion" layoutX="52.0" layoutY="178.0" prefHeight="478.0" prefWidth="1181.0" stylesheets="@../css/estilos.css">
         <columns>
-          <TableColumn fx:id="columnNomProd" prefWidth="354.0" text="Nombre del producto" />
-            <TableColumn fx:id="columnPrecio" prefWidth="103.0" text="Precio" />
-          <TableColumn fx:id="columnDescuento" prefWidth="106.0" text="Descuento" />
-            <TableColumn fx:id="columnPreDesc" prefWidth="177.0" text="Precio con descuento" />
-            <TableColumn fx:id="columnFechaInicio" prefWidth="108.0" text="Fecha inicio" />
-            <TableColumn fx:id="columnFechaFin" prefWidth="129.0" text="Fecha fin" />
+          <TableColumn fx:id="columnNomProd" prefWidth="406.0" text="Nombre del producto" />
+            <TableColumn fx:id="columnPrecio" prefWidth="134.0" text="Precio" />
+          <TableColumn fx:id="columnDescuento" prefWidth="158.0" text="Descuento" />
+            <TableColumn fx:id="columnPreDesc" prefWidth="163.0" text="Precio con descuento" />
+            <TableColumn fx:id="columnFechaInicio" prefWidth="162.0" text="Fecha inicio" />
+            <TableColumn fx:id="columnFechaFin" prefWidth="157.0" text="Fecha fin" />
         </columns>
       </TableView>
-      <Button layoutX="1009.0" layoutY="655.0" mnemonicParsing="false" onAction="#clicBtnExpirar" text="Expirar" />
+      <Button layoutX="927.0" layoutY="124.0" mnemonicParsing="false" onAction="#clicBtnExpirar" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Expirar">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <ImageView fitHeight="61.0" fitWidth="220.0" layoutX="1040.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/FarmaTech.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="52.0" layoutY="47.0" mnemonicParsing="false" onAction="#clicBtnRegresar" prefHeight="60.0" prefWidth="61.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="37.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/back.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label layoutX="415.0" layoutY="47.0" text="Administración de promociones">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

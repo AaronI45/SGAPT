@@ -102,7 +102,6 @@ public class FXMLAdministracionPedidosController implements Initializable {
     private void recuperarIdPedidoSeleccionado() {
         final Pedido pedido = getTablaPedidosSeleccionada();
         idPedidoSeleccionadoEnTabla = pedido.getIdPedido();
-        System.out.println("Cambio de id de pedido a = " + idPedidoSeleccionadoEnTabla);
     }
     
     public Pedido getTablaPedidosSeleccionada() {
