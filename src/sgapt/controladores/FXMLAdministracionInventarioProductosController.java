@@ -44,20 +44,20 @@ public class FXMLAdministracionInventarioProductosController implements Initiali
     }
 
     @FXML
-    private void clicRegresar(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));
-        stagePrincipal.setTitle("Home");
-        stagePrincipal.show();
-    }
-
-    @FXML
     private void clicIrAdministrarPedidos(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
         stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPedidos.fxml"));
         stagePrincipal.setTitle("Administracion de pedidos");
+        stagePrincipal.show();
+    }
+
+    @FXML
+    private void clicBtnRegresar(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));
+        stagePrincipal.setTitle("Home");
         stagePrincipal.show();
     }
     
