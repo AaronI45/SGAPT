@@ -27,25 +27,43 @@ public class FXMLAdministracionEmpleadosController implements Initializable {
     }
 
     @FXML
-    private void clicBtnConsultarEmpleado(ActionEvent event) {
-        Node source = (Node) event.getSource();
+    private void clicIrConsultarEmpleado(ActionEvent event) {
+            Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
         stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLInformacionEmpleado.fxml"));
         stagePrincipal.setTitle("Información de empleado");
         stagePrincipal.show();
     }
+    
+    
 
     @FXML
-    private void clicBtnModificarEmpleado(ActionEvent event) {
-        Node source = (Node) event.getSource();
+    private void clicIrModifcarEmpleado(ActionEvent event) {
+           Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
         stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLModificarEmpleado.fxml"));
         stagePrincipal.setTitle("Modificación de empleado");
-        stagePrincipal.show();
+        stagePrincipal.show(); 
+ 
     }
 
     @FXML
-    private void clicBtnDarDeBajaEmpleado(ActionEvent event) {
+    private void clicIrDarDeBajaEmpleado(ActionEvent event) {
+         Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLBajaEmpleado.fxml"));
+        stagePrincipal.setTitle("Baja de empleado");
+        stagePrincipal.show();      
     }
-    
+
+    @FXML
+    private void clicIrDarDeAltaEmpleado(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLFormularioEmpleado.fxml"));
+        stagePrincipal.setTitle("Alta de empleado");
+        stagePrincipal.show(); 
+    }
+
+
 }

@@ -1,4 +1,8 @@
-package sgapt.controladores;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ */
+package sgapt.vistas;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -6,23 +10,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sgapt.util.Utilidades;
 
-public class FXMLFormularioEmpleadoController implements Initializable {
+/**
+ * FXML Controller class
+ *
+ * @author zS21022065
+ */
+public class FXMLBajaEmpleadoController implements Initializable {
 
-    @FXML
-    private TextField tfNombre;
-    @FXML
-    private TextField tfApellidoPaterno;
-    @FXML
-    private TextField tfApellidoMaterno;
-    @FXML
-    private TextField tfCorreo;
-    @FXML
-    private TextField tfDireccion;
-
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -30,19 +30,11 @@ public class FXMLFormularioEmpleadoController implements Initializable {
 
     @FXML
     private void clicBtnRegresar(ActionEvent event) {
-         Node source = (Node) event.getSource();
+           Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
         stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionEmpleados.fxml"));
         stagePrincipal.setTitle("Administración de empleados");
         stagePrincipal.show();
-    }
-
-    @FXML
-    private void clicBtnCancelar(ActionEvent event) {
-    }
-
-    @FXML
-    private void clicBtnGuardar(ActionEvent event) {
     }
     
 }
