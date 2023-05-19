@@ -27,7 +27,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label fx:id="lbTitulo" layoutX="473.0" layoutY="47.0" text="Modificación de pedido">
+      <Label fx:id="lbTitulo" layoutX="487.0" layoutY="47.0" text="Formulario de pedido">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>

@@ -22,6 +22,8 @@ public class FXMLFormularioEmpleadoController implements Initializable {
     private TextField tfCorreo;
     @FXML
     private TextField tfDireccion;
+    @FXML
+    private TextField tfNumeroTelefonico;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

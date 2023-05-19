@@ -1,12 +1,6 @@
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package sgapt.controladores;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -39,7 +33,7 @@ import sgapt.util.Utilidades;
  *
  * @author super
  */
-public class FXMLInformacionInventarioController implements Initializable {
+public class FXMLAdministracionProductosController implements Initializable {
 
     @FXML
     private TableView<Producto> tvProductos;
@@ -143,8 +137,8 @@ public class FXMLInformacionInventarioController implements Initializable {
     private void clicBtnRegresar(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("/sgapt/vistas/FXMLAdministracionInventarioProductos.fxml"));
-        stagePrincipal.setTitle("Administración de inventario");
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));
+        stagePrincipal.setTitle("Home");
         stagePrincipal.show();
     }
 }
