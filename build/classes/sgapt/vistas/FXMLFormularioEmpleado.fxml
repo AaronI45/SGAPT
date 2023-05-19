@@ -32,5 +32,56 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
+      <Label layoutX="71.0" layoutY="155.0" text="Nombre">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="358.0" layoutY="155.0" text="Apellido paterno">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="689.0" layoutY="155.0" text="Apellido Materno">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfNombre" layoutX="52.0" layoutY="200.0" prefHeight="31.0" prefWidth="262.0" promptText="Juanito" />
+      <TextField fx:id="tfApellidoPaterno" layoutX="358.0" layoutY="200.0" prefHeight="31.0" prefWidth="262.0" promptText="Alcachofa" />
+      <TextField fx:id="tfApellidoMaterno" layoutX="689.0" layoutY="200.0" prefHeight="31.0" prefWidth="262.0" promptText="Rivera" />
+      <Label layoutX="58.0" layoutY="265.0" text="Correo electronico">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfCorreo" layoutX="52.0" layoutY="317.0" prefHeight="51.0" prefWidth="372.0" promptText="juanitolocochon21@gmail.com" />
+      <Label layoutX="52.0" layoutY="493.0" text="Direccion">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfDireccion" layoutX="52.0" layoutY="538.0" prefHeight="31.0" prefWidth="262.0" promptText="finca de las animas" />
+      <Label layoutX="747.0" layoutY="265.0" text="Fotografia">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Button layoutX="986.0" layoutY="618.0" mnemonicParsing="false" onAction="#clicBtnCancelar" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Cancelar">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="1113.0" layoutY="618.0" mnemonicParsing="false" onAction="#clicBtnGuardar" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Guardar">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Label layoutX="55.0" layoutY="375.0" text="Numero telefonico">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfNumeroTelefonico" layoutX="52.0" layoutY="433.0" prefHeight="31.0" prefWidth="262.0" promptText="2282363992" />
    </children>
 </AnchorPane>
