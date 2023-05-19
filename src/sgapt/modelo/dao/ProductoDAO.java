@@ -55,6 +55,7 @@ public class ProductoDAO {
                 }
                 productos.setProductos(productosConsulta);
                 productos.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                conexionBD.close();
             }catch(SQLException e){
                 productos.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
             }      
@@ -83,6 +84,7 @@ public class ProductoDAO {
                 }
                 productos.setProductos(productosConsulta);
                 productos.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                conexionBD.close();
             }catch(SQLException e){
                 productos.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
             }      
