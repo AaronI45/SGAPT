@@ -37,7 +37,7 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Label layoutX="409.0" layoutY="231.0" text="Apellido paterno">
+      <Label layoutX="465.0" layoutY="239.0" text="Apellido paterno">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -48,14 +48,14 @@
          </font>
       </Label>
       <TextField fx:id="tfNombre" layoutX="64.0" layoutY="301.0" prefHeight="31.0" prefWidth="262.0" promptText="Juanito" />
-      <TextField fx:id="tfApellidoPaterno" layoutX="409.0" layoutY="300.0" prefHeight="31.0" prefWidth="262.0" promptText="Alcachofa" />
-      <TextField fx:id="tfApellidoMaterno" layoutX="494.0" layoutY="430.0" prefHeight="31.0" prefWidth="262.0" promptText="Rivera" />
+      <TextField fx:id="tfApellidoPaterno" layoutX="453.0" layoutY="309.0" prefHeight="31.0" prefWidth="262.0" promptText="Alcachofa" />
+      <TextField fx:id="tfApellidoMaterno" layoutX="453.0" layoutY="430.0" prefHeight="31.0" prefWidth="262.0" promptText="Rivera" />
       <Label layoutX="64.0" layoutY="371.0" text="Correo electronico">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <TextField fx:id="tfCorreo" layoutX="64.0" layoutY="430.0" prefHeight="51.0" prefWidth="372.0" promptText="juanitolocochon21@gmail.com" />
+      <TextField fx:id="tfCorreo" layoutX="52.0" layoutY="430.0" prefHeight="51.0" prefWidth="372.0" promptText="juanitolocochon21@gmail.com" />
       <Label layoutX="63.0" layoutY="501.0" text="Direccion">
          <font>
             <Font name="System Bold" size="30.0" />

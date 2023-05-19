@@ -28,7 +28,7 @@ public class FXMLAdministracionEmpleadosController implements Initializable {
 
     @FXML
     private void clicIrConsultarEmpleado(ActionEvent event) {
-            Node source = (Node) event.getSource();
+        Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
         stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLInformacionEmpleado.fxml"));
         stagePrincipal.setTitle("Información de empleado");
@@ -39,7 +39,7 @@ public class FXMLAdministracionEmpleadosController implements Initializable {
 
     @FXML
     private void clicIrModifcarEmpleado(ActionEvent event) {
-           Node source = (Node) event.getSource();
+        Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
         stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLModificarEmpleado.fxml"));
         stagePrincipal.setTitle("Modificación de empleado");
@@ -49,7 +49,7 @@ public class FXMLAdministracionEmpleadosController implements Initializable {
 
     @FXML
     private void clicIrDarDeBajaEmpleado(ActionEvent event) {
-         Node source = (Node) event.getSource();
+        Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
         stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLBajaEmpleado.fxml"));
         stagePrincipal.setTitle("Baja de empleado");

@@ -3,7 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/controladores/FXMLInformacionPedidoController.java</file>
             <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/SGAPT.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/dao/EmpleadoDAO.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/controladores/FXMLInformacionEmpleadoController.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/controladores/FXMLBajaEmpleadoController.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/controladores/FXMLAdministracionEmpleadosController.java</file>
         </group>
     </open-files>
 </project-private>
