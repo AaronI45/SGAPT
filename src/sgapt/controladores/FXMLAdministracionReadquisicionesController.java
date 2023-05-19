@@ -29,7 +29,7 @@ import sgapt.modelo.pojo.Sucursal;
 import sgapt.util.Constantes;
 import sgapt.util.Utilidades;
 
-public class FXMLReadquisicionSucursalesController implements Initializable {
+public class FXMLAdministracionReadquisicionesController implements Initializable {
 
     @FXML
     private TableView<Producto> tvProductos;
@@ -333,8 +333,8 @@ public class FXMLReadquisicionSucursalesController implements Initializable {
     private void clicBtnRegresar(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("/sgapt/vistas/FXMLAdministracionInventarioProductos.fxml"));
-        stagePrincipal.setTitle("Administración de inventario");
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));
+        stagePrincipal.setTitle("Home");
         stagePrincipal.show();
     }
     

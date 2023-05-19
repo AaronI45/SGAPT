@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" onKeyTyped="#permitirInputSoloNumeros" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.controladores.FXMLReadquisicionSucursalesController">
+<AnchorPane id="AnchorPane" onKeyTyped="#permitirInputSoloNumeros" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.controladores.FXMLAdministracionReadquisicionesController">
    <children>
       <Label layoutX="73.0" layoutY="131.0" text="Origen">
          <font>

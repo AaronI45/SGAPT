@@ -29,7 +29,6 @@ public class FXMLMenuPrincipalAdminController implements Initializable {
         stagePrincipal.show();        
     }
 
-    @FXML
     private void clicIrAdminInventario(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
@@ -50,4 +49,31 @@ public class FXMLMenuPrincipalAdminController implements Initializable {
             stagePrincipal.show();
         }
     }    
+
+    @FXML
+    private void clicIrAdminReadquisiciones(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionReadquisiciones.fxml"));
+        stagePrincipal.setTitle("Administracion de readquisiciones");
+        stagePrincipal.show();       
+    }
+
+    @FXML
+    private void clicIrAdminPedidos(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPedidos.fxml"));
+        stagePrincipal.setTitle("Administracion de pedidos");
+        stagePrincipal.show();
+    }
+
+    @FXML
+    private void clicIrAdminProductos(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionProductos.fxml"));
+        stagePrincipal.setTitle("Administracion de productos");
+        stagePrincipal.show();
+    }
 }
