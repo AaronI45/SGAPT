@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="SGAPT.jar" size="2461827" download="eager" />
+    <jar href="SGAPT.jar" size="2455174" download="eager" />
     <jar href="lib\mysql-connector-java-5.1.49.jar" size="1006904" download="eager" />
   </resources>
   <jfx:javafx-desc  width="800" height="600" main-class="sgapt.SGAPT"  name="SGAPT" />

@@ -6,11 +6,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import sgapt.modelo.pojo.Pedido;
 import sgapt.util.Utilidades;
 
-public class FXMLModificacionPedidoController implements Initializable {
+public class FXMLFormularioPedidoController implements Initializable {
 
+    @FXML
+    private Label lbTitulo;
+    private boolean esEdicion;
+    private Pedido pedidoEdicion;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -23,6 +30,23 @@ public class FXMLModificacionPedidoController implements Initializable {
         stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPedidos.fxml"));
         stagePrincipal.setTitle("Administracion de pedidos");
         stagePrincipal.show();
+    }
+    
+    public void inicializarInformacionFormulario(boolean esEdicion, Pedido pedidoEdicion){
+        this.esEdicion = esEdicion;
+        this.pedidoEdicion = pedidoEdicion;
+        
+        if (esEdicion) {
+            lbTitulo.setText("Modificación de pedido #"+ pedidoEdicion.getIdPedido());
+            cargarInformacionEdicion();
+            
+        } else {
+            lbTitulo.setText("Formulario de pedido");
+        }
+    }
+    
+    private void cargarInformacionEdicion() {
+        
     }
     
 }

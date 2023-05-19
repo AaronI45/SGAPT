@@ -103,14 +103,18 @@ public class FXMLInformacionInventarioController implements Initializable {
             switch (pr.getCodigoRespuesta()){
                     case Constantes.OPERACION_EXITOSA:
                         for (Producto produto : pr.getProductos()){
-                            ByteArrayInputStream input = new ByteArrayInputStream(produto.getFoto());
-                            Image imagenProducto = new Image(input);
-                            ImageView visualizacionProducto = new ImageView(imagenProducto);
-                            visualizacionProducto.setFitHeight(80);
-                            visualizacionProducto.setFitWidth(80);
-                            produto.setVisualizacionFoto(visualizacionProducto);
-                            listaProductos.add(produto);
+                            try{
+                                ByteArrayInputStream input = new ByteArrayInputStream(produto.getFoto());
+                                Image imagenProducto = new Image(input);
+                                ImageView visualizacionProducto = new ImageView(imagenProducto);
+                                visualizacionProducto.setFitHeight(80);
+                                visualizacionProducto.setFitWidth(80);
+                                produto.setVisualizacionFoto(visualizacionProducto);
+                            }catch(NullPointerException e){
+                                System.out.println("no hay imagen para el producto");
+                            }
                         }
+                        listaProductos.addAll(pr.getProductos());                                
                         tvProductos.setItems(listaProductos);
                     break;
                     case Constantes.ERROR_CONSULTA:

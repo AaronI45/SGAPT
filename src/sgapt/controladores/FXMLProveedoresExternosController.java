@@ -1,18 +1,25 @@
 package sgapt.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.ProveedorDAO;
 import sgapt.modelo.pojo.Producto;
@@ -34,7 +41,7 @@ public class FXMLProveedoresExternosController implements Initializable {
     @FXML
     private TableColumn colDireccion;
 
-    private ObservableList<Proveedor> listaProveedores;
+    private ObservableList<Proveedor> proveedores;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -50,12 +57,12 @@ public class FXMLProveedoresExternosController implements Initializable {
     }
     
     private void cargarInformacionTabla() {
-        listaProveedores = FXCollections.observableArrayList();
+        proveedores = FXCollections.observableArrayList();
         ProveedorRespuesta respuestaBD = ProveedorDAO.obtenerInformacionProveedor();
         switch (respuestaBD.getCodigoRespuesta()) {
             case Constantes.OPERACION_EXITOSA:
-                    listaProveedores.addAll(respuestaBD.getProveedores());
-                    tvProveedores.setItems(listaProveedores);
+                    proveedores.addAll(respuestaBD.getProveedores());
+                    tvProveedores.setItems(proveedores);
                 break;
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Sin conexión", 
@@ -84,6 +91,30 @@ public class FXMLProveedoresExternosController implements Initializable {
         final Proveedor proveedorSeleccionado = tvProveedores.
                 getSelectionModel().getSelectedItems().get(0);
         proveedorSeleccionado.getIdProveedor();
+        
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLFormularioPedido.fxml"));
+        stagePrincipal.setTitle("Formulario de pedido");
+        stagePrincipal.show();
+        
+//        try {
+//            FXMLLoader accesoControlador = new FXMLLoader
+//            (JFXControlEscuela.class.getResource("vistas/FXMLAlumnoFormulario.fxml"));
+//            Parent vista;
+//            vista = accesoControlador.load();
+//            
+//            FXMLAlumnoFormularioController formulario = accesoControlador.getController();
+//            formulario.inicializarInformacionFormulario(esEdicion, alumnoEdicion);
+//   
+//            Stage escenarioFormulario = new Stage();      
+//            escenarioFormulario.setScene(new Scene(vista));
+//            escenarioFormulario.setTitle("Formulario");
+//            escenarioFormulario.initModality(Modality.APPLICATION_MODAL);
+//            escenarioFormulario.showAndWait();
+//        } catch (IOException ex) {
+//            Logger.getLogger(FXMLAlumnoAdminController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
     
 }
