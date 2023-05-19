@@ -4,3 +4,10 @@ dist/SGAPT.jnlp
 nbproject/private/private.xml
 src/sgapt/mnodelo/conexionBD.java
 build/built-jar.properties
+build/built-jar.properties
+nbproject/private/private.properties
+nbproject/private/private.properties
+build/built-jar.properties
+nbproject/private/private.properties
+dist/SGAPT.jar
+*.jar
