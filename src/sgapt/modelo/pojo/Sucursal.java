@@ -51,7 +51,6 @@ public class Sucursal {
     @Override
     public String toString() {
         return estado;
-        //estado + " " + ciudad;
     }
     
     
