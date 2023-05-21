@@ -108,5 +108,32 @@ public class PromocionDAO {
         }
         return respuesta;
     } 
+       
+     public static int modificarPromocion(Promocion promocionEdicion) {
+        int respuesta;
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null) {
+            try {
+                String sentencia = "UPDATE promocion SET porcentajeDescuento = ?, fechaInicio = ?, "
+                       + "fechaFin = ?, Producto_IdProducto = ? "
+                       + "WHERE idPromocion = ?";
+               PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
+               prepararSentencia.setDouble(1, promocionEdicion.getPorcentajeDescuento());
+               prepararSentencia.setString(2,promocionEdicion.getFechaInicio());
+               prepararSentencia.setString(3, promocionEdicion.getFechaFin());
+               prepararSentencia.setInt(4, promocionEdicion.getIdProducto());
+               prepararSentencia.setInt(5, promocionEdicion.getIdPromocion());
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
+                        Constantes.ERROR_CONSULTA;
+                conexionBD.close();
+            } catch (SQLException e) {
+                respuesta = Constantes.ERROR_CONSULTA;
+            }
+        } else {
+            respuesta = Constantes.ERROR_CONEXION;
+        }
+        return respuesta;
+    }     
     
 }
