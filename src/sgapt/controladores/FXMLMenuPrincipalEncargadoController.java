@@ -6,14 +6,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import sgapt.util.Utilidades;
 
 public class FXMLMenuPrincipalEncargadoController implements Initializable {
 
     @FXML
-    private Label lbTitulo;
+    private Button btnSalir1;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

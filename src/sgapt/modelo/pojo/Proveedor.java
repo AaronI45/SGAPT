@@ -1,21 +1,53 @@
 package sgapt.modelo.pojo;
 
 public class Proveedor {
+    private int idProveedor;
+    private String estado;
+    private String ciudad;
+    private String direccion;
     private String nombre;
-    private int telefono;
-    private int correo;
-    private int direccion;
-    private int idInventario;
 
     public Proveedor() {
     }
 
-    public Proveedor(String nombre, int telefono, int correo, int direccion, int idInventario) {
-        this.nombre = nombre;
-        this.telefono = telefono;
-        this.correo = correo;
+    public Proveedor(int idProveedor, String estado, String ciudad, String direccion, String nombre) {
+        this.idProveedor = idProveedor;
+        this.estado = estado;
+        this.ciudad = ciudad;
         this.direccion = direccion;
-        this.idInventario = idInventario;
+        this.nombre = nombre;
+    }
+
+    public int getIdProveedor() {
+        return idProveedor;
+    }
+
+    public void setIdProveedor(int idProveedor) {
+        this.idProveedor = idProveedor;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getNombre() {
@@ -26,42 +58,9 @@ public class Proveedor {
         this.nombre = nombre;
     }
 
-    public int getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
-    }
-
-    public int getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(int correo) {
-        this.correo = correo;
-    }
-
-    public int getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(int direccion) {
-        this.direccion = direccion;
-    }
-
-    public int getIdInventario() {
-        return idInventario;
-    }
-
-    public void setIdInventario(int idInventario) {
-        this.idInventario = idInventario;
-    }
-
     @Override
     public String toString() {
-        return "Proveedor{" + "nombre=" + nombre + ", telefono=" + telefono + ", correo=" + correo + ", direccion=" + direccion + ", idInventario=" + idInventario + '}';
+        return "Proveedor{" + "idProveedor=" + idProveedor + ", estado=" + estado + ", ciudad=" + ciudad + ", direccion=" + direccion + ", nombre=" + nombre + '}';
     }
-    
-    
+
 }

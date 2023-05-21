@@ -102,7 +102,6 @@ public class FXMLAdministracionPedidosController implements Initializable {
     private void recuperarIdPedidoSeleccionado() {
         final Pedido pedido = getTablaPedidosSeleccionada();
         idPedidoSeleccionadoEnTabla = pedido.getIdPedido();
-        System.out.println("Cambio de id de pedido a = " + idPedidoSeleccionadoEnTabla);
     }
     
     public Pedido getTablaPedidosSeleccionada() {
@@ -121,8 +120,8 @@ public class FXMLAdministracionPedidosController implements Initializable {
     private void clicBtnRegresar(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionInventarioProductos.fxml"));
-        stagePrincipal.setTitle("Administración de inventario");
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalAdmin.fxml"));
+        stagePrincipal.setTitle("Home");
         stagePrincipal.show();
     }
 

@@ -41,6 +41,7 @@ public class SucursalDAO {
                 }
                 sucursales.setSucursales(sucursalesConsulta);
                 sucursales.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                conexionBD.close();
             } catch (SQLException e) {
                 sucursales.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
             }

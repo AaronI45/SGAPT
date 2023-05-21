@@ -50,7 +50,7 @@ public class ProductoDAO {
                     producto.setRequiereReceta(resultado.getBoolean("requiereReceta"));
                     producto.setNumeroLote(resultado.getInt("idLote"));
                     producto.setPrecio(resultado.getInt("precio"));
-                    //producto.setFoto(resultado.getBytes("foto"));
+                    producto.setFoto(resultado.getBytes("foto"));
                     productosConsulta.add(producto);
                 }
                 productos.setProductos(productosConsulta);
@@ -94,7 +94,6 @@ public class ProductoDAO {
         }
         return productos;
     }
-
     public static ResultadoOperacion eliminarProducto (Producto productoAEliminar) throws SQLException{
         ResultadoOperacion resultadoEliminacion = new ResultadoOperacion();
         resultadoEliminacion.setError(true);
