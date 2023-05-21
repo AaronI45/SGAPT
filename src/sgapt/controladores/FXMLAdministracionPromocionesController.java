@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
@@ -21,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sgapt.interfaz.INotificacionOperacion;
 import sgapt.modelo.dao.PromocionDAO;
 import static sgapt.modelo.dao.PromocionDAO.darDeBajaPromocion;
 import sgapt.modelo.pojo.Promocion;
@@ -28,7 +30,7 @@ import sgapt.modelo.pojo.PromocionRespuesta;
 import sgapt.util.Constantes;
 import sgapt.util.Utilidades;
 
-public class FXMLAdministracionPromocionesController implements Initializable {
+public class FXMLAdministracionPromocionesController implements Initializable, INotificacionOperacion {
     @FXML
     private TableView<Promocion> tvPromocion;
     @FXML
@@ -46,6 +48,8 @@ public class FXMLAdministracionPromocionesController implements Initializable {
     @FXML
     private TableColumn columnPrecio;
 
+    private INotificacionOperacion interfazNotificacion;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
@@ -68,11 +72,12 @@ public class FXMLAdministracionPromocionesController implements Initializable {
 
     @FXML
     private void clicBtnCrearProm(ActionEvent event) {
-        Node source = (Node) event.getSource();
+        irFormulario(false, null);
+        /*Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLFormularioPromocion1.fxml"));
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLFormularioPromocion2.fxml"));
         stagePrincipal.setTitle("Formulario de promoción");
-        stagePrincipal.show();
+        stagePrincipal.show();*/
     }
     
      private void configurarTabla() {
@@ -110,8 +115,8 @@ public class FXMLAdministracionPromocionesController implements Initializable {
         int posicion = tvPromocion.getSelectionModel().getSelectedIndex();
         if(posicion!= -1){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmación de readquisición");
-                alert.setHeaderText("¿Está seguro de que desea realizar la readquisición?");
+                alert.setTitle("Confirmación de expiracion");
+                alert.setHeaderText("¿Está seguro de que desea expirar la promoción?");
 
                 ButtonType btnConfirmar = new ButtonType("Confirmar");
                 ButtonType btnCancelar = new ButtonType("Cancelar");
@@ -126,13 +131,57 @@ public class FXMLAdministracionPromocionesController implements Initializable {
                 }
                 cargarInformacionTabla();
         }else{
-            Utilidades.mostrarDialogoSimple("Selecciona un alumno", "Selecciona el registro en la tabla del alumno para su edicion", 
+            Utilidades.mostrarDialogoSimple("Selecciona una promoción", "Selecciona el registro en la tabla de promociones para su expiracion", 
                     Alert.AlertType.WARNING);
             }
     }
     
     private void expirar(int idPromocion){
         darDeBajaPromocion(idPromocion);
+    }
+    
+    @FXML
+    private void clicBtnModificar(ActionEvent event) {
+        int posicion = tvPromocion.getSelectionModel().getSelectedIndex();
+        if(posicion!= -1){
+            irFormulario(true, promociones.get(posicion));
+        }else{
+            Utilidades.mostrarDialogoSimple("Selecciona una promocion", "Selecciona el registro en la tabla de la promocion para su edicion", 
+                    Alert.AlertType.WARNING);
+            }
+    }
+    
+     private void irFormulario(boolean esEdicion, Promocion promocionEdicion){
+         try{
+             FXMLLoader accesoControlador = new FXMLLoader
+                     (sgapt.SGAPT.class.getResource("vistas/FXMLFormularioPromocion2.fxml"));
+             Parent vista = accesoControlador.load();
+             FXMLFormularioPromocionController formulario = accesoControlador.getController();
+             
+             formulario.inicializarInformacionFormulario(esEdicion, promocionEdicion, this);
+             
+             Stage escenarioFormulario = new Stage();
+             escenarioFormulario.setScene(new Scene(vista));
+             escenarioFormulario.setTitle("Formulario");
+             escenarioFormulario.initModality(Modality.APPLICATION_MODAL);
+             escenarioFormulario.showAndWait();
+         }catch(IOException ex){
+             Logger.getLogger(FXMLAdministracionPromocionesController.class.getName()).log(Level.SEVERE, null, ex);
+         }
+    }
+
+    @Override
+    public void notificarOperacionGuardar() {
+        cargarInformacionTabla();
+         //Utilidades.mostrarDialogoSimple("Notificacion", 
+            //    "Promocion del producto "+nombreProducto+" guardada", Alert.AlertType.INFORMATION);
+    }
+
+    @Override
+    public void notificarOperacionActualizar() {
+        cargarInformacionTabla();
+        //Utilidades.mostrarDialogoSimple("Notificacion", 
+               // "Promocion del producto "+nombreProducto+" actualizada", Alert.AlertType.INFORMATION);
     }
     
 }
