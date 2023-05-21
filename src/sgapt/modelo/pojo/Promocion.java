@@ -17,8 +17,10 @@ public class Promocion {
     private String producto;
     private float productoPrecio;
     private float precioDescuento;
+    private int idSucursal;
+    private byte[] foto;
 
-    public Promocion(int idPromocion, double porcentajeDescuento, String fechaInicio, String fechaFin, int idProducto, String producto, float productoPrecio, float precioDescuento) {
+    public Promocion(int idPromocion, double porcentajeDescuento, String fechaInicio, String fechaFin, int idProducto, String producto, float productoPrecio, float precioDescuento, int idSucursal, byte[] foto) {
         this.idPromocion = idPromocion;
         this.porcentajeDescuento = porcentajeDescuento;
         this.fechaInicio = fechaInicio;
@@ -27,6 +29,8 @@ public class Promocion {
         this.producto = producto;
         this.productoPrecio = productoPrecio;
         this.precioDescuento = precioDescuento;
+        this.idSucursal = idSucursal;
+        this.foto = foto;
     }
 
     public Promocion(){
@@ -96,11 +100,21 @@ public class Promocion {
     public void setPrecioDescuento(float precioDescuento) {
         this.precioDescuento = precioDescuento;
     }
+
+    public int getIdSucursal() {
+        return idSucursal;
+    }
+
+    public void setIdSucursal(int idSucursal) {
+        this.idSucursal = idSucursal;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
     
-    /*private float descuento(float productoPrecio, double porcentajeDescuento){
-        float descuentoPro;
-        float porDesc=(float)porcentajeDescuento;
-        descuentoPro = productoPrecio * porDesc;
-        return descuentoPro;
-    }*/
 }

@@ -20,7 +20,7 @@ import sgapt.util.Constantes;
  * @author super
  */
 public class SucursalDAO {
-    public static SucursalRespuesta recuperarSucursales (){
+   public static SucursalRespuesta recuperarSucursales (){
         SucursalRespuesta sucursales = new SucursalRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null){
