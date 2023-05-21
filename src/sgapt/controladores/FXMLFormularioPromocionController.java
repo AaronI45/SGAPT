@@ -89,7 +89,6 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
     private void validarCamposRegistros(){
         String porcentajeDescuento = tfPorcentaje.getText();
         double descuento = Double.parseDouble(porcentajeDescuento);
-        //LocalDate fechaInicio = dtFechaInicio.getValue();
         LocalDate fechaInicio = dpFechaInicio.getValue();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LLLL-dd");
         String fomrStringInicio = fechaInicio.format(formatter);
@@ -274,7 +273,7 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
 
     private void cargarInformacionProducto(Sucursal sucursal){
         productos = FXCollections.observableArrayList();
-        ProductoRespuesta productoBD=ProductoDAO.recuperarProductosEnSucursal(sucursal);
+        ProductoRespuesta productoBD=ProductoDAO.obtenerProductoPorSucursal(sucursal);
         switch(productoBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", "Error en la conexion con la base de datos",

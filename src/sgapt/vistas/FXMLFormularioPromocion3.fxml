@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
 <AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.controladores.FXMLFormularioPromocionController">
    <children>
@@ -33,9 +38,9 @@
       <Label fx:id="lbErrorFechaInicio" layoutX="56.0" layoutY="396.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
       <Label fx:id="lbErrorFechaFin" layoutX="63.0" layoutY="533.0" prefHeight="21.0" prefWidth="218.0" textFill="RED" />
       <Label fx:id="lbErrorSucursal" layoutX="688.0" layoutY="235.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
-      <ComboBox fx:id="cbIdProducto" layoutX="935.0" layoutY="189.0" prefWidth="150.0" />
+      <ComboBox fx:id="cbIdProducto" layoutX="935.0" layoutY="189.0" prefWidth="150.0" stylesheets="@../css/estilos.css" />
       <Label layoutX="935.0" layoutY="162.0" text="Producto " />
-      <ComboBox fx:id="cbSucursal" layoutX="688.0" layoutY="189.0" prefWidth="150.0" />
+      <ComboBox fx:id="cbSucursal" layoutX="688.0" layoutY="189.0" prefWidth="150.0" stylesheets="@../css/estilos.css" />
       <Label layoutX="688.0" layoutY="162.0" text="Sucursal" />
       <Label fx:id="lbErrorProducto" layoutX="938.0" layoutY="225.0" prefHeight="21.0" prefWidth="177.0" textFill="RED" />
       <ImageView fitHeight="61.0" fitWidth="220.0" layoutX="1040.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">

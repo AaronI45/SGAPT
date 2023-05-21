@@ -50,11 +50,20 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <ImageView fitHeight="206.0" fitWidth="200.0" layoutX="1048.0" layoutY="295.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="ivProducto" fitHeight="206.0" fitWidth="200.0" layoutX="1048.0" layoutY="295.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="803.0" layoutY="124.0" mnemonicParsing="false" onAction="#clicBtnModificar" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Modificar promocion">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
+      </Button>
+      <Button fx:id="btImagen" layoutX="581.0" layoutY="107.0" mnemonicParsing="false" onAction="#clicMostrarImagen" prefHeight="59.0" prefWidth="84.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css">
+         <graphic>
+            <ImageView fitHeight="49.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/galeria-de-imagenes.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
    </children>
 </AnchorPane>

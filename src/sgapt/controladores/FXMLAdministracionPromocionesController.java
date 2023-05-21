@@ -1,5 +1,6 @@
 package sgapt.controladores;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -16,15 +17,19 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sgapt.interfaz.INotificacionOperacion;
 import sgapt.modelo.dao.PromocionDAO;
 import static sgapt.modelo.dao.PromocionDAO.darDeBajaPromocion;
+import sgapt.modelo.pojo.Producto;
 import sgapt.modelo.pojo.Promocion;
 import sgapt.modelo.pojo.PromocionRespuesta;
 import sgapt.util.Constantes;
@@ -49,6 +54,12 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
     private TableColumn columnPrecio;
 
     private INotificacionOperacion interfazNotificacion;
+    @FXML
+    private ImageView ivProducto;
+    
+    private Producto producto;
+    @FXML
+    private Button btImagen;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -60,8 +71,8 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
     private void clicBtnRegresar(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLMenuPrincipalEncargado1.fxml"));
-        stagePrincipal.setTitle("Home");
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLBannerPromociones.fxml"));
+        stagePrincipal.setTitle("Promociones");
         stagePrincipal.show();
     }
     
@@ -154,10 +165,9 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
      private void irFormulario(boolean esEdicion, Promocion promocionEdicion){
          try{
              FXMLLoader accesoControlador = new FXMLLoader
-                     (sgapt.SGAPT.class.getResource("vistas/FXMLFormularioPromocion2.fxml"));
-             Parent vista = accesoControlador.load();
+                     (sgapt.SGAPT.class.getResource("vistas/FXMLFormularioPromocion3.fxml"));
+             Parent vista= accesoControlador.load();
              FXMLFormularioPromocionController formulario = accesoControlador.getController();
-             
              formulario.inicializarInformacionFormulario(esEdicion, promocionEdicion, this);
              
              Stage escenarioFormulario = new Stage();
@@ -182,6 +192,22 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
         cargarInformacionTabla();
         //Utilidades.mostrarDialogoSimple("Notificacion", 
                // "Promocion del producto "+nombreProducto+" actualizada", Alert.AlertType.INFORMATION);
+    }
+    
+    private void mostrarImagenProducto(){
+        int posicion = tvPromocion.getSelectionModel().getSelectedIndex();
+        if(posicion!= -1){
+            ByteArrayInputStream inputFoto = new ByteArrayInputStream(promociones.get(posicion).getFoto());
+            Image imgFotoAlumno = new Image(inputFoto);
+            ivProducto.setImage(imgFotoAlumno);
+        }else{
+            System.out.println("hola");
+        }        
+    }
+
+    @FXML
+    private void clicMostrarImagen(ActionEvent event) {
+        mostrarImagenProducto();
     }
     
 }
