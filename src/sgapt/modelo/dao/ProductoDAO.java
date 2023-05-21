@@ -131,13 +131,13 @@ public class ProductoDAO {
         return resultadoEdicion;
     }
 
-    public static ProductoRespuesta obtenerProductoPorSucursal(Sucursal sucursal) {
+    public static ProductoRespuesta obtenerProductoPorSucursal(Sucursal sucursal){
         ProductoRespuesta productos = new ProductoRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null)
         {
             try{
-                String consulta = "SELECT `producto_almacenado`.*, `producto`.*, `almacen`.*, `lote`.`fechaDeCaducidad`, `lote`.`idLote`\n" +
+                String consulta = "SELECT DISTINCT `producto_almacenado`.*, `producto`.*, `almacen`.*, `lote`.`fechaDeCaducidad`, `lote`.`idLote`\n" +
                         "FROM `producto_almacenado` \n" +
                         "LEFT JOIN `producto` ON `producto_almacenado`.`Producto_idProducto` = `producto`.`idProducto` \n" +
                         "LEFT JOIN `almacen` ON `producto_almacenado`.`Almacen_idAlmacen` = `almacen`.`idAlmacen` \n" +
@@ -173,5 +173,38 @@ public class ProductoDAO {
         }
         return productos;
     }
-
+    
+    public static ProductoRespuesta obtenerProductos(){
+        ProductoRespuesta productos = new ProductoRespuesta();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null)
+        {
+            try{
+                String consulta = "SELECT idProducto, nombre, requiereReceta, precio, disponibilidad, tipoProducto FROM producto";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                ResultSet resultado = prepararSentencia.executeQuery();
+                ArrayList<Producto> productosConsulta = new ArrayList();
+                while(resultado.next()){
+                    Producto producto = new Producto();
+                    producto.setIdProducto(resultado.getInt("idProducto"));
+                    producto.setNombre(resultado.getString("nombre"));
+                    producto.setDisponibilidad(resultado.getString("disponibilidad"));
+                    producto.setTipoProducto(resultado.getString("tipoProducto"));
+                    producto.setRequiereReceta(resultado.getBoolean("requiereReceta"));
+                    producto.setPrecio(resultado.getInt("precio"));
+                    productosConsulta.add(producto);
+                }
+                productos.setProductos(productosConsulta);
+                productos.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+                conexionBD.close();
+            }catch(SQLException e){
+                productos.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
+            }
+        }
+        else{
+            productos.setCodigoRespuesta(Constantes.ERROR_CONEXION);
+        }
+        return productos;
+    }
+    
 }

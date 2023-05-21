@@ -71,14 +71,15 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        cargarInformacionSucursal();
-       cbSucursal.valueProperty().addListener(new ChangeListener<Sucursal>() {
+       /*cbSucursal.valueProperty().addListener(new ChangeListener<Sucursal>() {
           @Override
           public void changed(ObservableValue<? extends Sucursal> observable, Sucursal oldValue, Sucursal newValue){
              if(newValue != null){
                  cargarInformacionProducto(newValue);
              }
           }
-       });
+       });*/
+       cargarInformacionProducto();
     }
 
     @FXML
@@ -96,7 +97,6 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
         String formStringFin = fechaFin.format(formatter);
         SingleSelectionModel<Producto> producto= cbIdProducto.getSelectionModel();
         int idProducto = cbIdProducto.getSelectionModel().getSelectedItem().getIdProducto();
-        int Sucursal = cbSucursal.getSelectionModel().getSelectedItem().getIdInventario();
         boolean sonValidos=true;
         boolean sinDisponibilidad;
         //TO DO Validaciones
@@ -271,9 +271,9 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
         }
     }
 
-    private void cargarInformacionProducto(Sucursal sucursal){
+    private void cargarInformacionProducto(){
         productos = FXCollections.observableArrayList();
-        ProductoRespuesta productoBD=ProductoDAO.obtenerProductoPorSucursal(sucursal);
+        ProductoRespuesta productoBD=ProductoDAO.obtenerProductos();
         switch(productoBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", "Error en la conexion con la base de datos",

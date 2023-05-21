@@ -33,7 +33,7 @@ public class SesionDAO
                     usuarioVerificado.setApellidoMaterno(resultado.getString("apellidoMaterno"));
                     usuarioVerificado.setTipoEmpleado(resultado.getString("tipoUsuario"));
                     usuarioVerificado.setCorreo(resultado.getString("correoElectronico"));
-                    usuarioVerificado.setFoto(resultado.getBytes("fotografia"));
+                    //usuarioVerificado.setFoto(resultado.getBytes("fotografia"));
                     usuarioVerificado.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
                 }
                 conexion.close();
