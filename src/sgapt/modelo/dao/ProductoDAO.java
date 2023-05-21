@@ -28,7 +28,7 @@ public class ProductoDAO {
         if (conexionBD != null)
         {
             try{
-                String consulta = "SELECT `producto_almacenado`.*, `producto`.*, `almacen`.*, `lote`.`fechaDeCaducidad`, `lote`.`idLote`\n" +
+                String consulta = "SELECT `producto_almacenado`.*, `producto`.*, `almacen`.*, `lote`.`fechaDeCaducidad`, `lote`.`numeroDeLote`\n" +
                         "FROM `producto_almacenado` \n" +
                         "LEFT JOIN `producto` ON `producto_almacenado`.`Producto_idProducto` = `producto`.`idProducto` \n" +
                         "LEFT JOIN `almacen` ON `producto_almacenado`.`Almacen_idAlmacen` = `almacen`.`idAlmacen` \n" +
@@ -48,7 +48,7 @@ public class ProductoDAO {
                     producto.setTipoProducto(resultado.getString("tipoProducto"));
                     producto.setFechaCaducidad(resultado.getDate("fechaDeCaducidad"));
                     producto.setRequiereReceta(resultado.getBoolean("requiereReceta"));
-                    producto.setNumeroLote(resultado.getInt("idLote"));
+                    producto.setNumeroLote(resultado.getInt("numeroDeLote"));
                     producto.setPrecio(resultado.getInt("precio"));
                     producto.setFoto(resultado.getBytes("foto"));
                     productosConsulta.add(producto);
