@@ -23,13 +23,13 @@ import sgapt.util.Constantes;
  */
 public class ProductoDAO {
     public static ProductoRespuesta recuperarProductosEnSucursal (Sucursal sucursal){
-        ProductoRespuesta productos = new ProductoRespuesta(); 
+        ProductoRespuesta productos = new ProductoRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null)
         {
             try{
-                String consulta = "SELECT lote_almacenado.*, producto.*, almacen.*, " + 
-                        "lote.fechaDeCaducidad, lote.idLote " + 
+                String consulta = "SELECT lote_almacenado.*, producto.*, almacen.*, " +
+                        "lote.fechaDeCaducidad, lote.idLote " +
                         "FROM lote_almacenado " +
                         "LEFT JOIN lote ON lote_almacenado.Lote_idLote = lote.idLote " +
                         "LEFT JOIN producto ON producto.idProducto = lote.Producto_idProducto " +
@@ -59,16 +59,16 @@ public class ProductoDAO {
                 conexionBD.close();
             }catch(SQLException e){
                 productos.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
-            }      
+            }
         }
         else{
             productos.setCodigoRespuesta(Constantes.ERROR_CONEXION);
         }
         return productos;
     }
-    
+
     public static ProductoRespuesta mostrarDisponibilidad (Producto product){
-        ProductoRespuesta productos = new ProductoRespuesta(); 
+        ProductoRespuesta productos = new ProductoRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null)
         {
@@ -88,14 +88,13 @@ public class ProductoDAO {
                 conexionBD.close();
             }catch(SQLException e){
                 productos.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
-            }      
+            }
         }
         else{
             productos.setCodigoRespuesta(Constantes.ERROR_CONEXION);
         }
         return productos;
     }
-    
     public static ResultadoOperacion eliminarProducto (Producto productoAEliminar) throws SQLException{
         ResultadoOperacion resultadoEliminacion = new ResultadoOperacion();
         resultadoEliminacion.setError(true);
@@ -122,28 +121,28 @@ public class ProductoDAO {
             }
         }else{
             resultadoEliminacion.setMensaje("No hay conexión a la base de datos");
-            
+
         }
         return resultadoEliminacion;
     }
-    
+
     public static ResultadoOperacion editarEstadoProducto (Producto productoAEditar){
         ResultadoOperacion resultadoEdicion = new ResultadoOperacion();
-        
+
         return resultadoEdicion;
-    }   
-    
+    }
+
     public static ProductoRespuesta recuperarProductosEnAlmacen (int idAlmacen){
-        ProductoRespuesta productos = new ProductoRespuesta(); 
+        ProductoRespuesta productos = new ProductoRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null)
         {
             try{
-                String consulta = "SELECT idProducto, nombre, disponibilidad, " + 
+                String consulta = "SELECT idProducto, nombre, disponibilidad, " +
                         "tipoProducto, lote.numeroDeLote, lote.idLote, lote_almacenado.cantidad " +
-                        "FROM producto INNER JOIN lote ON producto.idProducto = " + 
-                        "lote.Producto_idProducto INNER JOIN lote_almacenado ON " + 
-                        "lote.idLote = lote_almacenado.Lote_idLote " + 
+                        "FROM producto INNER JOIN lote ON producto.idProducto = " +
+                        "lote.Producto_idProducto INNER JOIN lote_almacenado ON " +
+                        "lote.idLote = lote_almacenado.Lote_idLote " +
                         "WHERE lote_almacenado.Almacen_idAlmacen = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idAlmacen);
@@ -165,7 +164,7 @@ public class ProductoDAO {
                 conexionBD.close();
             }catch(SQLException e){
                 productos.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
-            }      
+            }
         }
         else{
             productos.setCodigoRespuesta(Constantes.ERROR_CONEXION);
