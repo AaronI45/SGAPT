@@ -13,7 +13,8 @@ public class Producto {
     private Sucursal sucursal;
     private boolean requiereReceta;
     private int precio;
-    private int numeroLote;
+    private int idLote;
+    private String numeroLote;
     private Date fechaCaducidad;
     private byte[] foto;
     private ImageView visualizacionFoto;
@@ -21,7 +22,7 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(int idProducto, String nombre, String tipoProducto, String disponibilidad, int cantidad, Sucursal sucursal, boolean requiereReceta, int precio, int numeroLote, Date fechaCaducidad, byte[] foto, ImageView visualizacionFoto) {
+    public Producto(int idProducto, String nombre, String tipoProducto, String disponibilidad, int cantidad, Sucursal sucursal, boolean requiereReceta, int precio, int idLote, String numeroLote, Date fechaCaducidad, byte[] foto, ImageView visualizacionFoto) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.tipoProducto = tipoProducto;
@@ -30,6 +31,7 @@ public class Producto {
         this.sucursal = sucursal;
         this.requiereReceta = requiereReceta;
         this.precio = precio;
+        this.idLote = idLote;
         this.numeroLote = numeroLote;
         this.fechaCaducidad = fechaCaducidad;
         this.foto = foto;
@@ -108,12 +110,12 @@ public class Producto {
         this.precio = precio;
     }
 
-    public int getNumeroLote() {
-        return numeroLote;
+    public int getIdLote() {
+        return idLote;
     }
 
-    public void setNumeroLote(int numeroLote) {
-        this.numeroLote = numeroLote;
+    public void setIdLote(int idLote) {
+        this.idLote = idLote;
     }
 
     public byte[] getFoto() {
@@ -130,6 +132,14 @@ public class Producto {
 
     public void setVisualizacionFoto(ImageView visualizacionFoto) {
         this.visualizacionFoto = visualizacionFoto;
+    }
+
+    public String getNumeroLote() {
+        return numeroLote;
+    }
+
+    public void setNumeroLote(String numeroLote) {
+        this.numeroLote = numeroLote;
     }
     
     @Override

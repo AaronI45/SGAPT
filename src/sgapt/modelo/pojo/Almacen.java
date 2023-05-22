@@ -1,29 +1,37 @@
 package sgapt.modelo.pojo;
 
-public class Proveedor {
-    private int idProveedor;
+public class Almacen {
+    private int idAlmacen;
+    private int idFarmacia;
     private String estado;
     private String ciudad;
     private String direccion;
-    private String nombre;
 
-    public Proveedor() {
+    public Almacen() {
     }
 
-    public Proveedor(int idProveedor, String estado, String ciudad, String direccion, String nombre) {
-        this.idProveedor = idProveedor;
+    public Almacen(int idAlmacen, int idFarmacia, String estado, String ciudad, String direccion) {
+        this.idAlmacen = idAlmacen;
+        this.idFarmacia = idFarmacia;
         this.estado = estado;
         this.ciudad = ciudad;
         this.direccion = direccion;
-        this.nombre = nombre;
     }
 
-    public int getIdProveedor() {
-        return idProveedor;
+    public int getIdAlmacen() {
+        return idAlmacen;
     }
 
-    public void setIdProveedor(int idProveedor) {
-        this.idProveedor = idProveedor;
+    public void setIdAlmacen(int idAlmacen) {
+        this.idAlmacen = idAlmacen;
+    }
+
+    public int getIdFarmacia() {
+        return idFarmacia;
+    }
+
+    public void setIdFarmacia(int idFarmacia) {
+        this.idFarmacia = idFarmacia;
     }
 
     public String getEstado() {
@@ -50,17 +58,10 @@ public class Proveedor {
         this.direccion = direccion;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     @Override
     public String toString() {
-        return nombre;
+        return estado + "-" + ciudad;
     }
-
+    
+    
 }

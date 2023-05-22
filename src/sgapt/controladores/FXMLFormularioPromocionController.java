@@ -273,7 +273,7 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
 
     private void cargarInformacionProducto(Sucursal sucursal){
         productos = FXCollections.observableArrayList();
-        ProductoRespuesta productoBD=ProductoDAO.obtenerProductoPorSucursal(sucursal);
+        ProductoRespuesta productoBD=ProductoDAO.recuperarProductosEnSucursal(sucursal);
         switch(productoBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", "Error en la conexion con la base de datos",
