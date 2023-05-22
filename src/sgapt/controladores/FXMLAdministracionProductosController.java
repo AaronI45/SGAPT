@@ -184,10 +184,9 @@ public class FXMLAdministracionProductosController implements Initializable {
                     accesoControlador.getController();
             formulario.inicializarValores(producto);
             Scene escenaFormulario = new Scene(vista);
-            Stage escenarioNuevo = new Stage();
-            escenarioNuevo.setScene(escenaFormulario);
-            escenarioNuevo.initModality(Modality.APPLICATION_MODAL);
-            escenarioNuevo.showAndWait();
+            Stage escenario = (Stage) tvProductos.getScene().getWindow();
+            escenario.setScene(escenaFormulario);
+            formulario.inicializarCbTipoProducto();
         } catch (IOException e) {
             Utilidades.mostrarDialogoSimple("Error", "No se puede mostrar la pantalla de formulario", 
                     Alert.AlertType.ERROR);

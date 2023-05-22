@@ -7,7 +7,9 @@ package sgapt.controladores;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,11 +36,12 @@ public class FXMLFormularioProductoController implements Initializable {
     private File fotografiaProducto;
     private boolean esEdicion;
     private Producto productoEdicion;
+    private ObservableList<Producto.TipoDeProducto> tipos;
     
     @FXML
     private ComboBox<String> cbRequiereReceta;
     @FXML
-    private ComboBox<String> cbTipoProducto;
+    private ComboBox<Producto.TipoDeProducto> cbTipoProducto;
     @FXML
     private TextField tfNombre;
     @FXML
@@ -85,6 +88,10 @@ public class FXMLFormularioProductoController implements Initializable {
         }
     }
     
+    public void inicializarCbTipoProducto(){
+        tipos.addAll(Producto.TipoDeProducto.values());
+        cbTipoProducto.setItems(tipos);
+    }
 
     @FXML
     private void clicVolver(ActionEvent event) {

@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 
 public class Producto {
     
-    enum TipoDeProducto{
+    public static enum TipoDeProducto{
         SALUD("artículo para salud"),
         HIGIENE("artículo para higiene"),
         MEDICAMENTO("medicamento");
@@ -13,12 +13,13 @@ public class Producto {
         private TipoDeProducto(String tipo){
             this.tipo = tipo;
         }
-        
-        public String getTipo(){
+                
+        private String tipo;
+
+        @Override
+        public String toString() {
             return tipo;
         }
-        
-        private String tipo;
     }
     
     private int idProducto;
