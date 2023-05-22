@@ -1,7 +1,7 @@
 package sgapt.modelo.pojo;
 
 public class Lote {
-    
+    private int idLote;
     private String numeroDeLote;
     private String nombre;
     private String tipoProducto;
@@ -12,13 +12,22 @@ public class Lote {
     public Lote() {
     }
 
-    public Lote(String numeroDeLote, String nombre, String tipoProducto, String fechaDeCaducidad, int cantidad, double precioLote) {
+    public Lote(int idLote, String numeroDeLote, String nombre, String tipoProducto, String fechaDeCaducidad, int cantidad, double precioLote) {
+        this.idLote = idLote;
         this.numeroDeLote = numeroDeLote;
         this.nombre = nombre;
         this.tipoProducto = tipoProducto;
         this.fechaDeCaducidad = fechaDeCaducidad;
         this.cantidad = cantidad;
         this.precioLote = precioLote;
+    }
+
+    public int getIdLote() {
+        return idLote;
+    }
+
+    public void setIdLote(int idLote) {
+        this.idLote = idLote;
     }
 
     public String getNumeroDeLote() {
@@ -71,7 +80,7 @@ public class Lote {
 
     @Override
     public String toString() {
-        return "Lote{" + "numeroDeLote=" + numeroDeLote + ", nombre=" + nombre + ", tipoProducto=" + tipoProducto + ", fechaDeCaducidad=" + fechaDeCaducidad + ", cantidad=" + cantidad + ", precioLote=" + precioLote + '}';
+        return "Lote{" + "idLote=" + idLote + ", numeroDeLote=" + numeroDeLote + ", nombre=" + nombre + ", tipoProducto=" + tipoProducto + ", fechaDeCaducidad=" + fechaDeCaducidad + ", cantidad=" + cantidad + ", precioLote=" + precioLote + '}';
     }
-    
+
 }

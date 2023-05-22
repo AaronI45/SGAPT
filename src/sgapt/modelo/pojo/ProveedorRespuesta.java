@@ -3,8 +3,8 @@ package sgapt.modelo.pojo;
 import java.util.ArrayList;
 
 public class ProveedorRespuesta {
-    int codigoRespuesta;
-    ArrayList<Proveedor> proveedores;
+    private int codigoRespuesta;
+    private ArrayList<Proveedor> proveedores;
 
     public ProveedorRespuesta() {
     }
