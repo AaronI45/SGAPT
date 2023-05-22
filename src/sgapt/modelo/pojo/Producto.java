@@ -5,6 +5,22 @@ import javafx.scene.image.ImageView;
 
 public class Producto {
     
+    enum TipoDeProducto{
+        SALUD("artículo para salud"),
+        HIGIENE("artículo para higiene"),
+        MEDICAMENTO("medicamento");
+        
+        private TipoDeProducto(String tipo){
+            this.tipo = tipo;
+        }
+        
+        public String getTipo(){
+            return tipo;
+        }
+        
+        private String tipo;
+    }
+    
     private int idProducto;
     private String nombre;
     private String tipoProducto;
@@ -12,7 +28,7 @@ public class Producto {
     private int cantidad;
     private Sucursal sucursal;
     private boolean requiereReceta;
-    private int precio;
+    private double precio;
     private int idLote;
     private String numeroLote;
     private Date fechaCaducidad;
@@ -22,7 +38,7 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(int idProducto, String nombre, String tipoProducto, String disponibilidad, int cantidad, Sucursal sucursal, boolean requiereReceta, int precio, int idLote, String numeroLote, Date fechaCaducidad, byte[] foto, ImageView visualizacionFoto) {
+    public Producto(int idProducto, String nombre, String tipoProducto, String disponibilidad, int cantidad, Sucursal sucursal, boolean requiereReceta, double precio, int idLote, String numeroLote, Date fechaCaducidad, byte[] foto, ImageView visualizacionFoto) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.tipoProducto = tipoProducto;
@@ -102,11 +118,11 @@ public class Producto {
         this.fechaCaducidad = fechaCaducidad;
     }
 
-    public int getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 

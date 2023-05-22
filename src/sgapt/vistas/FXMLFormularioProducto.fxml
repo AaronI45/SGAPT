@@ -19,17 +19,20 @@
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
-      <Label layoutX="464.0" layoutY="149.0" text="Requiere receta">
+      <Label layoutX="462.0" layoutY="418.0" text="Requiere receta">
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
-      <Label layoutX="793.0" layoutY="149.0" text="Tipo de producto">
+      <Label layoutX="112.0" layoutY="418.0" text="Tipo de producto">
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
-      <ComboBox fx:id="cbRequiereReceta" layoutX="499.0" layoutY="213.0" prefHeight="42.0" prefWidth="188.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
-      <Label layoutX="830.0" layoutY="377.0" text="Fotografía del producto" />
-      <ComboBox fx:id="cbTipoProducto" layoutX="830.0" layoutY="213.0" prefHeight="42.0" prefWidth="188.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
+      <ComboBox fx:id="cbRequiereReceta" layoutX="464.0" layoutY="482.0" prefHeight="42.0" prefWidth="221.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
+      <Label layoutX="816.0" layoutY="270.0" text="Fotografía del producto">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font></Label>
+      <ComboBox fx:id="cbTipoProducto" layoutX="112.0" layoutY="482.0" prefHeight="42.0" prefWidth="221.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
       <TextField fx:id="tfNombre" layoutX="112.0" layoutY="213.0" prefHeight="42.0" prefWidth="215.0" styleClass="textField" stylesheets="@../css/estilos.css" />
       <Button layoutX="52.0" layoutY="47.0" mnemonicParsing="false" onAction="#clicVolver" prefHeight="60.0" prefWidth="77.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css">
          <graphic>
@@ -40,10 +43,16 @@
             </ImageView>
          </graphic>
       </Button>
-      <ImageView fitHeight="248.0" fitWidth="250.0" layoutX="769.0" layoutY="400.0" onMousePressed="#clicAgregarImagen" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ivProducto" fitHeight="248.0" fitWidth="250.0" layoutX="861.0" layoutY="317.0" onMousePressed="#clicAgregarImagen" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/icons8_Add_Image_512px_1.png" />
          </image>
       </ImageView>
+      <Label layoutX="484.0" layoutY="155.0" text="Precio">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfNombre2" layoutX="484.0" layoutY="213.0" prefHeight="42.0" prefWidth="215.0" styleClass="textField" stylesheets="@../css/estilos.css" />
    </children>
 </AnchorPane>

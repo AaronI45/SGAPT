@@ -1,5 +1,6 @@
 package sgapt.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -9,12 +10,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.ProductoDAO;
 import sgapt.modelo.pojo.ProductoRespuesta;
@@ -168,6 +173,26 @@ public class FXMLAdministracionProductosController implements Initializable {
             }
         }
     }
+
+    private void irAFormulario(Producto producto){
+        try {
+            FXMLLoader accesoControlador = 
+                    new FXMLLoader(getClass().getResource("/sgapt/vistas/FXMLFormularioProducto.fxml"));
+            Parent vista = accesoControlador.load();
+            
+            FXMLFormularioProductoController formulario = 
+                    accesoControlador.getController();
+            formulario.inicializarValores(producto);
+            Scene escenaFormulario = new Scene(vista);
+            Stage escenarioNuevo = new Stage();
+            escenarioNuevo.setScene(escenaFormulario);
+            escenarioNuevo.initModality(Modality.APPLICATION_MODAL);
+            escenarioNuevo.showAndWait();
+        } catch (IOException e) {
+            Utilidades.mostrarDialogoSimple("Error", "No se puede mostrar la pantalla de formulario", 
+                    Alert.AlertType.ERROR);
+        }
+    }        
     
     @FXML
     private void clicEditarProducto(ActionEvent event) {
@@ -175,10 +200,7 @@ public class FXMLAdministracionProductosController implements Initializable {
 
     @FXML
     private void clicAgregarProducto(ActionEvent event) {
-        Stage stagePrincipal = (Stage) tvProductos.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("/sgapt/vistas/FXMLFormularioProducto.fxml"));
-        stagePrincipal.setTitle("Agregar producto");
-        stagePrincipal.show();               
+        irAFormulario(null);
     }
 
     @FXML

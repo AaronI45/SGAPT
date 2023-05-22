@@ -50,7 +50,7 @@ public class ProductoDAO {
                     producto.setFechaCaducidad(resultado.getDate("fechaDeCaducidad"));
                     producto.setRequiereReceta(resultado.getBoolean("requiereReceta"));
                     producto.setNumeroLote(resultado.getString("numeroDeLote"));
-                    producto.setPrecio(resultado.getInt("precio"));
+                    producto.setPrecio(resultado.getDouble("precio"));
                     producto.setFoto(resultado.getBytes("foto"));
                     productosConsulta.add(producto);
                 }
@@ -126,18 +126,33 @@ public class ProductoDAO {
         return resultadoEliminacion;
     }
 
-    public static ResultadoOperacion editarEstadoProducto (Producto productoAEditar, String nuevoEstado) throws SQLException{
+    public static ResultadoOperacion editarEstadoProducto (Producto productoAEditar, String nuevoEstado){
         ResultadoOperacion resultadoEdicion = new ResultadoOperacion();
         //TODO
         return resultadoEdicion;
     }
     
-    public static ResultadoOperacion agregarProducto (Producto productoNuevo){
+    public static ResultadoOperacion agregarProducto (Producto productoNuevo) throws SQLException{
         ResultadoOperacion resultadoAgregar = new ResultadoOperacion();
+        resultadoAgregar.setError(true);
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null){
             try {
-                
+                String consulta = "INSERT INTO producto (nombre, requiereReceta, precio, tipoProducto, disponibilidad) "
+                        + "VALUES (?,?,?,?,?)";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setString(1, productoNuevo.getNombre());
+                prepararSentencia.setBoolean(2, productoNuevo.isRequiereReceta());
+                prepararSentencia.setDouble(3, productoNuevo.getPrecio());
+                prepararSentencia.setString(4, productoNuevo.getTipoProducto());
+                prepararSentencia.setString(5, "no disponible");
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                if (filasAfectadas >0){
+                    resultadoAgregar.setError(false);
+                    resultadoAgregar.setMensaje("El producto ha sido registrado exitosamente, ahora puede ordenar este tipo de productos");
+                }else{
+                    resultadoAgregar.setMensaje("Hubo un error al registrar el nuevo producto, por favor inténtelo de nuevo");
+                }
             } catch (SQLException e) {
                 resultadoAgregar.setMensaje("Error de conexión");
             }
