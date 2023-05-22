@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.controladores.FXMLFormularioPedidoController">
+   <children>
+      <Button fx:id="btnGuardarCambios" layoutX="1059.0" layoutY="143.0" mnemonicParsing="false" onAction="#clicBtnGuardarCambios" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Guardar cambios">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="61.0" fitWidth="220.0" layoutX="1040.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/FarmaTech.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="52.0" layoutY="47.0" mnemonicParsing="false" onAction="#clicBtnRegresar" prefHeight="60.0" prefWidth="61.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="37.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/back.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="lbTitulo" layoutX="497.0" layoutY="55.0" text="Formulario de pedido">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tvLotesProveedor" layoutX="55.0" layoutY="302.0" prefHeight="285.0" prefWidth="504.0" stylesheets="@../css/estilos.css">
+        <columns>
+          <TableColumn fx:id="colNumLotePro" prefWidth="110.0" text="N° de lote" />
+          <TableColumn fx:id="colNombreProductoPro" minWidth="0.0" prefWidth="193.0" text="Nombre producto" />
+            <TableColumn fx:id="colCantidadPro" prefWidth="75.0" text="Cantidad" />
+            <TableColumn fx:id="colPrecioPro" prefWidth="125.0" text="Precio" />
+        </columns>
+      </TableView>
+      <Label layoutX="54.0" layoutY="200.0" text="Ubicación:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="621.0" layoutY="454.0" mnemonicParsing="false" onAction="#clicBtnRemover" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css">
+         <graphic>
+            <ImageView fitHeight="39.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/back.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="621.0" layoutY="387.0" mnemonicParsing="false" onAction="#clicBtnAgregar" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css">
+         <graphic>
+            <ImageView fitHeight="39.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/next.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <TableView fx:id="tvLotesPedido" layoutX="742.0" layoutY="302.0" prefHeight="285.0" prefWidth="504.0" stylesheets="@../css/estilos.css">
+         <columns>
+            <TableColumn fx:id="colNumLotePed" prefWidth="110.0" text="N° de lote" />
+            <TableColumn fx:id="colNombreProductoPed" minWidth="0.0" prefWidth="193.0" text="Nombre producto" />
+            <TableColumn fx:id="colCantidadPed" prefWidth="75.0" text="Cantidad" />
+            <TableColumn fx:id="colPrecioPed" prefWidth="125.0" text="Precio" />
+         </columns>
+      </TableView>
+      <ComboBox fx:id="cbProveedores" layoutX="53.0" layoutY="143.0" prefHeight="44.0" prefWidth="212.0" promptText="Seleccionar proveedor" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
+      <ComboBox fx:id="cbAlmacenes" layoutX="739.0" layoutY="143.0" prefHeight="44.0" prefWidth="245.0" promptText="Seleccionar almacen destino" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
+      <Label layoutX="902.0" layoutY="263.0" text="Lotes seleccionados">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="216.0" layoutY="263.0" text="Lotes de proveedor">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="739.0" layoutY="200.0" text="Ubicación:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnRealizarPedido" layoutX="1059.0" layoutY="143.0" mnemonicParsing="false" onAction="#clicBtnRealizarPedido" prefHeight="44.0" prefWidth="191.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Realizar pedido">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
+      <Label layoutX="940.0" layoutY="605.0" text="Precio Poductos:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbPrecioProductos" layoutX="1097.0" layoutY="605.0" prefHeight="27.0" prefWidth="149.0" text="PrecioProductos">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="taUbicacionAlmacen" editable="false" layoutX="831.0" layoutY="200.0" prefHeight="27.0" prefWidth="419.0" />
+      <TextArea fx:id="taUbicacionProveedor" editable="false" layoutX="140.0" layoutY="200.0" prefHeight="27.0" prefWidth="419.0" />
+      <Label layoutX="861.0" layoutY="605.0" prefHeight="27.0" prefWidth="45.0" text="500">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="743.0" layoutY="605.0" text="Precio Envio:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbPrecioTotal" layoutX="1097.0" layoutY="638.0" prefHeight="27.0" prefWidth="149.0" text="PrecioTotal">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="976.0" layoutY="638.0" text="Precio Total:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

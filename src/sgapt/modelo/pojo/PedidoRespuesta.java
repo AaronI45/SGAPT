@@ -6,13 +6,15 @@ import sgapt.modelo.pojo.Pedido;
 public class PedidoRespuesta {
     
     private int codigoRespuesta;
+    private int idPedido;
     private ArrayList<Pedido> pedidos;
 
     public PedidoRespuesta() {
     }
 
-    public PedidoRespuesta(int codigoRespuesta, ArrayList<Pedido> pedidos) {
+    public PedidoRespuesta(int codigoRespuesta, int idPedido, ArrayList<Pedido> pedidos) {
         this.codigoRespuesta = codigoRespuesta;
+        this.idPedido = idPedido;
         this.pedidos = pedidos;
     }
 
@@ -32,9 +34,12 @@ public class PedidoRespuesta {
         this.pedidos = pedidos;
     }
 
-    @Override
-    public String toString() {
-        return "PedidoRespuesta{" + "codigoRespuesta=" + codigoRespuesta + ", pedidos=" + pedidos + '}';
+    public int getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(int idPedido) {
+        this.idPedido = idPedido;
     }
 
 }

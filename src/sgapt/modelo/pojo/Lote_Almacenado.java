@@ -1,27 +1,27 @@
 package sgapt.modelo.pojo;
 
-public class Producto_Almacenado {
-    private int producto_idProducto;
+public class Lote_Almacenado {
+    private int lote_idLote;
     private int almacen_idAlmacen;
     private int cantidad;
     private int codigoRespuesta;
 
-    public Producto_Almacenado() {
+    public Lote_Almacenado() {
     }
 
-    public Producto_Almacenado(int producto_idProducto, int almacen_idAlmacen, int cantidad, int codigoRespuesta) {
-        this.producto_idProducto = producto_idProducto;
+    public Lote_Almacenado(int producto_idProducto, int almacen_idAlmacen, int cantidad, int codigoRespuesta) {
+        this.lote_idLote = producto_idProducto;
         this.almacen_idAlmacen = almacen_idAlmacen;
         this.cantidad = cantidad;
         this.codigoRespuesta = codigoRespuesta;
     }
 
-    public int getProducto_idProducto() {
-        return producto_idProducto;
+    public int getLote_idLote() {
+        return lote_idLote;
     }
 
-    public void setProducto_idProducto(int producto_idProducto) {
-        this.producto_idProducto = producto_idProducto;
+    public void setLote_idLote(int lote_idLote) {
+        this.lote_idLote = lote_idLote;
     }
 
     public int getAlmacen_idAlmacen() {
@@ -50,7 +50,7 @@ public class Producto_Almacenado {
 
     @Override
     public String toString() {
-        return "Producto_almacenado{" + "producto_idProducto=" + producto_idProducto + ", almacen_idAlmacen=" + almacen_idAlmacen + ", cantidad=" + cantidad + '}';
+        return "Lote_almacenado{" + "lote_idLote=" + lote_idLote + ", almacen_idAlmacen=" + almacen_idAlmacen + ", cantidad=" + cantidad + '}';
     }
     
 }
