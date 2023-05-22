@@ -29,7 +29,7 @@ public class ProductoDAO {
         {
             try{
                 String consulta = "SELECT lote_almacenado.*, producto.*, almacen.*, " +
-                        "lote.fechaDeCaducidad, lote.idLote " +
+                        "lote.fechaDeCaducidad, lote.numeroDeLote " +
                         "FROM lote_almacenado " +
                         "LEFT JOIN lote ON lote_almacenado.Lote_idLote = lote.idLote " +
                         "LEFT JOIN producto ON producto.idProducto = lote.Producto_idProducto " +
@@ -126,10 +126,28 @@ public class ProductoDAO {
         return resultadoEliminacion;
     }
 
-    public static ResultadoOperacion editarEstadoProducto (Producto productoAEditar){
+    public static ResultadoOperacion editarEstadoProducto (Producto productoAEditar, String nuevoEstado) throws SQLException{
         ResultadoOperacion resultadoEdicion = new ResultadoOperacion();
-
+        //TODO
         return resultadoEdicion;
+    }
+    
+    public static ResultadoOperacion agregarProducto (Producto productoNuevo){
+        ResultadoOperacion resultadoAgregar = new ResultadoOperacion();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null){
+            try {
+                
+            } catch (SQLException e) {
+                resultadoAgregar.setMensaje("Error de conexión");
+            }
+            finally{
+                conexionBD.close();
+            }
+        }else{
+            resultadoAgregar.setMensaje("No hay conexión a la base de datos");
+        }
+        return resultadoAgregar;
     }
 
     public static ProductoRespuesta recuperarProductosEnAlmacen (int idAlmacen){

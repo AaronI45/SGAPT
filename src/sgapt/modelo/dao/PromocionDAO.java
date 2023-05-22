@@ -25,7 +25,7 @@ public class PromocionDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "Select idPromocion, producto.idProducto, producto.nombre AS nombreProducto,producto.precio AS precioProducto,porcentajeDescuento AS descuento, fechaInicio, fechaFin "
+                String consulta = "Select idPromocion, producto.idProducto, producto.foto, producto.nombre AS nombreProducto,producto.precio AS precioProducto,porcentajeDescuento AS descuento, fechaInicio, fechaFin "
                         + " FROM promocion "
                         + " INNER JOIN producto ON promocion.Producto_IdProducto = idProducto";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
@@ -40,7 +40,8 @@ public class PromocionDAO {
                     promocion.setProductoPrecio(resultado.getFloat("precioProducto"));
                     promocion.setPorcentajeDescuento(resultado.getDouble("descuento")); 
                     promocion.setFechaInicio(resultado.getString("fechaInicio")); 
-                    promocion.setFechaFin(resultado.getString("fechaFin")); 
+                    promocion.setFechaFin(resultado.getString("fechaFin"));
+                    promocion.setFoto(resultado.getBytes("foto"));
                     promocion.setPrecioDescuento(descuento(promocion.getProductoPrecio(), promocion.getPorcentajeDescuento()));
                     promocionesConsulta.add(promocion);
                 }

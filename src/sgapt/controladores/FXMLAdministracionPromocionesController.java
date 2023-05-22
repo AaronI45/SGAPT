@@ -195,9 +195,9 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
     }
     
     private void mostrarImagenProducto(){
-        int posicion = tvPromocion.getSelectionModel().getSelectedIndex();
-        if(posicion!= -1){
-            ByteArrayInputStream inputFoto = new ByteArrayInputStream(promociones.get(posicion).getFoto());
+        Promocion promocion = tvPromocion.getSelectionModel().getSelectedItem();
+        if(promocion != null){
+            ByteArrayInputStream inputFoto = new ByteArrayInputStream(promocion.getFoto());
             Image imgFotoAlumno = new Image(inputFoto);
             ivProducto.setImage(imgFotoAlumno);
         }else{
