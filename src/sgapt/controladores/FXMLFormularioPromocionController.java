@@ -96,7 +96,7 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
         String formStringFin = fechaFin.format(formatter);
         SingleSelectionModel<Producto> producto= cbIdProducto.getSelectionModel();
         int idProducto = cbIdProducto.getSelectionModel().getSelectedItem().getIdProducto();
-        int Sucursal = cbSucursal.getSelectionModel().getSelectedItem().getIdInventario();
+        int Sucursal = cbSucursal.getSelectionModel().getSelectedItem().getIdSucursal();
         boolean sonValidos=true;
         boolean sinDisponibilidad;
         //TO DO Validaciones
@@ -273,7 +273,7 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
 
     private void cargarInformacionProducto(Sucursal sucursal){
         productos = FXCollections.observableArrayList();
-        ProductoRespuesta productoBD=ProductoDAO.obtenerProductoPorSucursal(sucursal);
+        ProductoRespuesta productoBD=ProductoDAO.recuperarProductosEnSucursal(sucursal);
         switch(productoBD.getCodigoRespuesta()){
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexion", "Error en la conexion con la base de datos",
@@ -325,7 +325,7 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
 
     private int obtenerPosicionComboSucursal(int idSucursal){
         for(int i=0; i <sucursales.size(); i++){
-            if(sucursales.get(i).getIdInventario()== idSucursal){
+            if(sucursales.get(i).getIdSucursal()== idSucursal){
                 return i;
             }
         }

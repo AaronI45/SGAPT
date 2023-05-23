@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.controladores.FXMLMenuPrincipalEncargadoController">
+   <children>
+      <Button layoutX="388.0" layoutY="310.0" mnemonicParsing="false" onAction="#clicBtnAdministrarPromociones" prefHeight="122.0" prefWidth="528.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Administrar promociones" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="95.0" fitWidth="88.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/tag.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font></Button>
+      <ImageView fitHeight="216.0" fitWidth="407.0" layoutX="447.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/FarmaTech.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnSalir1" layoutX="571.0" layoutY="593.0" mnemonicParsing="false" onAction="#clicBtnSalir" prefHeight="69.0" prefWidth="161.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Salir" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="45.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/logout.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

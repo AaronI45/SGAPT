@@ -28,15 +28,15 @@ public class ProductoDAO {
         if (conexionBD != null)
         {
             try{
-                String consulta = "SELECT lote_almacenado.*, producto.*, almacen.*, " +
+                String consulta = "SELECT lote_almacenado.*, producto.*, farmacia.*, " +
                         "lote.fechaDeCaducidad, lote.idLote " +
                         "FROM lote_almacenado " +
                         "LEFT JOIN lote ON lote_almacenado.Lote_idLote = lote.idLote " +
                         "LEFT JOIN producto ON producto.idProducto = lote.Producto_idProducto " +
-                        "LEFT JOIN almacen ON lote_almacenado.Almacen_idAlmacen = almacen.idAlmacen  " +
-                        "WHERE almacen.idAlmacen = ?";
+                        "LEFT JOIN farmacia ON lote_almacenado.Farmacia_idFarmacia = farmacia.idFarmacia  " +
+                        "WHERE farmacia.idFarmacia = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
-                prepararSentencia.setInt(1, sucursal.getIdInventario());
+                prepararSentencia.setInt(1, sucursal.getIdSucursal());
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Producto> productosConsulta = new ArrayList();
                 while (resultado.next()) {
@@ -130,45 +130,5 @@ public class ProductoDAO {
         ResultadoOperacion resultadoEdicion = new ResultadoOperacion();
 
         return resultadoEdicion;
-    }
-
-    public static ProductoRespuesta recuperarProductosEnAlmacen (int idAlmacen){
-        ProductoRespuesta productos = new ProductoRespuesta();
-        Connection conexionBD = ConexionBD.abrirConexionBD();
-        if (conexionBD != null)
-        {
-            try{
-                String consulta = "SELECT idProducto, nombre, disponibilidad, " +
-                        "tipoProducto, lote.numeroDeLote, lote.idLote, lote_almacenado.cantidad " +
-                        "FROM producto INNER JOIN lote ON producto.idProducto = " +
-                        "lote.Producto_idProducto INNER JOIN lote_almacenado ON " +
-                        "lote.idLote = lote_almacenado.Lote_idLote " +
-                        "WHERE lote_almacenado.Almacen_idAlmacen = ?";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
-                prepararSentencia.setInt(1, idAlmacen);
-                ResultSet resultado = prepararSentencia.executeQuery();
-                ArrayList<Producto> productosConsulta = new ArrayList();
-                while(resultado.next()){
-                    Producto producto = new Producto();
-                    producto.setIdProducto(resultado.getInt("idProducto"));
-                    producto.setNombre(resultado.getString("nombre"));
-                    producto.setDisponibilidad(resultado.getString("disponibilidad"));
-                    producto.setTipoProducto(resultado.getString("tipoProducto"));
-                    producto.setNumeroLote(resultado.getString("numeroDeLote"));
-                    producto.setCantidad(resultado.getInt("cantidad"));
-                    producto.setIdLote(resultado.getInt("idLote"));
-                    productosConsulta.add(producto);
-                }
-                productos.setProductos(productosConsulta);
-                productos.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
-                conexionBD.close();
-            }catch(SQLException e){
-                productos.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
-            }
-        }
-        else{
-            productos.setCodigoRespuesta(Constantes.ERROR_CONEXION);
-        }
-        return productos;
     }
 }

@@ -1,0 +1,130 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : May 13, 2023, 4:31:29 AM
+    Author     : super
+*/
+
+.buttonCancelar{
+    -fx-background-color:  #f30a49;
+    -fx-text-fill: white;
+}
+
+.buttonCancelar:hover{
+    -fx-background-color: #ff1a30;
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+}
+
+.buttonCancelar:pressed{
+    -fx-background-color: #a2142b;
+    -fx-text-fill: white;
+}
+
+.buttonInicioSesion{
+    -fx-background-color: #0c56a6; 
+   -fx-text-fill: white;
+}
+
+.buttonInicioSesion:hover{
+   -fx-background-color: #0c3c78;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.buttonInicioSesion:pressed{
+    -fx-background-color: #090030;
+    -fx-text-fill: white;
+}
+
+.buttonGeneral{
+    -fx-background-color: #D6D6D6;
+}
+
+.buttonGeneral:hover{
+    -fx-background-color: #CCCCCC;
+    -fx-cursor: hand;
+}
+
+.buttonGeneral:pressed{
+    -fx-background-color: #7F7F7F;
+}
+
+.buttonPrincipal{
+    -fx-background-color: #142D4C;
+    -fx-text-fill: #FFFFFF;
+}
+
+.buttonPrincipal:hover{
+    -fx-background-color: #627387;
+    -fx-cursor: hand;
+}
+
+.buttonPrincipal:pressed{
+    -fx-background-color: #96A1AF;
+}
+
+.textField{
+    -fx-border-color: #cccccc;
+    -fx-background-color:  #FFFFFF;
+    -fx-border-style: solid;
+    -fx-border-radius: 5px;
+}
+
+.table-view .column-header,
+.table-view .column-header-background .filler{
+    -fx-background-color: #00519E;
+}
+
+.table-view .column-header .label{
+    -fx-text-fill: white;
+    -fx-alignment: CENTER;
+}
+
+.combo-box-base .text{
+    -fx-background-color: #0c3c78;
+    -fx-fill: white;
+}
+
+.combo-box-base .textField{
+    -fx-background-color: #0c3c78;
+    -fx-fill: white;
+}
+
+.combo-box .list-cell 
+{
+    /*-fx-background: #0c3c78;*/
+    -fx-background-color: #0c3c78;
+    -fx-text-fill: white;
+    /*-fx-padding: 3 0 2 7;*/
+    /*-fx-cell-size: 1.66667em;*/ 
+}
+
+.combo-box-popup .list-view .list-cell 
+{
+    /*-fx-padding: 4 0 4 5;*/
+
+    /* No alternate highlighting */
+    -fx-background-color: #00519E;
+    -fx-text-fill: white;
+}
+
+.combo-box-base:hover
+{
+    -fx-color: #0c3c78;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover 
+{
+    /*-fx-background: -fx-accent;*/
+    -fx-background-color: #a2142b;
+    -fx-text-fill: white;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover 
+{
+    -fx-background-color: #0c3c78;
+    -fx-text-fill: white;
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.controladores.FXMLAdministracionPedidosController">
+   <children>
+      <TableView fx:id="tvPedidos" layoutX="56.0" layoutY="172.0" prefHeight="487.0" prefWidth="739.0" stylesheets="@../css/estilos.css">
+         <columns>
+            <TableColumn fx:id="colNumeroPedido" prefWidth="211.0" text="N° pedido" />
+            <TableColumn fx:id="colProveedor" prefWidth="289.0" text="Proveedor" />
+            <TableColumn fx:id="colEstado" prefWidth="238.0" text="Estado" />
+         </columns>
+      </TableView>
+      <Button layoutX="913.0" layoutY="434.0" mnemonicParsing="false" onAction="#clicBtnRealizarPedido" prefHeight="44.0" prefWidth="253.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Realizar nuevo pedido">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button layoutX="913.0" layoutY="353.0" mnemonicParsing="false" onAction="#clicBtnModificar" prefHeight="44.0" prefWidth="253.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Modificar pedido">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button layoutX="913.0" layoutY="273.0" mnemonicParsing="false" onAction="#clicBtnConsultar" prefHeight="44.0" prefWidth="253.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Consultar pedido">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button layoutX="914.0" layoutY="514.0" mnemonicParsing="false" onAction="#clicBtnCancelar" prefHeight="44.0" prefWidth="253.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" text="Cancelar pedido">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Button>
+      <Button layoutX="52.0" layoutY="47.0" mnemonicParsing="false" onAction="#clicBtnRegresar" prefHeight="60.0" prefWidth="61.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="37.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/back.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="lbTitulo" layoutX="456.0" layoutY="47.0" text="Administración de pedidos">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="61.0" fitWidth="220.0" layoutX="1040.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/FarmaTech.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

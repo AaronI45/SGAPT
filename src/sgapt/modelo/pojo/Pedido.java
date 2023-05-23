@@ -14,12 +14,12 @@ public class Pedido {
     private double precioEnvio;
     private double montoTotal;
     private int idProveedor;
-    private int idAlmacen;
+    private int idSucursal;
 
     public Pedido() {
     }
 
-    public Pedido(int idPedido, String nombreProveedor, String direccionEntrega, String fechaPedido, String fechaEnvio, String fechaEntrega, String estadoRastreo, String numPedido, double precioProductos, double precioEnvio, double montoTotal, int idProveedor, int idAlmacen) {
+    public Pedido(int idPedido, String nombreProveedor, String direccionEntrega, String fechaPedido, String fechaEnvio, String fechaEntrega, String estadoRastreo, String numPedido, double precioProductos, double precioEnvio, double montoTotal, int idProveedor, int idFarmacia) {
         this.idPedido = idPedido;
         this.nombreProveedor = nombreProveedor;
         this.direccionEntrega = direccionEntrega;
@@ -32,7 +32,7 @@ public class Pedido {
         this.precioEnvio = precioEnvio;
         this.montoTotal = montoTotal;
         this.idProveedor = idProveedor;
-        this.idAlmacen = idAlmacen;
+        this.idSucursal = idFarmacia;
     }
 
     public int getIdPedido() {
@@ -131,17 +131,17 @@ public class Pedido {
         this.idProveedor = idProveedor;
     }
 
-    public int getIdAlmacen() {
-        return idAlmacen;
+    public int getIdSucursal() {
+        return idSucursal;
     }
 
-    public void setIdAlmacen(int idAlmacen) {
-        this.idAlmacen = idAlmacen;
+    public void setIdSucursal(int idSucursal) {
+        this.idSucursal = idSucursal;
     }
 
     @Override
     public String toString() {
-        return "Pedido{" + "idPedido=" + idPedido + ", nombreProveedor=" + nombreProveedor + ", direccionEntrega=" + direccionEntrega + ", fechaPedido=" + fechaPedido + ", fechaEnvio=" + fechaEnvio + ", fechaEntrega=" + fechaEntrega + ", estadoRastreo=" + estadoRastreo + ", numPedido=" + numPedido + ", precioProductos=" + precioProductos + ", precioEnvio=" + precioEnvio + ", montoTotal=" + montoTotal + ", idProveedor=" + idProveedor + ", idAlmacen=" + idAlmacen + '}';
+        return "Pedido{" + "idPedido=" + idPedido + ", nombreProveedor=" + nombreProveedor + ", direccionEntrega=" + direccionEntrega + ", fechaPedido=" + fechaPedido + ", fechaEnvio=" + fechaEnvio + ", fechaEntrega=" + fechaEntrega + ", estadoRastreo=" + estadoRastreo + ", numPedido=" + numPedido + ", precioProductos=" + precioProductos + ", precioEnvio=" + precioEnvio + ", montoTotal=" + montoTotal + ", idProveedor=" + idProveedor + ", idFarmacia=" + idSucursal + '}';
     }
 
 }
