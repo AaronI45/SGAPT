@@ -21,18 +21,18 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import sgapt.modelo.dao.AlmacenDAO;
 import sgapt.modelo.dao.LoteDAO;
 import sgapt.modelo.dao.PedidoDAO;
 import sgapt.modelo.dao.ProveedorDAO;
-import sgapt.modelo.pojo.Almacen;
-import sgapt.modelo.pojo.AlmacenRespuesta;
+import sgapt.modelo.dao.SucursalDAO;
 import sgapt.modelo.pojo.Lote;
 import sgapt.modelo.pojo.LoteRespuesta;
 import sgapt.modelo.pojo.Pedido;
 import sgapt.modelo.pojo.PedidoRespuesta;
 import sgapt.modelo.pojo.Proveedor;
 import sgapt.modelo.pojo.ProveedorRespuesta;
+import sgapt.modelo.pojo.Sucursal;
+import sgapt.modelo.pojo.SucursalRespuesta;
 import sgapt.util.Constantes;
 import sgapt.util.Utilidades;
 
@@ -59,10 +59,6 @@ public class FXMLFormularioPedidoController implements Initializable {
     @FXML
     private ComboBox<Proveedor> cbProveedores;
     @FXML
-    private ComboBox<Almacen> cbAlmacenes;
-    @FXML
-    private TextArea taUbicacionAlmacen;
-    @FXML
     private TextArea taUbicacionProveedor;
     @FXML
     private TableView<Lote> tvLotesProveedor;
@@ -77,7 +73,7 @@ public class FXMLFormularioPedidoController implements Initializable {
     @FXML
     private Label lbPrecioTotal;
     
-    private ObservableList<Almacen> almacenes;
+    private ObservableList<Sucursal> sucursales;
     private ObservableList<Proveedor> proveedores;
     private ObservableList<Lote> lotesProveedor;
     private ObservableList<Lote> lotesPedido; 
@@ -86,12 +82,16 @@ public class FXMLFormularioPedidoController implements Initializable {
     
     private boolean esEdicion;
     private Pedido pedidoEdicion;
+    @FXML
+    private ComboBox<Sucursal> cbSucursales;
+    @FXML
+    private TextArea taUbicacionSucursal;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cargarListaAlmacenes();
+        cargarListaSucursales();
         cargarListaProveedores();
-        agregarListenerDeAlmacenes();
+        agregarListenerDeSucursales();
         agregarListenerDeProveedores();
         configurarTablasLotes();
         lotesPedido = FXCollections.observableArrayList();
@@ -99,20 +99,20 @@ public class FXMLFormularioPedidoController implements Initializable {
         lbPrecioTotal.setText(String.valueOf(0.00));
     }   
     
-    private void cargarListaAlmacenes() {
-        almacenes = FXCollections.observableArrayList();
-        AlmacenRespuesta ar = AlmacenDAO.recuperarAlmacenes();
-        almacenes.addAll(ar.getAlmacenes());
-        cbAlmacenes.setItems(almacenes);
+    private void cargarListaSucursales() {
+        sucursales = FXCollections.observableArrayList();
+        SucursalRespuesta sr = SucursalDAO.recuperarSucursales();
+        sucursales.addAll(sr.getSucursales());
+        cbSucursales.setItems(sucursales);
     }
     
-    private void agregarListenerDeAlmacenes() {
-        cbAlmacenes.valueProperty().addListener(new ChangeListener<Almacen>(){
+    private void agregarListenerDeSucursales() {
+        cbSucursales.valueProperty().addListener(new ChangeListener<Sucursal>(){
             @Override
-            public void changed(ObservableValue<? extends Almacen> observable, 
-                    Almacen oldValue, Almacen newValue) {
+            public void changed(ObservableValue<? extends Sucursal> observable, 
+                    Sucursal oldValue, Sucursal newValue) {
                 if(newValue != null){
-                    taUbicacionAlmacen.setText(newValue.getDireccion());
+                    taUbicacionSucursal.setText(newValue.getDireccion());
                 }
             }
         });
@@ -199,7 +199,7 @@ public class FXMLFormularioPedidoController implements Initializable {
     
     private void cargarInformacionEdicion() {
         seleccionarProveedorPedidoEdicion();
-        seleccionarAlmacenPedidoEdicion();
+        seleccionarSucursalPedidoEdicion();
         cargarLotesPedidoEdicion();
     }
     
@@ -238,13 +238,13 @@ public class FXMLFormularioPedidoController implements Initializable {
             cbProveedores.getSelectionModel().selectNext();
     }
     
-    private void seleccionarAlmacenPedidoEdicion() {
-        cbAlmacenes.getSelectionModel().selectFirst();
+    private void seleccionarSucursalPedidoEdicion() {
+        cbSucursales.getSelectionModel().selectFirst();
         
-        while (cbAlmacenes.getSelectionModel().getSelectedItem() != null &&
-                !cbAlmacenes.getSelectionModel().getSelectedItem().getDireccion().
+        while (cbSucursales.getSelectionModel().getSelectedItem() != null &&
+                !cbSucursales.getSelectionModel().getSelectedItem().getDireccion().
                 equals(pedidoEdicion.getDireccionEntrega())) {
-            cbAlmacenes.getSelectionModel().selectNext();
+            cbSucursales.getSelectionModel().selectNext();
         }
     }
 
@@ -284,7 +284,7 @@ public class FXMLFormularioPedidoController implements Initializable {
     }
     
     private void realizarValidacionesParaCrearPedido() {
-        if (cbAlmacenes.getSelectionModel().getSelectedItem() != null) {
+        if (cbSucursales.getSelectionModel().getSelectedItem() != null) {
             if (!lotesPedido.isEmpty()) {
                 boolean realizarPedido = Utilidades.mostrarDialogoConfirmacion(
                                 "Realizar pedido", 
@@ -312,14 +312,14 @@ public class FXMLFormularioPedidoController implements Initializable {
         Pedido nuevoPedido = new Pedido();
         nuevoPedido.setIdProveedor(cbProveedores.getSelectionModel().
                 getSelectedItem().getIdProveedor());
-        nuevoPedido.setIdAlmacen(cbAlmacenes.getSelectionModel().
-                getSelectedItem().getIdAlmacen());
+        nuevoPedido.setIdSucursal(cbSucursales.getSelectionModel().
+                getSelectedItem().getIdSucursal());
         nuevoPedido.setFechaPedido(fechaPedido);
         nuevoPedido.setMontoTotal(Double.parseDouble(lbPrecioTotal.getText()));
-        nuevoPedido.setDireccionEntrega(taUbicacionAlmacen.getText());    
+        nuevoPedido.setDireccionEntrega(taUbicacionSucursal.getText());    
         nuevoPedido.setEstadoRastreo("sin enviar");
         nuevoPedido.setNumPedido(nuevoPedido.getIdProveedor() + "-" + fechaPedido + 
-                "-" + nuevoPedido.getIdAlmacen());
+                "-" + nuevoPedido.getIdSucursal());
         nuevoPedido.setPrecioProductos(Double.parseDouble(lbPrecioProductos.getText()));
         nuevoPedido.setPrecioEnvio(500.0);
         
@@ -384,13 +384,13 @@ public class FXMLFormularioPedidoController implements Initializable {
                 LocalDate now = LocalDate.now();
                 String fechaPedido = now.format( formatter );
                 
-                pedidoEdicion.setIdAlmacen(cbAlmacenes.getSelectionModel().
-                        getSelectedItem().getIdAlmacen());
+                pedidoEdicion.setIdSucursal(cbSucursales.getSelectionModel().
+                        getSelectedItem().getIdSucursal());
                 pedidoEdicion.setFechaPedido(fechaPedido);
                 pedidoEdicion.setMontoTotal(Double.parseDouble(lbPrecioTotal.getText()));
-                pedidoEdicion.setDireccionEntrega(taUbicacionAlmacen.getText());    
+                pedidoEdicion.setDireccionEntrega(taUbicacionSucursal.getText());    
                 pedidoEdicion.setNumPedido(pedidoEdicion.getIdProveedor() + "-" + fechaPedido + 
-                        "-" + pedidoEdicion.getIdAlmacen());
+                        "-" + pedidoEdicion.getIdSucursal());
                 pedidoEdicion.setPrecioProductos(Double.parseDouble(
                         lbPrecioProductos.getText()));
                 

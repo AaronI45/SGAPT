@@ -81,14 +81,11 @@ public class FXMLAdministracionPedidosController implements Initializable {
             FXMLLoader accesoControlador = new FXMLLoader
                 (SGAPT.class.getResource("vistas/FXMLFormularioPedido1.fxml"));
             Parent vista = accesoControlador.load();
-            
             FXMLFormularioPedidoController formularioPedidoController = accesoControlador.getController();
             formularioPedidoController.inicializarInformacionFormulario(esEdicion, pedido);
-            
             Stage source = (Stage) lbTitulo.getScene().getWindow();
             Stage stagePrincipal = (Stage) source.getScene().getWindow();
             stagePrincipal.setScene(new Scene(vista));
-            
             if (esEdicion)
                 stagePrincipal.setTitle("Modificación de pedido");
             else

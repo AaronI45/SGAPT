@@ -194,20 +194,20 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
                // "Promocion del producto "+nombreProducto+" actualizada", Alert.AlertType.INFORMATION);
     }
     
-    private void mostrarImagenProducto(){
-        int posicion = tvPromocion.getSelectionModel().getSelectedIndex();
-        if(posicion!= -1){
-            ByteArrayInputStream inputFoto = new ByteArrayInputStream(promociones.get(posicion).getFoto());
-            Image imgFotoAlumno = new Image(inputFoto);
-            ivProducto.setImage(imgFotoAlumno);
-        }else{
-            System.out.println("hola");
-        }        
-    }
+//    private void mostrarImagenProducto(){
+//        int posicion = tvPromocion.getSelectionModel().getSelectedIndex();
+//        if(posicion!= -1){
+//            ByteArrayInputStream inputFoto = new ByteArrayInputStream(promociones.get(posicion).getFoto());
+//            Image imgFotoAlumno = new Image(inputFoto);
+//            ivProducto.setImage(imgFotoAlumno);
+//        }else{
+//            System.out.println("hola");
+//        }        
+//    }
 
     @FXML
     private void clicMostrarImagen(ActionEvent event) {
-        mostrarImagenProducto();
+//        mostrarImagenProducto();
     }
     
 }
