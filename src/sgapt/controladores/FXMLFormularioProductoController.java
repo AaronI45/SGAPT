@@ -9,6 +9,9 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -16,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,6 +28,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import sgapt.modelo.pojo.Producto;
+import sgapt.modelo.pojo.Sucursal;
 import sgapt.util.Utilidades;
 
 /**
@@ -48,13 +53,31 @@ public class FXMLFormularioProductoController implements Initializable {
     private ImageView ivProducto;
     @FXML
     private TextField tfNombre2;
+    @FXML
+    private Label lbRequiereReceta;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        inicializarCbTipoProducto();
+        lbRequiereReceta.setVisible(false);
+        cbRequiereReceta.setVisible(false);
+        cbTipoProducto.valueProperty().addListener(new ChangeListener<Producto.TipoDeProducto>(){
+            
+            @Override
+            public void changed(ObservableValue<? extends Producto.TipoDeProducto> observable, 
+                    Producto.TipoDeProducto oldValue, Producto.TipoDeProducto newValue) {
+                if(newValue == Producto.TipoDeProducto.MEDICAMENTO){
+                    cbRequiereReceta.setVisible(true);
+                    lbRequiereReceta.setVisible(true);
+                }else{
+                    lbRequiereReceta.setVisible(false);
+                    cbRequiereReceta.setVisible(false);
+                }
+            }
+        });
     }    
 
     @FXML
@@ -85,14 +108,21 @@ public class FXMLFormularioProductoController implements Initializable {
         esEdicion = (producto != null);
         if (esEdicion){
             cargarInformacionProducto();
+        }else{
+            inicializarCbTipoProducto();
         }
     }
     
     public void inicializarCbTipoProducto(){
+        tipos = FXCollections.observableArrayList();
         tipos.addAll(Producto.TipoDeProducto.values());
         cbTipoProducto.setItems(tipos);
     }
 
+    public void inicilizarCbRequiereReceta(){
+        
+    }
+    
     @FXML
     private void clicVolver(ActionEvent event) {
         Node source = (Node) event.getSource();

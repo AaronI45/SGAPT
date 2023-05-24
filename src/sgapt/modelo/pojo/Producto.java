@@ -34,12 +34,11 @@ public class Producto {
     private String numeroLote;
     private Date fechaCaducidad;
     private byte[] foto;
-    private ImageView visualizacionFoto;
 
     public Producto() {
     }
 
-    public Producto(int idProducto, String nombre, String tipoProducto, String disponibilidad, int cantidad, Sucursal sucursal, boolean requiereReceta, double precio, int idLote, String numeroLote, Date fechaCaducidad, byte[] foto, ImageView visualizacionFoto) {
+    public Producto(int idProducto, String nombre, String tipoProducto, String disponibilidad, int cantidad, Sucursal sucursal, boolean requiereReceta, double precio, int idLote, String numeroLote, Date fechaCaducidad, byte[] foto) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.tipoProducto = tipoProducto;
@@ -52,7 +51,6 @@ public class Producto {
         this.numeroLote = numeroLote;
         this.fechaCaducidad = fechaCaducidad;
         this.foto = foto;
-        this.visualizacionFoto = visualizacionFoto;
     }
     
     public int getIdProducto() {
@@ -141,14 +139,6 @@ public class Producto {
 
     public void setFoto(byte[] foto) {
         this.foto = foto;
-    }
-
-    public ImageView getVisualizacionFoto() {
-        return visualizacionFoto;
-    }
-
-    public void setVisualizacionFoto(ImageView visualizacionFoto) {
-        this.visualizacionFoto = visualizacionFoto;
     }
 
     public String getNumeroLote() {
