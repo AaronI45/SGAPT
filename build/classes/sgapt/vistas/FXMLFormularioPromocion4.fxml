@@ -38,10 +38,11 @@
       <Label fx:id="lbErrorFechaInicio" layoutX="56.0" layoutY="396.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
       <Label fx:id="lbErrorFechaFin" layoutX="63.0" layoutY="533.0" prefHeight="21.0" prefWidth="218.0" textFill="RED" />
       <Label fx:id="lbErrorSucursal" layoutX="688.0" layoutY="235.0" prefHeight="21.0" prefWidth="187.0" textFill="RED" />
-      <ComboBox fx:id="cbIdProducto" layoutX="935.0" layoutY="189.0" prefWidth="150.0" stylesheets="@../css/estilos.css" />
-      <Label layoutX="935.0" layoutY="162.0" text="Producto " />
-      <ComboBox fx:id="cbSucursal" layoutX="688.0" layoutY="189.0" prefWidth="150.0" stylesheets="@../css/estilos.css" />
-      <Label layoutX="688.0" layoutY="162.0" text="Sucursal" />
+      <ComboBox fx:id="cbIdProducto" layoutX="538.0" layoutY="204.0" prefWidth="150.0" stylesheets="@../css/estilos.css" />
+      <Label layoutX="538.0" layoutY="162.0" text="Producto ">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Label>
       <Label fx:id="lbErrorProducto" layoutX="938.0" layoutY="225.0" prefHeight="21.0" prefWidth="177.0" textFill="RED" />
       <ImageView fitHeight="61.0" fitWidth="220.0" layoutX="1040.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -55,5 +56,10 @@
       </Label>
       <DatePicker fx:id="dpFechaInicio" layoutX="67.0" layoutY="360.0" />
       <DatePicker fx:id="dpFechaFin" layoutX="67.0" layoutY="494.0" />
+      <ImageView fitHeight="286.0" fitWidth="333.0" layoutX="524.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/Productos/91795820-ojo-cerrado-oculto-sin-visualización-icono-invisible.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

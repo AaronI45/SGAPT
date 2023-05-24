@@ -7,8 +7,12 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -60,6 +65,8 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
     private Producto producto;
     @FXML
     private Button btImagen;
+    @FXML
+    private TextField tfBusqueda;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -117,9 +124,39 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
             case Constantes.OPERACION_EXITOSA:
                     promociones.addAll(respuestaBD.getPromociones());
                     tvPromocion.setItems(promociones);
+                    configurarBusquedaTabla();
                 break;
         }
     }
+    
+    private void configurarBusquedaTabla(){
+        if(promociones.size()>0){
+            FilteredList<Promocion> filtradoPromociones = new FilteredList<>(promociones, p-> true); //p es una funcion anonima que flitra las opciones
+            tfBusqueda.textProperty().addListener(new ChangeListener<String>(){
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    filtradoPromociones.setPredicate(promocionFiltro -> {
+                        //Caso defalut o vacío
+                        if(newValue == null || newValue.isEmpty()){
+                            return true;
+                        }
+                        //Criterio de búsqueda
+                        String lowerNewValue = newValue.toLowerCase();
+                        if(promocionFiltro.getProducto().toLowerCase().contains(newValue)){
+                            return true;
+                        }else if(promocionFiltro.getFechaFin().toLowerCase().contains(lowerNewValue)){
+                            return true;
+                        }
+                        return false;
+                    });
+                }
+        });
+            //SortedList<Alumno> sortedListaAlumnos = new SortedList<>();
+            SortedList<Promocion> sortedListaAlumnos = new SortedList<>(filtradoPromociones);
+            sortedListaAlumnos.comparatorProperty().bind(tvPromocion.comparatorProperty());
+            tvPromocion.setItems(sortedListaAlumnos);
+        }
+    } 
 
     @FXML
     private void clicBtnExpirar(ActionEvent event) {
@@ -165,7 +202,7 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
      private void irFormulario(boolean esEdicion, Promocion promocionEdicion){
          try{
              FXMLLoader accesoControlador = new FXMLLoader
-                     (sgapt.SGAPT.class.getResource("vistas/FXMLFormularioPromocion3.fxml"));
+                     (sgapt.SGAPT.class.getResource("vistas/FXMLFormularioPromocion4.fxml"));
              Parent vista= accesoControlador.load();
              FXMLFormularioPromocionController formulario = accesoControlador.getController();
              formulario.inicializarInformacionFormulario(esEdicion, promocionEdicion, this);

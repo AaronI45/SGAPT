@@ -70,15 +70,7 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       cargarInformacionSucursal();
-       /*cbSucursal.valueProperty().addListener(new ChangeListener<Sucursal>() {
-          @Override
-          public void changed(ObservableValue<? extends Sucursal> observable, Sucursal oldValue, Sucursal newValue){
-             if(newValue != null){
-                 cargarInformacionProducto(newValue);
-             }
-          }
-       });*/
+       //cargarInformacionSucursal();
        cargarInformacionProducto();
     }
 
@@ -100,7 +92,9 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
         boolean sonValidos=true;
         boolean sinDisponibilidad;
         //TO DO Validaciones
-        if(porcentajeDescuento.isEmpty()){
+        
+        //Validacion del porcentaje de descuento
+        if(descuento==0){
             sonValidos=false;
             lbErrorTipo.setText("Campo vacío");
         }else{
@@ -116,7 +110,8 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
                 }
             }
         }
-
+        
+        ///Validacion fecha inicio
         if(fomrStringInicio.isEmpty()){
             sonValidos=false;
             lbErrorFechaInicio.setText("Campo vacío");
@@ -127,7 +122,8 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
             }else
             lbErrorFechaInicio.setText("");
         }
-
+        
+        //Validacion fecha fin
         if(formStringFin.isEmpty()){
             sonValidos=false;
             lbErrorFechaFin.setText("Campo vacío");
@@ -139,17 +135,14 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
                 lbErrorFechaFin.setText("");
             }
         }
-
+        
+        //Validacion producto    
         if(cbIdProducto.getSelectionModel().isEmpty()){
             sonValidos=false;
             lbErrorProducto.setText("Campo vacío");
         }
-
-        if(cbSucursal.getSelectionModel().isEmpty()){
-            sonValidos=false;
-            lbErrorSucursal.setText("Campo vacío");
-        }
-
+        
+        //Validacion de disponibilidad del producto
         if("disponible".equals(cbIdProducto.getSelectionModel().getSelectedItem().getDisponibilidad())){
             sinDisponibilidad=false;
         }else{
@@ -157,7 +150,8 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
             Utilidades.mostrarDialogoSimple("Sin disponibilidad", "No hay disponibilidad del producto en el inventario",
                         Alert.AlertType.WARNING);
         }
-
+        
+        //Registro o actualizacion de la promocion
         if(sonValidos==false){
                 mostrarMensajeDatos();
             }else{
@@ -252,7 +246,7 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
         }
     }
 
-     private void cargarInformacionSucursal(){
+    /* private void cargarInformacionSucursal(){
         sucursales = FXCollections.observableArrayList();
         SucursalRespuesta sucursalBD=SucursalDAO.recuperarSucursales();
         switch(sucursalBD.getCodigoRespuesta()){
@@ -269,7 +263,7 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
                 cbSucursal.setItems(sucursales);
                 break;
         }
-    }
+    }*/
 
     private void cargarInformacionProducto(){
         productos = FXCollections.observableArrayList();
@@ -317,20 +311,20 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
         dpFechaInicio.setValue(fechaInicio);
         LocalDate fechaFin = LocalDate.parse(promocionEdicion.getFechaFin());
         dpFechaFin.setValue(fechaFin);
-        int posicionSucursal=obtenerPosicionComboSucursal(promocionEdicion.getIdSucursal());
-        cbSucursal.getSelectionModel().select(posicionSucursal);
+        /*int posicionSucursal=obtenerPosicionComboSucursal(promocionEdicion.getIdSucursal());
+        cbSucursal.getSelectionModel().select(posicionSucursal);*/
         int posicionProducto=obtenerPosicionComboProducto(promocionEdicion.getIdProducto());
         cbIdProducto.getSelectionModel().select(posicionProducto);
     }
 
-    private int obtenerPosicionComboSucursal(int idSucursal){
+    /*private int obtenerPosicionComboSucursal(int idSucursal){
         for(int i=0; i <sucursales.size(); i++){
             if(sucursales.get(i).getIdInventario()== idSucursal){
                 return i;
             }
         }
         return 0;
-    }
+    }*/
 
     private int obtenerPosicionComboProducto(int idProducto){
          for(int i=0; i <productos.size(); i++){
