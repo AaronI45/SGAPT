@@ -15,7 +15,7 @@
             <Font name="System Bold" size="20.0" />
          </font></Label>
       <ComboBox fx:id="cbSucursalOrigen" layoutX="148.0" layoutY="125.0" prefHeight="42.0" prefWidth="188.0" promptText="Seleccionar sucursal" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
-      <Label layoutX="343.0" layoutY="39.0" text="Readquisición de productos entre almacenes">
+      <Label layoutX="343.0" layoutY="39.0" text="Readquisición de productos entre sucursales">
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
