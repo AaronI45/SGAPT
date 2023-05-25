@@ -10,8 +10,8 @@ public class ConexionBD {
     private static String hostname = "127.0.0.1";
     private static String puerto = "3306";
     
-    private static String usuario = "Procesos";
-    private static String password = "ProcesosIngSoft";
+    private static String usuario = "root";
+    private static String password = "Africa1982";
     
     private static String urlConexion = "jdbc:mysql://"+hostname+":"+puerto+
             "/"+nombreBase+"?allowPublicKeyRetrieval=true&useSSL=false";
