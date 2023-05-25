@@ -24,17 +24,14 @@ public class EmpleadoDAO {
      public static EmpleadoRespuesta obtenerInformacionEmpleado() {
         EmpleadoRespuesta respuesta = new EmpleadoRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
-        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);//ayuda por avor ya no puedo mas 
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT usuario, empleado, farmacia, "+
-                        "apellidoMaterno, matricula, correo, fechaNacimiento, " +
-                        "alumno.idCarrera, carrera.nombre AS nombreCarrera, "+
-                        "carrera.idFacultad, facultad.nombre AS nombreFacultad " +
+                String consulta = "lEFT JOIN farmacia ON farmacia.Empleados_idEmpleados = Empleados_idEmpleados"+
+                        "SELECT usuario, empleado., farmacia, "+
                         "FROM usuario " +
-                        "INNER JOIN empledos ON empleado.idCarrera = carrera.idCarrera " +
-                        "INNER JOIN facultad ON carrera.idFacultad = facultad.idFacultad";
-                
+                        "LEFT JOIN empledo ON empleado.Usuario_idUsuario = usuario.idUsuario " +
+                        "LEFT JOIN empleados ON empleado.Empleados_idEmpleados = empleados.idEmpleados";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Empleado> empleadosConsulta = new ArrayList();
@@ -44,8 +41,8 @@ public class EmpleadoDAO {
                     empleado.setIdEmpleado(resultado.getInt("empleado"));
                     empleado.setIdFarmacia(resultado.getInt("farmacia"));
                     empleado.setNombre(resultado.getString("nombre"));
-                    empleado.setApellidoPaterno(resultado.getString("apellido paterno"));
-                    empleado.setApellidoPaterno(resultado.getString("apellido materno"));
+                    empleado.setApellidoPaterno(resultado.getString("apellidoPaterno"));
+                    empleado.setApellidoPaterno(resultado.getString("apellidoMaterno"));
                     //  empleado.setUsername(resultado.getString("username"));
                     //   empleado.setPassword(resultado.getString("password"));
                     //empleado.setTipoEmpleado(resultado.getString("tipo de empleado"));
