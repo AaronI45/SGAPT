@@ -28,7 +28,7 @@
             <Font name="System Bold" size="30.0" />
          </font></Label>
       <ComboBox fx:id="cbRequiereReceta" layoutX="464.0" layoutY="482.0" prefHeight="42.0" prefWidth="221.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
-      <Label layoutX="816.0" layoutY="270.0" text="Fotografía del producto">
+      <Label layoutX="817.0" layoutY="255.0" text="Fotografía del producto">
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
@@ -43,7 +43,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <ImageView fx:id="ivProducto" fitHeight="248.0" fitWidth="250.0" layoutX="861.0" layoutY="317.0" onMousePressed="#clicAgregarImagen" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="ivProducto" fitHeight="248.0" fitWidth="250.0" layoutX="862.0" layoutY="294.0" onMousePressed="#clicAgregarImagen" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/icons8_Add_Image_512px_1.png" />
          </image>
@@ -53,6 +53,11 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <TextField fx:id="tfNombre2" layoutX="484.0" layoutY="213.0" prefHeight="42.0" prefWidth="215.0" styleClass="textField" stylesheets="@../css/estilos.css" />
+      <TextField fx:id="tfPrecio" layoutX="484.0" layoutY="213.0" prefHeight="42.0" prefWidth="215.0" styleClass="textField" stylesheets="@../css/estilos.css" />
+      <Button layoutX="1000.0" layoutY="611.0" mnemonicParsing="false" onAction="#clicRegistrarProducto" prefHeight="45.0" prefWidth="221.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Registrar producto">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

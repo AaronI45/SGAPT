@@ -1,5 +1,9 @@
 package sgapt.controladores;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -8,6 +12,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,8 +24,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 import sgapt.modelo.dao.ProductoDAO;
 import sgapt.modelo.pojo.ProductoRespuesta;
 import sgapt.modelo.dao.SucursalDAO;
@@ -60,6 +67,8 @@ public class FXMLAdministracionProductosController implements Initializable {
     private ComboBox<Sucursal> cbSucursales;
     private ObservableList<Sucursal> listaSucursales;
     private ObservableList<Producto> listaProductos;
+    @FXML
+    private ImageView ivProducto;
 
     /**
      * Initializes the controller class.
@@ -75,6 +84,29 @@ public class FXMLAdministracionProductosController implements Initializable {
                     Sucursal oldValue, Sucursal newValue) {
                 if(newValue != null){
                     cargarDatosTabla(newValue);
+                    ivProducto.setImage(null);
+                }
+            }
+        });
+        
+        tvProductos.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null){
+                if (newSelection.getFoto() !=null){
+                    try {
+                        ByteArrayInputStream inputFoto = new ByteArrayInputStream(newSelection.getFoto());
+                        Image imgFotoEdicion = new Image(inputFoto);
+                        ivProducto.setImage(imgFotoEdicion);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                }else{
+                    try {
+                        Image img = new Image(new FileInputStream("src\\sgapt\\img\\imagen-no-disponible.png"));
+                        ivProducto.setImage(img);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        System.out.println("no hay fotografía disponible");
+                    }
                 }
             }
         });
@@ -98,19 +130,22 @@ public class FXMLAdministracionProductosController implements Initializable {
                     case Constantes.OPERACION_EXITOSA:
                         listaProductos.addAll(pr.getProductos());                                
                         tvProductos.setItems(listaProductos);
-                    break;
+                        break;
                     case Constantes.ERROR_CONSULTA:
                         Utilidades.mostrarDialogoSimple("Error en la solicitud", 
                             "Por el momento no se puede procesar la solicitud de verificación", 
                                 Alert.AlertType.ERROR);
+                        break;
                     case Constantes.ERROR_CONEXION:
                         Utilidades.mostrarDialogoSimple("Error de conexión", 
                                 "Por el momento no hay conexión, intentelo más tarde", 
                                 Alert.AlertType.ERROR);
+                        break;
                     default:
                         Utilidades.mostrarDialogoSimple("Error de petición", 
                                 "El sistema no está disponible por el momento", 
                                 Alert.AlertType.ERROR);
+                        break;
             }
     }
 

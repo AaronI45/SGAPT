@@ -28,13 +28,12 @@ public class ProductoDAO {
         if (conexionBD != null)
         {
             try{
-                String consulta = "SELECT lote_almacenado.*, producto.*, almacen.*, " +
-                        "lote.fechaDeCaducidad, lote.numeroDeLote " +
-                        "FROM lote_almacenado " +
-                        "LEFT JOIN lote ON lote_almacenado.Lote_idLote = lote.idLote " +
-                        "LEFT JOIN producto ON producto.idProducto = lote.Producto_idProducto " +
-                        "LEFT JOIN farmacia ON lote_almacenado.Farmacia_idFarmacia = farmacia.idFarmacia  " +
-                        "WHERE farmacia.idFarmacia = ?";
+                String consulta = "SELECT `lote_almacenado`.*, `farmacia`.`idFarmacia`, `lote`.`fechaDeCaducidad`, lote.numeroDeLote, `producto`.*\n" +
+                        "FROM `lote_almacenado` \n" +
+                        "LEFT JOIN `farmacia` ON `lote_almacenado`.`Farmacia_idFarmacia` = `farmacia`.`idFarmacia` \n" +
+                        "LEFT JOIN `lote` ON `lote_almacenado`.`Lote_idLote` = `lote`.`idLote` \n" +
+                        "LEFT JOIN `producto` ON `lote`.`Producto_idProducto` = `producto`.`idProducto`\n" +
+                        "WHERE idFarmacia = ?;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, sucursal.getIdSucursal());
                 ResultSet resultado = prepararSentencia.executeQuery();
