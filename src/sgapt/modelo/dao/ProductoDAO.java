@@ -33,10 +33,10 @@ public class ProductoDAO {
                         "FROM lote_almacenado " +
                         "LEFT JOIN lote ON lote_almacenado.Lote_idLote = lote.idLote " +
                         "LEFT JOIN producto ON producto.idProducto = lote.Producto_idProducto " +
-                        "LEFT JOIN almacen ON lote_almacenado.Almacen_idAlmacen = almacen.idAlmacen  " +
-                        "WHERE almacen.idAlmacen = ?";
+                        "LEFT JOIN farmacia ON lote_almacenado.Farmacia_idFarmacia = farmacia.idFarmacia  " +
+                        "WHERE farmacia.idFarmacia = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
-                prepararSentencia.setInt(1, sucursal.getIdInventario());
+                prepararSentencia.setInt(1, sucursal.getIdSucursal());
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Producto> productosConsulta = new ArrayList();
                 while (resultado.next()) {

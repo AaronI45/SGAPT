@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLAdministracionPromocionesController.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLInformacionPedidoController.java</file>
@@ -29,5 +30,8 @@
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/pojo/Lote.java</file>
             <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/pojo/Promocion.java</file>
         </group>
+=======
+        <group/>
+>>>>>>> 489b231660aaab06a8d241af4526dbe0024d699f
     </open-files>
 </project-private>

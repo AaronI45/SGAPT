@@ -194,6 +194,7 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
                // "Promocion del producto "+nombreProducto+" actualizada", Alert.AlertType.INFORMATION);
     }
     
+
     private void mostrarImagenProducto(){
         Promocion promocion = tvPromocion.getSelectionModel().getSelectedItem();
         if(promocion != null){
@@ -207,7 +208,7 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
 
     @FXML
     private void clicMostrarImagen(ActionEvent event) {
-        mostrarImagenProducto();
+//        mostrarImagenProducto();
     }
     
 }

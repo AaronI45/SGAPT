@@ -1,21 +1,29 @@
 package sgapt.modelo.pojo;
 
 public class Sucursal {
+    private int idSucursal;
     private String estado;
     private String ciudad;
     private String direccion;
-    private int idInventario;
 
     public Sucursal() {
     }
 
-    public Sucursal(String estado, String ciudad, String direccion, int idInventario) {
+    public Sucursal(int idSucursal, String estado, String ciudad, String direccion) {
+        this.idSucursal = idSucursal;
         this.estado = estado;
         this.ciudad = ciudad;
         this.direccion = direccion;
-        this.idInventario = idInventario;
     }
 
+    public int getIdSucursal() {
+        return idSucursal;
+    }
+
+    public void setIdSucursal(int idSucursal) {
+        this.idSucursal = idSucursal;
+    }
+    
     public String getEstado() {
         return estado;
     }
@@ -32,14 +40,6 @@ public class Sucursal {
         this.ciudad = ciudad;
     }
 
-    public int getIdInventario() {
-        return idInventario;
-    }
-
-    public void setIdInventario(int idInventario) {
-        this.idInventario = idInventario;
-    }
-
     public String getDireccion() {
         return direccion;
     }
@@ -52,6 +52,5 @@ public class Sucursal {
     public String toString() {
         return estado;
     }
-    
-    
+        
 }

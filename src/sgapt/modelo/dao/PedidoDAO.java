@@ -22,7 +22,7 @@ public class PedidoDAO {
                 String consulta = "SELECT idPedido, Proveedor.nombre AS nombreProveedor, "
                         + "direccionEntrega, fechaPedido, fechaEnvio, fechaEntrega, " + 
                         "estadoRastreo, montoTotal, numPedido, precioProductos, precioEnvio, " + 
-                        "Proveedor_idProveedor, Almacen_idAlmacen " +
+                        "Proveedor_idProveedor, Farmacia_idFarmacia " +
                         "FROM Pedido " +  
                         "INNER JOIN Proveedor " + 
                         "ON Pedido.Proveedor_idProveedor = Proveedor.idProveedor";
@@ -44,7 +44,7 @@ public class PedidoDAO {
                     pedido.setPrecioProductos(resultado.getDouble("precioProductos"));
                     pedido.setPrecioEnvio(resultado.getDouble("precioEnvio"));
                     pedido.setIdProveedor(resultado.getInt("Proveedor_idProveedor"));
-                    pedido.setIdAlmacen(resultado.getInt("Almacen_idAlmacen"));
+                    pedido.setIdSucursal(resultado.getInt("Farmacia_idFarmacia"));
                     pedidosConsulta.add(pedido);
                 }
                 respuesta.setPedidos(pedidosConsulta);
@@ -85,12 +85,12 @@ public class PedidoDAO {
         if(conexionBD != null){
             try{
                 String sentencia = "INSERT INTO pedido (Proveedor_idProveedor, " + 
-                        "Almacen_idAlmacen, fechaPedido, montoTotal, direccionEntrega, " + 
+                        "Farmacia_idFarmacia, fechaPedido, montoTotal, direccionEntrega, " + 
                         "estadoRastreo, numPedido, precioProductos, precioEnvio) VALUES " + 
                         "(?,?,?,?,?,?,?,?,?)";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia, Statement.RETURN_GENERATED_KEYS);
                 prepararSentencia.setInt(1, nuevoPedido.getIdProveedor());
-                prepararSentencia.setInt(2, nuevoPedido.getIdAlmacen());
+                prepararSentencia.setInt(2, nuevoPedido.getIdSucursal());
                 prepararSentencia.setString(3, nuevoPedido.getFechaPedido());
                 prepararSentencia.setDouble(4, nuevoPedido.getMontoTotal());
                 prepararSentencia.setString(5, nuevoPedido.getDireccionEntrega());
@@ -127,13 +127,13 @@ public class PedidoDAO {
         if (conexionBD != null) {
             try {
                String sentencia = "UPDATE pedido SET Proveedor_idProveedor = ?, " + 
-                        "Almacen_idAlmacen = ?, fechaPedido = ?, montoTotal = ?, " + 
+                        "Farmacia_idFarmacia = ?, fechaPedido = ?, montoTotal = ?, " + 
                        "direccionEntrega = ?, estadoRastreo = ?, numPedido = ?, " + 
                        "precioProductos = ?, precioEnvio = ? " + 
                        "WHERE idPedido = ?";
                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                prepararSentencia.setInt(1, pedidoEdicion.getIdProveedor());
-                prepararSentencia.setInt(2, pedidoEdicion.getIdAlmacen());
+                prepararSentencia.setInt(2, pedidoEdicion.getIdSucursal());
                 prepararSentencia.setString(3, pedidoEdicion.getFechaPedido());
                 prepararSentencia.setDouble(4, pedidoEdicion.getMontoTotal());
                 prepararSentencia.setString(5, pedidoEdicion.getDireccionEntrega());

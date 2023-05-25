@@ -18,14 +18,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import sgapt.modelo.dao.AlmacenDAO;
 import sgapt.modelo.dao.ProductoDAO;
 import sgapt.modelo.dao.Lote_AlmacenadoDAO;
+import sgapt.modelo.dao.SucursalDAO;
 import sgapt.modelo.pojo.ProductoRespuesta;
-import sgapt.modelo.pojo.Almacen;
-import sgapt.modelo.pojo.AlmacenRespuesta;
 import sgapt.modelo.pojo.Producto;
 import sgapt.modelo.pojo.Lote_Almacenado;
+import sgapt.modelo.pojo.Sucursal;
+import sgapt.modelo.pojo.SucursalRespuesta;
 import sgapt.util.Constantes;
 import sgapt.util.Utilidades;
 
@@ -46,21 +46,21 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
     @FXML
     private TextField tfCantidad;
     @FXML
-    private ComboBox<Almacen> cbAlmacenOrigen;
+    private ComboBox<Sucursal> cbSucursalOrigen;
     @FXML
-    private ComboBox<Almacen> cbAlmacenDestino;
+    private ComboBox<Sucursal> cbSucursalDestino;
     
-    private ObservableList<Almacen> almacenes;
     private ObservableList<Producto> productos;
+    private ObservableList<Sucursal> sucursales;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
-        cargarListasAlmacenes();
-        cbAlmacenOrigen.valueProperty().addListener(new ChangeListener<Almacen>(){
+        cargarListasSucursales();
+        cbSucursalOrigen.valueProperty().addListener(new ChangeListener<Sucursal>(){
             @Override
-            public void changed(ObservableValue<? extends Almacen> observable, 
-                    Almacen oldValue, Almacen newValue) {
+            public void changed(ObservableValue<? extends Sucursal> observable, 
+                    Sucursal oldValue, Sucursal newValue) {
                 if(newValue != null){
                     cargarDatosTabla(newValue);
                 }
@@ -76,19 +76,19 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
         colNumeroLote.setCellValueFactory(new PropertyValueFactory("numeroLote"));
     }
     
-    private void cargarListasAlmacenes() {
-        almacenes = FXCollections.observableArrayList();
-        AlmacenRespuesta ar = AlmacenDAO.recuperarAlmacenes();
-        almacenes.addAll(ar.getAlmacenes());
-        cbAlmacenOrigen.setItems(almacenes);
-        cbAlmacenDestino.setItems(almacenes);
+    private void cargarListasSucursales() {
+        sucursales = FXCollections.observableArrayList();
+        SucursalRespuesta sr = SucursalDAO.recuperarSucursales();
+        sucursales.addAll(sr.getSucursales());
+        cbSucursalOrigen.setItems(sucursales);
+        cbSucursalDestino.setItems(sucursales);
     }
     
     
-    public void cargarDatosTabla(Almacen almacenSeleccionado){
+    public void cargarDatosTabla(Sucursal sucursalSeleccionada){
         productos = FXCollections.observableArrayList();
-        ProductoRespuesta pr = ProductoDAO.recuperarProductosEnAlmacen(
-                almacenSeleccionado.getIdAlmacen());
+        ProductoRespuesta pr = ProductoDAO.recuperarProductosEnSucursal(
+                sucursalSeleccionada);
         switch (pr.getCodigoRespuesta()){
                 case Constantes.OPERACION_EXITOSA:
                     productos.addAll(pr.getProductos());
@@ -114,11 +114,11 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
 
     @FXML
     private void clicRealizarReadquisicion(ActionEvent event) {
-        Almacen almacenOrigen = cbAlmacenOrigen.getSelectionModel().getSelectedItem();
-        Almacen almacenDestino = cbAlmacenDestino.getSelectionModel().getSelectedItem();
+        Sucursal sucursalOrigen=  cbSucursalOrigen.getSelectionModel().getSelectedItem();
+        Sucursal sucursalDestino = cbSucursalDestino.getSelectionModel().getSelectedItem();
         
-        if (almacenOrigen != null && almacenDestino != null) {
-            if (almacenOrigen.getIdAlmacen() == almacenDestino.getIdAlmacen()) {
+        if (sucursalOrigen != null && sucursalDestino != null) {
+            if (sucursalOrigen.getIdSucursal()== sucursalDestino.getIdSucursal()) {
                 Utilidades.mostrarDialogoSimple("Error", "La sucursal de origen no puede ser " + 
                         "la misma que la sucursal de destino. Por favor, cambie la selección.",
                         Alert.AlertType.WARNING);
@@ -147,9 +147,9 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
             int cantidadExistencias = obtenerCantidadDeProductoAlmacenado();
             if (cantidadExistencias > 0) {
                 if (cantidadReadquisicion <= cantidadExistencias) {
-                    realizarActualizacionEnAlmacenes(cantidadReadquisicion, 
+                    realizarActualizacionDeProductosEnFarmacias(cantidadReadquisicion, 
                             cantidadExistencias);
-                    cargarDatosTabla(cbAlmacenOrigen.getSelectionModel().getSelectedItem());                        
+                    cargarDatosTabla(cbSucursalOrigen.getSelectionModel().getSelectedItem());                        
                 } else {
                     Utilidades.mostrarDialogoSimple("Error", 
                         "Debe introducir una cantidad de productos menor o igual " + 
@@ -166,26 +166,13 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
         }
     }
     
-    private void realizarActualizacionEnAlmacenes(int cantidadReadquisicion, 
+    private void realizarActualizacionDeProductosEnFarmacias(int cantidadReadquisicion, 
             int cantidadExistencias) {
-        
-        System.out.println("SelectedItem().getIdLote = " + 
-                tvProductos.getSelectionModel().getSelectedItem().getIdLote());
-        System.out.println("SelectedItem().getIdAlmacen()" + 
-                cbAlmacenDestino.getSelectionModel().getSelectedItem().getIdAlmacen());
-        
         Lote_Almacenado lote_Almacenado = Lote_AlmacenadoDAO.recuperarLoteAlmacenado(
                 tvProductos.getSelectionModel().getSelectedItem().getIdLote(), 
-                cbAlmacenDestino.getSelectionModel().getSelectedItem().getIdAlmacen());
+                cbSucursalDestino.getSelectionModel().getSelectedItem().getIdSucursal());
         
-        
-        System.out.println("lote_Almacenado = " + lote_Almacenado);
-        System.out.println("getCodigoRespuesta = " + lote_Almacenado.getCodigoRespuesta());
-        System.out.println("getAlmacen_idAlmacen = " + lote_Almacenado.getAlmacen_idAlmacen());
-        System.out.println("getCantidad = " + lote_Almacenado.getCantidad());
-        System.out.println("getLote_idLote = " + lote_Almacenado.getLote_idLote());
-        
-        restarCantidadProductoAlmacenOrigen(cantidadReadquisicion, cantidadExistencias);
+        restarCantidadProductoFarmaciaOrigen(cantidadReadquisicion, cantidadExistencias);
         
         switch (lote_Almacenado.getCodigoRespuesta()){
             case Constantes.OPERACION_EXITOSA: 
@@ -229,8 +216,8 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
                         lote_Almacenado.setCantidad(cantidadReadquisicion);
                         lote_Almacenado.setLote_idLote(tvProductos.getSelectionModel().
                                 getSelectedItem().getIdLote());
-                        lote_Almacenado.setAlmacen_idAlmacen(cbAlmacenDestino.
-                                getSelectionModel().getSelectedItem().getIdAlmacen());
+                        lote_Almacenado.setAlmacen_idAlmacen(cbSucursalDestino.
+                                getSelectionModel().getSelectedItem().getIdSucursal());
                         int respuesta = Lote_AlmacenadoDAO.guardarLote_Almacenado(lote_Almacenado);
                     
                     switch (respuesta) {
@@ -264,13 +251,13 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
         }
     }
     
-    private void restarCantidadProductoAlmacenOrigen(int cantidadSolicitada, 
+    private void restarCantidadProductoFarmaciaOrigen(int cantidadSolicitada, 
             int cantidadExistencias) {
         Lote_Almacenado lote_almacenado = new Lote_Almacenado();
         lote_almacenado.setLote_idLote(tvProductos.
                 getSelectionModel().getSelectedItem().getIdLote());
-        lote_almacenado.setAlmacen_idAlmacen(cbAlmacenOrigen.
-                getSelectionModel().getSelectedItem().getIdAlmacen());
+        lote_almacenado.setAlmacen_idAlmacen(cbSucursalOrigen.
+                getSelectionModel().getSelectedItem().getIdSucursal());
         lote_almacenado.setCantidad(cantidadExistencias - cantidadSolicitada);
         
         int resultado = Lote_AlmacenadoDAO.modificarLote_Almacenado(lote_almacenado);
@@ -302,7 +289,7 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
         Lote_Almacenado lote_Almacenado = Lote_AlmacenadoDAO.
                 recuperarLoteAlmacenado(tvProductos.getSelectionModel().
                     getSelectedItem().getIdProducto(), 
-                    cbAlmacenOrigen.getSelectionModel().getSelectedItem().getIdAlmacen());
+                    cbSucursalOrigen.getSelectionModel().getSelectedItem().getIdSucursal());
             
         switch (lote_Almacenado.getCodigoRespuesta()) {
             case Constantes.OPERACION_EXITOSA :

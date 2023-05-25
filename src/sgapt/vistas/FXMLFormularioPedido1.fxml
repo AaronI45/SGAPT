@@ -77,7 +77,7 @@
          </columns>
       </TableView>
       <ComboBox fx:id="cbProveedores" layoutX="53.0" layoutY="143.0" prefHeight="44.0" prefWidth="212.0" promptText="Seleccionar proveedor" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
-      <ComboBox fx:id="cbAlmacenes" layoutX="739.0" layoutY="143.0" prefHeight="44.0" prefWidth="245.0" promptText="Seleccionar almacen destino" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
+      <ComboBox fx:id="cbSucursales" layoutX="739.0" layoutY="143.0" prefHeight="44.0" prefWidth="245.0" promptText="Seleccionar sucursal destino" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
       <Label layoutX="902.0" layoutY="263.0" text="Lotes seleccionados">
          <font>
             <Font name="System Bold" size="20.0" />
@@ -108,7 +108,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextArea fx:id="taUbicacionAlmacen" editable="false" layoutX="831.0" layoutY="200.0" prefHeight="27.0" prefWidth="419.0" />
+      <TextArea fx:id="taUbicacionSucursal" editable="false" layoutX="831.0" layoutY="200.0" prefHeight="27.0" prefWidth="419.0" />
       <TextArea fx:id="taUbicacionProveedor" editable="false" layoutX="140.0" layoutY="200.0" prefHeight="27.0" prefWidth="419.0" />
       <Label layoutX="861.0" layoutY="605.0" prefHeight="27.0" prefWidth="45.0" text="500">
          <font>

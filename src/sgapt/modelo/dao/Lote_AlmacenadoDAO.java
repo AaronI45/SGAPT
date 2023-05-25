@@ -17,7 +17,7 @@ public class Lote_AlmacenadoDAO {
             try {
                 String sentencia = "SELECT cantidad " + 
                         "FROM Lote_Almacenado " + 
-                        "WHERE Lote_idLote = ? AND Almacen_idAlmacen = ?";
+                        "WHERE Lote_idLote = ? AND Farmacia_idFarmacia = ?";
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, idLote);
                 prepararSentencia.setInt(2, idAlmacen);
@@ -47,14 +47,13 @@ public class Lote_AlmacenadoDAO {
         if (conexionBD != null) {
             try {
                 String sentencia = "INSERT INTO lote_almacenado(lote_idLote, " + 
-                        "almacen_idAlmacen, cantidad) "+ 
+                        "farmacia_idFarmacia, cantidad) "+ 
                         "VALUES (?, ?, ?)";
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, lote_Almacenado.getLote_idLote());
                 prepararSentencia.setInt(2, lote_Almacenado.getAlmacen_idAlmacen());
                 prepararSentencia.setInt(3, lote_Almacenado.getCantidad());                
                 int filasAfectadas = prepararSentencia.executeUpdate();
-                System.out.println("filasAfectadas = " + filasAfectadas);
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
                 conexionBD.close();
@@ -74,13 +73,12 @@ public class Lote_AlmacenadoDAO {
             try {
                 String sentencia = "UPDATE lote_almacenado " + 
                         "SET cantidad = ? " + 
-                        "WHERE lote_idlote = ? AND Almacen_idAlmacen = ?";
+                        "WHERE lote_idlote = ? AND Farmacia_idFarmacia = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, lote_Almacenado.getCantidad());
                 prepararSentencia.setInt(2, lote_Almacenado.getLote_idLote());
                 prepararSentencia.setInt(3, lote_Almacenado.getAlmacen_idAlmacen());
                 int filasAfectadas = prepararSentencia.executeUpdate();
-                System.out.println("filasAfectadas = " + filasAfectadas);
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
                 conexionBD.close();
@@ -93,17 +91,17 @@ public class Lote_AlmacenadoDAO {
         return respuesta;
     }
     
-    public static int eliminarLote_Almacenado(int lote_idLote, int almacen_idAlmacen) {
+    public static int eliminarLote_Almacenado(int lote_idLote, int farmacia_idFarmacia) {
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
                 String sentencia = "DELETE FROM lote_almacenado " + 
                         "WHERE lote_idLote = ? " + 
-                        "AND almacen_idAlmacen = ?";
+                        "AND farmacia_idFarmacia = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
                 prepararSentencia.setInt(1, lote_idLote);
-                prepararSentencia.setInt(2, almacen_idAlmacen);
+                prepararSentencia.setInt(2, farmacia_idFarmacia);
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
