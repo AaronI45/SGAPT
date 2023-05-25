@@ -27,11 +27,14 @@ public class EmpleadoDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idEmpleado, idFarmacia, "
-                        + "nombres, ApellidoPaterno, ApellidoMaterno,correo,foto " + 
-                        "FROM Usuario " +  
-                        "INNER JOIN Empleado " + 
-                        "ON Usuario.Empleado_idEmpleado = Empleado.idEmpleado";
+                String consulta = "SELECT usuario, empleado, farmacia, "+
+                        "apellidoMaterno, matricula, correo, fechaNacimiento, " +
+                        "alumno.idCarrera, carrera.nombre AS nombreCarrera, "+
+                        "carrera.idFacultad, facultad.nombre AS nombreFacultad " +
+                        "FROM usuario " +
+                        "INNER JOIN empledos ON empleado.idCarrera = carrera.idCarrera " +
+                        "INNER JOIN facultad ON carrera.idFacultad = facultad.idFacultad";
+                
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Empleado> empleadosConsulta = new ArrayList();
