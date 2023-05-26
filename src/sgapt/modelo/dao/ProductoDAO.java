@@ -28,17 +28,17 @@ public class ProductoDAO {
         if (conexionBD != null)
         {
             try{
-                String consulta = "SELECT `producto_almacenado`.*, `producto`.*, `almacen`.*, `lote`.`fechaDeCaducidad`, `lote`.`idLote`\n" +
-                        "FROM `producto_almacenado` \n" +
-                        "LEFT JOIN `producto` ON `producto_almacenado`.`Producto_idProducto` = `producto`.`idProducto` \n" +
-                        "LEFT JOIN `almacen` ON `producto_almacenado`.`Almacen_idAlmacen` = `almacen`.`idAlmacen` \n" +
-                        "LEFT JOIN `lote` ON `lote`.`Producto_idProducto` = `producto`.`idProducto`\n" +
-                        "WHERE almacen.idAlmacen = ?;";
+                String consulta = "SELECT `lote_almacenado`.*, `farmacia`.`idFarmacia`, `lote`.`fechaDeCaducidad`, lote.numeroDeLote, `producto`.*\n" +
+                        "FROM `lote_almacenado` \n" +
+                        "LEFT JOIN `farmacia` ON `lote_almacenado`.`Farmacia_idFarmacia` = `farmacia`.`idFarmacia` \n" +
+                        "LEFT JOIN `lote` ON `lote_almacenado`.`Lote_idLote` = `lote`.`idLote` \n" +
+                        "LEFT JOIN `producto` ON `lote`.`Producto_idProducto` = `producto`.`idProducto`\n" +
+                        "WHERE idFarmacia = ?;";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
-                prepararSentencia.setInt(1, sucursal.getIdInventario());
+                prepararSentencia.setInt(1, sucursal.getIdSucursal());
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Producto> productosConsulta = new ArrayList();
-                while(resultado.next()){
+                while (resultado.next()) {
                     Producto producto = new Producto();
                     producto.setIdProducto(resultado.getInt("idProducto"));
                     producto.setNombre(resultado.getString("nombre"));
@@ -48,8 +48,9 @@ public class ProductoDAO {
                     producto.setTipoProducto(resultado.getString("tipoProducto"));
                     producto.setFechaCaducidad(resultado.getDate("fechaDeCaducidad"));
                     producto.setRequiereReceta(resultado.getBoolean("requiereReceta"));
-                    producto.setNumeroLote(resultado.getInt("idLote"));
-                    producto.setPrecio(resultado.getInt("precio"));
+                    producto.setIdLote(resultado.getInt("Lote_idLote"));
+                    producto.setNumeroLote(resultado.getString("numeroDeLote"));
+                    producto.setPrecio(resultado.getDouble("precio"));
                     producto.setFoto(resultado.getBytes("foto"));
                     productosConsulta.add(producto);
                 }
@@ -125,40 +126,70 @@ public class ProductoDAO {
         return resultadoEliminacion;
     }
 
-    public static ResultadoOperacion editarEstadoProducto (Producto productoAEditar){
+    public static ResultadoOperacion editarEstadoProducto (Producto productoAEditar, String nuevoEstado){
         ResultadoOperacion resultadoEdicion = new ResultadoOperacion();
-
+        //TODO
         return resultadoEdicion;
     }
+    
+    public static ResultadoOperacion agregarProducto (Producto productoNuevo) throws SQLException{
+        ResultadoOperacion resultadoAgregar = new ResultadoOperacion();
+        resultadoAgregar.setError(true);
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null){
+            try {
+                String consulta = "INSERT INTO producto (nombre, requiereReceta, precio, tipoProducto, disponibilidad) "
+                        + "VALUES (?,?,?,?,?)";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setString(1, productoNuevo.getNombre());
+                prepararSentencia.setBoolean(2, productoNuevo.isRequiereReceta());
+                prepararSentencia.setDouble(3, productoNuevo.getPrecio());
+                prepararSentencia.setString(4, productoNuevo.getTipoProducto());
+                prepararSentencia.setString(5, "no disponible");
+                int filasAfectadas = prepararSentencia.executeUpdate();
+                if (filasAfectadas >0){
+                    resultadoAgregar.setError(false);
+                    resultadoAgregar.setMensaje("El producto ha sido registrado exitosamente, ahora puede ordenar este tipo de productos");
+                }else{
+                    resultadoAgregar.setMensaje("Hubo un error al registrar el nuevo producto, por favor inténtelo de nuevo");
+                }
+            } catch (SQLException e) {
+                resultadoAgregar.setMensaje("Error de conexión");
+            }
+            finally{
+                conexionBD.close();
+            }
+        }else{
+            resultadoAgregar.setMensaje("No hay conexión a la base de datos");
+        }
+        return resultadoAgregar;
+    }
 
-    public static ProductoRespuesta obtenerProductoPorSucursal(Sucursal sucursal){
+    public static ProductoRespuesta recuperarProductosEnAlmacen (int idAlmacen){
         ProductoRespuesta productos = new ProductoRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null)
         {
             try{
-                String consulta = "SELECT DISTINCT `producto_almacenado`.*, `producto`.*, `almacen`.*, `lote`.`fechaDeCaducidad`, `lote`.`idLote`\n" +
-                        "FROM `producto_almacenado` \n" +
-                        "LEFT JOIN `producto` ON `producto_almacenado`.`Producto_idProducto` = `producto`.`idProducto` \n" +
-                        "LEFT JOIN `almacen` ON `producto_almacenado`.`Almacen_idAlmacen` = `almacen`.`idAlmacen` \n" +
-                        "LEFT JOIN `lote` ON `lote`.`Producto_idProducto` = `producto`.`idProducto`\n" +
-                        "WHERE almacen.idAlmacen = ?;";
+                String consulta = "SELECT idProducto, nombre, disponibilidad, " +
+                        "tipoProducto, lote.numeroDeLote, lote.idLote, lote_almacenado.cantidad " +
+                        "FROM producto INNER JOIN lote ON producto.idProducto = " +
+                        "lote.Producto_idProducto INNER JOIN lote_almacenado ON " +
+                        "lote.idLote = lote_almacenado.Lote_idLote " +
+                        "WHERE lote_almacenado.Almacen_idAlmacen = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
-                prepararSentencia.setInt(1, sucursal.getIdInventario());
+                prepararSentencia.setInt(1, idAlmacen);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Producto> productosConsulta = new ArrayList();
                 while(resultado.next()){
                     Producto producto = new Producto();
                     producto.setIdProducto(resultado.getInt("idProducto"));
                     producto.setNombre(resultado.getString("nombre"));
-                    producto.setCantidad(resultado.getInt("cantidad"));
-                    producto.setSucursal(sucursal);
                     producto.setDisponibilidad(resultado.getString("disponibilidad"));
                     producto.setTipoProducto(resultado.getString("tipoProducto"));
-                    producto.setFechaCaducidad(resultado.getDate("fechaDeCaducidad"));
-                    producto.setRequiereReceta(resultado.getBoolean("requiereReceta"));
-                    producto.setNumeroLote(resultado.getInt("idLote"));
-                    producto.setPrecio(resultado.getInt("precio"));
+                    producto.setNumeroLote(resultado.getString("numeroDeLote"));
+                    producto.setCantidad(resultado.getInt("cantidad"));
+                    producto.setIdLote(resultado.getInt("idLote"));
                     productosConsulta.add(producto);
                 }
                 productos.setProductos(productosConsulta);

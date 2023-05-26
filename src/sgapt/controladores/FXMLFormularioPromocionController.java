@@ -320,7 +320,7 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
 
     /*private int obtenerPosicionComboSucursal(int idSucursal){
         for(int i=0; i <sucursales.size(); i++){
-            if(sucursales.get(i).getIdInventario()== idSucursal){
+            if(sucursales.get(i).getIdSucursal()== idSucursal){
                 return i;
             }
         }

@@ -1,20 +1,27 @@
 package sgapt.controladores;
 
+import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import sgapt.SGAPT;
+import sgapt.modelo.dao.LoteDAO;
 import sgapt.modelo.dao.PedidoDAO;
 import sgapt.modelo.pojo.PedidoRespuesta;
 import sgapt.modelo.pojo.Pedido;
@@ -30,49 +37,27 @@ public class FXMLAdministracionPedidosController implements Initializable {
     @FXML
     private TableColumn colProveedor;
     @FXML
-    private TableColumn colMontoTotal;
-    @FXML
-    private TableColumn colDirEntrega;
-    @FXML
-    private TableColumn colFechaPedido;
-    @FXML
-    private TableColumn colFechaEnvio;
-    @FXML
-    private TableColumn colEstadoRastreo;
-    @FXML
-    private TableColumn colFechaEntrega;
+    private TableColumn colEstado;
     
-    private ObservableList<Pedido> pedidos;    
-    private static int idPedidoSeleccionadoEnTabla;
-
-    public static int getIdPedidoSeleccionadoEnTabla() {
-        return idPedidoSeleccionadoEnTabla;
-    }
+    private ObservableList<Pedido> pedidos;        
+    @FXML
+    private Label lbTitulo;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarInformacionTabla();
-        
-        final ObservableList<Pedido> tablaPedidoSel = tvPedidos.getSelectionModel().getSelectedItems();
-        tablaPedidoSel.addListener(selectorTablaPedidos);
     }    
     
     private void configurarTabla() {
         colNumeroPedido.setCellValueFactory(new PropertyValueFactory("idPedido"));
         colProveedor.setCellValueFactory(new PropertyValueFactory("nombreProveedor"));
-        colFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaEntrega"));
-        colDirEntrega.setCellValueFactory(new PropertyValueFactory("direccionEntrega"));
-        colFechaPedido.setCellValueFactory(new PropertyValueFactory("fechaPedido"));
-        colFechaEnvio.setCellValueFactory(new PropertyValueFactory("fechaEnvio"));
-        colFechaEntrega.setCellValueFactory(new PropertyValueFactory("fechaEntrega"));
-        colEstadoRastreo.setCellValueFactory(new PropertyValueFactory("estadoRastreo"));
-        colMontoTotal.setCellValueFactory(new PropertyValueFactory("montoTotal"));        
+        colEstado.setCellValueFactory(new PropertyValueFactory("estadoRastreo"));
     }
     
     private void cargarInformacionTabla() {
         pedidos = FXCollections.observableArrayList();
-        PedidoRespuesta respuestaBD = PedidoDAO.obtenerInformacionPedido();
+        PedidoRespuesta respuestaBD = PedidoDAO.obtenerInformacionPedidos();
         switch (respuestaBD.getCodigoRespuesta()) {
             case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Sin conexión", 
@@ -91,31 +76,27 @@ public class FXMLAdministracionPedidosController implements Initializable {
         }
     }
     
-    private final ListChangeListener<Pedido> selectorTablaPedidos = 
-            new ListChangeListener<Pedido>() {
-                @Override
-                public void onChanged(ListChangeListener.Change<? extends Pedido> c) {
-                    recuperarIdPedidoSeleccionado();
-                }
-            };
-    
-    private void recuperarIdPedidoSeleccionado() {
-        final Pedido pedido = getTablaPedidosSeleccionada();
-        idPedidoSeleccionadoEnTabla = pedido.getIdPedido();
-    }
-    
-    public Pedido getTablaPedidosSeleccionada() {
-        if (tvPedidos != null) {
-            List<Pedido> tabla = tvPedidos.getSelectionModel().getSelectedItems();
-            if (tabla.size() == 1) {
-                final Pedido pedidoSeleccionado = tabla.get(0);
-                return pedidoSeleccionado;
-            }
+    private void irFormularioPedido(boolean esEdicion, Pedido pedido){
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader
+                (SGAPT.class.getResource("vistas/FXMLFormularioPedido1.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLFormularioPedidoController formularioPedidoController = accesoControlador.getController();
+            formularioPedidoController.inicializarInformacionFormulario(esEdicion, pedido);
+            Stage source = (Stage) lbTitulo.getScene().getWindow();
+            Stage stagePrincipal = (Stage) source.getScene().getWindow();
+            stagePrincipal.setScene(new Scene(vista));
+            if (esEdicion)
+                stagePrincipal.setTitle("Modificación de pedido");
+            else
+                stagePrincipal.setTitle("Formulario de pedido");
+                
+            stagePrincipal.show();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLFormularioPedidoController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
     }
     
-
     @FXML
     private void clicBtnRegresar(ActionEvent event) {
         Node source = (Node) event.getSource();
@@ -127,33 +108,128 @@ public class FXMLAdministracionPedidosController implements Initializable {
 
     @FXML
     private void clicBtnRealizarPedido(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLProveedoresExternos.fxml"));
-        stagePrincipal.setTitle("Proveedores externos");
-        stagePrincipal.show();
+        irFormularioPedido(false, null);
     }
 
     @FXML
     private void clicBtnModificar(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLModificacionPedido.fxml"));
-        stagePrincipal.setTitle("Modificación de pedido");
-        stagePrincipal.show();
+          int posicion = tvPedidos.getSelectionModel().getSelectedIndex();
+          if (posicion != -1) {
+              Pedido pedidoSeleccion = pedidos.get(posicion);
+                if (pedidoSeleccion.getEstadoRastreo().equals("sin enviar")) {
+                    irFormularioPedido(true, pedidos.get(posicion));
+                    
+                } else if (pedidoSeleccion.getEstadoRastreo().equals("enviado") || 
+                        pedidoSeleccion.getEstadoRastreo().equals("con demora")) {
+                    Utilidades.mostrarDialogoSimple("Modificación no permitida", 
+                        "No es posible modificar el pedido debido a que ya se ha enviado", 
+                        Alert.AlertType.WARNING);
+                    
+                } if (pedidoSeleccion.getEstadoRastreo().equals("entregado")) {
+                    Utilidades.mostrarDialogoSimple("Modificación no permitida", 
+                        "No es posible modificar el pedido debido a que ya se ha entregado", 
+                        Alert.AlertType.WARNING);
+                }
+          } else {
+              Utilidades.mostrarDialogoSimple("Seleccion necesaria", 
+                    "Debe seleccionar un pedido previamente", 
+                    Alert.AlertType.WARNING);
+          }
     }
 
     @FXML
     private void clicBtnConsultar(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLInformacionPedido.fxml"));
-        stagePrincipal.setTitle("Información de pedido");
-        stagePrincipal.show();
+          int posicion = tvPedidos.getSelectionModel().getSelectedIndex();
+          if (posicion != -1) {
+              irConsultarPedido(posicion);
+          } else {
+              Utilidades.mostrarDialogoSimple("Seleccion necesaria", 
+                    "Debe seleccionar un pedido previamente", 
+                    Alert.AlertType.WARNING);
+          }
+    }
+    
+    private void irConsultarPedido(int posicion){
+        try {
+            FXMLLoader accesoControlador = new FXMLLoader
+                (SGAPT.class.getResource("vistas/FXMLInformacionPedido1.fxml"));
+            Parent vista = accesoControlador.load();
+            FXMLInformacionPedidoController informacionPedidoController = accesoControlador.getController();
+            informacionPedidoController.inicializarInformacion(pedidos.get(posicion));
+            Stage source = (Stage) lbTitulo.getScene().getWindow();
+            Stage stagePrincipal = (Stage) source.getScene().getWindow();
+            stagePrincipal.setScene(new Scene(vista));
+            stagePrincipal.setTitle("Información de pedido");
+            stagePrincipal.show();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLInformacionPedidoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     private void clicBtnCancelar(ActionEvent event) {
+        int posicion = tvPedidos.getSelectionModel().getSelectedIndex();
+        if (posicion != -1) {
+            Pedido pedidoSeleccion = pedidos.get(posicion);
+            
+            if (pedidoSeleccion.getEstadoRastreo().equals("sin enviar")) {
+                boolean cancelarPedido = Utilidades.mostrarDialogoConfirmacion("Cancelación de pedido", "¿Está seguro de " + 
+                        "que desea cancelar el pedido?");
+                
+                if (cancelarPedido) {
+                    int respuestaLoteDesenlazado = LoteDAO.desenlazarLotesDePedido(pedidoSeleccion.getIdPedido());
+                    
+                    switch (respuestaLoteDesenlazado) {
+                    case Constantes.ERROR_CONEXION:
+                            Utilidades.mostrarDialogoSimple("Sin conexión", 
+                            "Lo sentimos, por el momento no hay conexión para poder eliminar el pedido", 
+                            Alert.AlertType.ERROR);
+                        break;
+                    case Constantes.ERROR_CONSULTA:
+                            Utilidades.mostrarDialogoSimple("Error al eliminar el pedido", 
+                            "Hubo un error al eliminar el pedido, por favor inténtelo más tarde", 
+                            Alert.AlertType.WARNING);
+                        break;
+                    case Constantes.OPERACION_EXITOSA:
+                            int respuesta = PedidoDAO.
+                                    eliminarPedido(pedidoSeleccion.getIdPedido());
+                            switch (respuesta) {
+                            case Constantes.ERROR_CONEXION:
+                                    Utilidades.mostrarDialogoSimple("Sin conexión", 
+                                    "Lo sentimos, por el momento no hay conexión para poder eliminar el pedido", 
+                                    Alert.AlertType.ERROR);
+                                break;
+                            case Constantes.ERROR_CONSULTA:
+                                    Utilidades.mostrarDialogoSimple("Error al eliminar el pedido", 
+                                    "Hubo un error al eliminar el pedido, por favor inténtelo más tarde", 
+                                    Alert.AlertType.WARNING);
+                                break;
+                            case Constantes.OPERACION_EXITOSA:
+                                    Utilidades.mostrarDialogoSimple("Operación exitosa", 
+                                            "Se ha eliminado el pedido satisfactoriamente", 
+                                            Alert.AlertType.INFORMATION);
+                                    cargarInformacionTabla();
+                                break;
+                            }
+                        break;
+                    }
+                }
+            } else if (pedidoSeleccion.getEstadoRastreo().equals("enviado") || 
+                    pedidoSeleccion.getEstadoRastreo().equals("con demora")) {
+                Utilidades.mostrarDialogoSimple("Cancelación no permitida", 
+                    "No es posible cancelar el pedido debido a que ya se ha enviado", 
+                    Alert.AlertType.WARNING);
+                
+            } else if (pedidoSeleccion.getEstadoRastreo().equals("entregado")) {
+                Utilidades.mostrarDialogoSimple("Cancelación no permitida", 
+                    "No es posible cancelar el pedido debido a que ya se ha entregado", 
+                    Alert.AlertType.WARNING);
+            }
+        } else {
+            Utilidades.mostrarDialogoSimple("Seleccion necesaria", 
+                    "Debe seleccionar un pedido previamente", 
+                    Alert.AlertType.WARNING);
+        }
     }
     
 }

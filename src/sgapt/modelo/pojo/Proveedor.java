@@ -60,7 +60,7 @@ public class Proveedor {
 
     @Override
     public String toString() {
-        return "Proveedor{" + "idProveedor=" + idProveedor + ", estado=" + estado + ", ciudad=" + ciudad + ", direccion=" + direccion + ", nombre=" + nombre + '}';
+        return nombre;
     }
 
 }

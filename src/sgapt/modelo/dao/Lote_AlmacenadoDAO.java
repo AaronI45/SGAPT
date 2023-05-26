@@ -5,27 +5,27 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import sgapt.modelo.ConexionBD;
-import sgapt.modelo.pojo.Producto_Almacenado;
+import sgapt.modelo.pojo.Lote_Almacenado;
 import sgapt.util.Constantes;
 
-public class Producto_AlmacenadoDAO {
+public class Lote_AlmacenadoDAO {
     
-    public static Producto_Almacenado recuperarProductoAlmacenado(int idProducto, int idAlmacen) {        
-        Producto_Almacenado producto_almacenadoRespuesta = new Producto_Almacenado();
+    public static Lote_Almacenado recuperarLoteAlmacenado(int idLote, int idAlmacen) {        
+        Lote_Almacenado producto_almacenadoRespuesta = new Lote_Almacenado();
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
                 String sentencia = "SELECT cantidad " + 
-                        "FROM Producto_Almacenado " + 
-                        "WHERE Producto_idProducto = ? AND Almacen_idAlmacen = ?";
+                        "FROM Lote_Almacenado " + 
+                        "WHERE Lote_idLote = ? AND Farmacia_idFarmacia = ?";
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setInt(1, idProducto);
+                prepararSentencia.setInt(1, idLote);
                 prepararSentencia.setInt(2, idAlmacen);
                 
                 ResultSet resultado = prepararSentencia.executeQuery();
                 producto_almacenadoRespuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
                 if (resultado.next()) {
-                    producto_almacenadoRespuesta.setProducto_idProducto(idProducto);
+                    producto_almacenadoRespuesta.setLote_idLote(idLote);
                     producto_almacenadoRespuesta.setAlmacen_idAlmacen(idAlmacen);
                     producto_almacenadoRespuesta.setCantidad(resultado.getInt("cantidad"));
                 } else {
@@ -33,6 +33,7 @@ public class Producto_AlmacenadoDAO {
                 }
                 conexionBD.close();
             } catch (SQLException e) {
+                e.printStackTrace();
                 producto_almacenadoRespuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
             }
         } else {
@@ -41,24 +42,26 @@ public class Producto_AlmacenadoDAO {
         return producto_almacenadoRespuesta;
     }
     
-    public static int guardarProducto_Almacenado(Producto_Almacenado producto_Almacenado) {
+    //TODO
+    public static int guardarLote_Almacenado(Lote_Almacenado lote_Almacenado) {
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "INSERT INTO producto_almacenado(producto_idProducto, " + 
-                        "almacen_idAlmacen, cantidad) "+ 
+                String sentencia = "INSERT INTO lote_almacenado(lote_idLote, " + 
+                        "farmacia_idFarmacia, cantidad) "+ 
                         "VALUES (?, ?, ?)";
                 PreparedStatement prepararSentencia =  conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setInt(1, producto_Almacenado.getProducto_idProducto());
-                prepararSentencia.setInt(2, producto_Almacenado.getAlmacen_idAlmacen());
-                prepararSentencia.setInt(3, producto_Almacenado.getCantidad());                
+                prepararSentencia.setInt(1, lote_Almacenado.getLote_idLote());
+                prepararSentencia.setInt(2, lote_Almacenado.getAlmacen_idAlmacen());
+                prepararSentencia.setInt(3, lote_Almacenado.getCantidad());                
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
             }
         } else {
             respuesta = Constantes.ERROR_CONEXION;
@@ -66,24 +69,25 @@ public class Producto_AlmacenadoDAO {
         return respuesta;
     }
     
-    public static int modificarProducto_Almacenado(Producto_Almacenado producto_Almacenado) {
+    public static int modificarLote_Almacenado(Lote_Almacenado lote_Almacenado) {
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "UPDATE producto_almacenado " + 
+                String sentencia = "UPDATE lote_almacenado " + 
                         "SET cantidad = ? " + 
-                        "WHERE Producto_idProducto = ? AND Almacen_idAlmacen = ?";
+                        "WHERE lote_idlote = ? AND Farmacia_idFarmacia = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setInt(1, producto_Almacenado.getCantidad());
-                prepararSentencia.setInt(2, producto_Almacenado.getProducto_idProducto());
-                prepararSentencia.setInt(3, producto_Almacenado.getAlmacen_idAlmacen());
+                prepararSentencia.setInt(1, lote_Almacenado.getCantidad());
+                prepararSentencia.setInt(2, lote_Almacenado.getLote_idLote());
+                prepararSentencia.setInt(3, lote_Almacenado.getAlmacen_idAlmacen());
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
             }
         } else {
             respuesta = Constantes.ERROR_CONEXION;
@@ -91,23 +95,24 @@ public class Producto_AlmacenadoDAO {
         return respuesta;
     }
     
-    public static int eliminarProducto_Almacenado(int producto_idProducto, int almacen_idAlmacen) {
+    public static int eliminarLote_Almacenado(int lote_idLote, int farmacia_idFarmacia) {
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null) {
             try {
-                String sentencia = "DELETE FROM producto_almacenado " + 
-                        "WHERE producto_idProducto = ? " + 
-                        "AND almacen_idAlmacen = ?";
+                String sentencia = "DELETE FROM lote_almacenado " + 
+                        "WHERE lote_idLote = ? " + 
+                        "AND farmacia_idFarmacia = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setInt(1, producto_idProducto);
-                prepararSentencia.setInt(2, almacen_idAlmacen);
+                prepararSentencia.setInt(1, lote_idLote);
+                prepararSentencia.setInt(2, farmacia_idFarmacia);
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
             }
         } else {
             respuesta = Constantes.ERROR_CONEXION;

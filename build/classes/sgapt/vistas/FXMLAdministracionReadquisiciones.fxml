@@ -19,16 +19,13 @@
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
-      <TableView fx:id="tvProductos" layoutX="48.0" layoutY="180.0" prefHeight="492.0" prefWidth="1190.0" stylesheets="@../css/estilos.css">
+      <TableView fx:id="tvProductos" layoutX="48.0" layoutY="217.0" prefHeight="455.0" prefWidth="1190.0" stylesheets="@../css/estilos.css">
          <columns>
-            <TableColumn fx:id="colNombre" prefWidth="237.0" text="Nombre producto" />
-            <TableColumn fx:id="colTipoProducto" prefWidth="214.0" text="Tipo de producto" />
-            <TableColumn fx:id="colDisponibilidad" minWidth="7.0" prefWidth="124.0" text="Disponibilidad" />
-            <TableColumn fx:id="colCantidad" prefWidth="79.0" text="Cantidad" />
-            <TableColumn fx:id="colFechaCaducidad" minWidth="1.0" prefWidth="169.0" text="Fecha de caducidad" />
-            <TableColumn fx:id="colRequiereReceta" prefWidth="142.0" text="Requiere de receta" />
-            <TableColumn fx:id="colNumeroLote" prefWidth="84.0" text="N° lote" />
-            <TableColumn fx:id="colPrecio" prefWidth="117.0" text="Precio unitario" />
+            <TableColumn fx:id="colNombre" prefWidth="285.0" text="Nombre producto" />
+            <TableColumn fx:id="colTipoProducto" prefWidth="228.0" text="Tipo de producto" />
+            <TableColumn fx:id="colDisponibilidad" minWidth="7.0" prefWidth="227.0" text="Disponibilidad" />
+            <TableColumn fx:id="colCantidad" prefWidth="242.0" text="Cantidad" />
+            <TableColumn fx:id="colNumeroLote" prefWidth="207.0" text="N° lote" />
          </columns>
       </TableView>
       <TextField fx:id="tfCantidad" layoutX="756.0" layoutY="130.0" onKeyTyped="#permitirInputSoloNumeros" prefHeight="31.0" prefWidth="72.0" styleClass="textField" stylesheets="@../css/estilos.css" />

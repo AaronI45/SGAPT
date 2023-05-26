@@ -25,9 +25,7 @@ public class SucursalDAO {
         Connection conexionBD = ConexionBD.abrirConexionBD();
         if (conexionBD != null){
             try {
-                String consulta = "SELECT `farmacia`.*, `almacen`.`idAlmacen`\n" +
-                        "FROM `farmacia` \n" +
-                        "LEFT JOIN `almacen` ON `almacen`.`Farmacia_idFarmacia` = `farmacia`.`idFarmacia`";
+                String consulta = "SELECT * FROM farmacia";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Sucursal> sucursalesConsulta = new ArrayList<>();
@@ -36,7 +34,7 @@ public class SucursalDAO {
                     sucursal.setCiudad(resultado.getString("ciudad"));
                     sucursal.setEstado(resultado.getString("estado"));
                     sucursal.setDireccion(resultado.getString("direccion"));
-                    sucursal.setIdInventario(resultado.getInt("idAlmacen"));
+                    sucursal.setIdSucursal(resultado.getInt("idFarmacia"));
                     sucursalesConsulta.add(sucursal);
                 }
                 sucursales.setSucursales(sucursalesConsulta);

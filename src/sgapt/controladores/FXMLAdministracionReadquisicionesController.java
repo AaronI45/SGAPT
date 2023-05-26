@@ -19,13 +19,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.ProductoDAO;
-import sgapt.modelo.dao.Producto_AlmacenadoDAO;
-import sgapt.modelo.pojo.ProductoRespuesta;
+import sgapt.modelo.dao.Lote_AlmacenadoDAO;
 import sgapt.modelo.dao.SucursalDAO;
-import sgapt.modelo.pojo.SucursalRespuesta;
+import sgapt.modelo.pojo.ProductoRespuesta;
 import sgapt.modelo.pojo.Producto;
-import sgapt.modelo.pojo.Producto_Almacenado;
+import sgapt.modelo.pojo.Lote_Almacenado;
 import sgapt.modelo.pojo.Sucursal;
+import sgapt.modelo.pojo.SucursalRespuesta;
 import sgapt.util.Constantes;
 import sgapt.util.Utilidades;
 
@@ -42,25 +42,16 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
     @FXML
     private TableColumn colCantidad;
     @FXML
-    private TableColumn colFechaCaducidad;
-    @FXML
-    private TableColumn colRequiereReceta;
-    @FXML
     private TableColumn colNumeroLote;
     @FXML
-    private TableColumn colPrecio;
+    private TextField tfCantidad;
     @FXML
     private ComboBox<Sucursal> cbSucursalOrigen;
     @FXML
     private ComboBox<Sucursal> cbSucursalDestino;
-    @FXML
-    private TextField tfCantidad;
     
-    private ObservableList<Sucursal> sucursales;
     private ObservableList<Producto> productos;
-    private int idProductoSeleccionadoEnTabla; 
-    private int idAlmacenOrigenSeleccionado;
-    private int idAlmacenDestinoSeleccionado;
+    private ObservableList<Sucursal> sucursales;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -73,7 +64,7 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
                 if(newValue != null){
                     cargarDatosTabla(newValue);
                 }
-            }
+            }            
         });
     }    
 
@@ -82,10 +73,7 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
         colTipoProducto.setCellValueFactory(new PropertyValueFactory("tipoProducto"));
         colDisponibilidad.setCellValueFactory(new PropertyValueFactory("disponibilidad"));
         colCantidad.setCellValueFactory(new PropertyValueFactory("cantidad"));
-        colRequiereReceta.setCellValueFactory(new PropertyValueFactory("requiereReceta"));
         colNumeroLote.setCellValueFactory(new PropertyValueFactory("numeroLote"));
-        colPrecio.setCellValueFactory(new PropertyValueFactory("precio"));
-        colFechaCaducidad.setCellValueFactory(new PropertyValueFactory("fechaCaducidad"));
     }
     
     private void cargarListasSucursales() {
@@ -99,10 +87,15 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
     
     public void cargarDatosTabla(Sucursal sucursalSeleccionada){
         productos = FXCollections.observableArrayList();
-        ProductoRespuesta pr = ProductoDAO.recuperarProductosEnSucursal(sucursalSeleccionada);
+        ProductoRespuesta pr = ProductoDAO.recuperarProductosEnSucursal(
+                sucursalSeleccionada);
         switch (pr.getCodigoRespuesta()){
                 case Constantes.OPERACION_EXITOSA:
-                    productos.addAll(pr.getProductos());
+                    for (Producto producto : pr.getProductos()){
+                        if(producto.getDisponibilidad().equals("disponible")){
+                           productos.add(producto);
+                        }
+                    }
                     tvProductos.setItems(productos);
                 break;
                 case Constantes.ERROR_CONSULTA:
@@ -125,27 +118,22 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
 
     @FXML
     private void clicRealizarReadquisicion(ActionEvent event) {
-        Sucursal sucursalOrigen = cbSucursalOrigen.getSelectionModel().getSelectedItem();
+        Sucursal sucursalOrigen=  cbSucursalOrigen.getSelectionModel().getSelectedItem();
         Sucursal sucursalDestino = cbSucursalDestino.getSelectionModel().getSelectedItem();
         
         if (sucursalOrigen != null && sucursalDestino != null) {
-            if (sucursalOrigen.getIdInventario() == sucursalDestino.getIdInventario()) {
+            if (sucursalOrigen.getIdSucursal()== sucursalDestino.getIdSucursal()) {
                 Utilidades.mostrarDialogoSimple("Error", "La sucursal de origen no puede ser " + 
                         "la misma que la sucursal de destino. Por favor, cambie la selección.",
                         Alert.AlertType.WARNING);
             } else {                
-                int posicionProductoSel = tvProductos.getSelectionModel().getSelectedIndex();
-                    if (posicionProductoSel != -1) {
-                        idProductoSeleccionadoEnTabla = productos.
-                                get(posicionProductoSel).getIdProducto();                        
+                int posicion = tvProductos.getSelectionModel().getSelectedIndex();
+                    if (posicion != -1) {
                         boolean realizarReadquisicion = Utilidades.mostrarDialogoConfirmacion(
                                 "Readquisición de productos", 
                                 "¿Está seguro de que desea realizar la readquisición?");
-
                         if (realizarReadquisicion) {                    
-                            idAlmacenOrigenSeleccionado = sucursalOrigen.getIdInventario();
-                            idAlmacenDestinoSeleccionado = sucursalDestino.getIdInventario();
-                            validarCantidadReadquisicion();  
+                            validarCantidadReadquisicion();
                         }
                     } else
                         Utilidades.mostrarDialogoSimple("Selecciona un producto", 
@@ -160,10 +148,11 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
         int cantidadReadquisicion = Integer.parseInt(tfCantidad.getText());
         
         if (cantidadReadquisicion > 0) {
-            int cantidadProductoAlmacenado = obtenerCantidadDeProductoAlmacenado();
-            if (cantidadProductoAlmacenado > 0) {
-                if (cantidadReadquisicion <= cantidadProductoAlmacenado) {
-                    realizarActualizacionEnAlmacenDestino(cantidadReadquisicion);
+            int cantidadExistencias = obtenerCantidadDeProductoAlmacenado();
+            if (cantidadExistencias > 0) {
+                if (cantidadReadquisicion <= cantidadExistencias) {
+                    realizarActualizacionDeProductosEnFarmacias(cantidadReadquisicion, 
+                            cantidadExistencias);
                     cargarDatosTabla(cbSucursalOrigen.getSelectionModel().getSelectedItem());                        
                 } else {
                     Utilidades.mostrarDialogoSimple("Error", 
@@ -181,18 +170,18 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
         }
     }
     
-    private void realizarActualizacionEnAlmacenDestino(int cantidad) {
+    private void realizarActualizacionDeProductosEnFarmacias(int cantidadReadquisicion, 
+            int cantidadExistencias) {
+        Lote_Almacenado lote_Almacenado = Lote_AlmacenadoDAO.recuperarLoteAlmacenado(
+                tvProductos.getSelectionModel().getSelectedItem().getIdLote(), 
+                cbSucursalDestino.getSelectionModel().getSelectedItem().getIdSucursal());
         
-        Producto_Almacenado producto_Almacenado = Producto_AlmacenadoDAO.
-            recuperarProductoAlmacenado(idProductoSeleccionadoEnTabla, 
-                    idAlmacenDestinoSeleccionado);
-        restarCantidadProductoAlmacenOrigen(cantidad);
+        restarCantidadProductoFarmaciaOrigen(cantidadReadquisicion, cantidadExistencias);
         
-        switch (producto_Almacenado.getCodigoRespuesta()){
+        switch (lote_Almacenado.getCodigoRespuesta()){
             case Constantes.OPERACION_EXITOSA: 
-                producto_Almacenado.setCantidad(cantidad + producto_Almacenado.getCantidad());
-                    int resultado = Producto_AlmacenadoDAO.
-                            modificarProducto_Almacenado(producto_Almacenado);
+                lote_Almacenado.setCantidad(cantidadReadquisicion + lote_Almacenado.getCantidad());
+                    int resultado = Lote_AlmacenadoDAO.modificarLote_Almacenado(lote_Almacenado);
                 
                 switch (resultado) {
                     case Constantes.OPERACION_EXITOSA:
@@ -228,10 +217,12 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.SIN_RESULTADOS:
-                        producto_Almacenado.setCantidad(cantidad);
-                        producto_Almacenado.setProducto_idProducto(idProductoSeleccionadoEnTabla);
-                        producto_Almacenado.setAlmacen_idAlmacen(idAlmacenDestinoSeleccionado);
-                        int respuesta = Producto_AlmacenadoDAO.guardarProducto_Almacenado(producto_Almacenado);
+                        lote_Almacenado.setCantidad(cantidadReadquisicion);
+                        lote_Almacenado.setLote_idLote(tvProductos.getSelectionModel().
+                                getSelectedItem().getIdLote());
+                        lote_Almacenado.setAlmacen_idAlmacen(cbSucursalDestino.
+                                getSelectionModel().getSelectedItem().getIdSucursal());
+                        int respuesta = Lote_AlmacenadoDAO.guardarLote_Almacenado(lote_Almacenado);
                     
                     switch (respuesta) {
                         case Constantes.OPERACION_EXITOSA:
@@ -264,14 +255,16 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
         }
     }
     
-    private void restarCantidadProductoAlmacenOrigen(int cantidadSolicitada) {
-        Producto_Almacenado producto_almacenadoOrigen = new Producto_Almacenado();
-        producto_almacenadoOrigen.setProducto_idProducto(idProductoSeleccionadoEnTabla);
-        producto_almacenadoOrigen.setAlmacen_idAlmacen(idAlmacenOrigenSeleccionado);
-        int cantidadProductoOriginal = obtenerCantidadDeProductoAlmacenado();
-        producto_almacenadoOrigen.setCantidad(cantidadProductoOriginal - cantidadSolicitada);
+    private void restarCantidadProductoFarmaciaOrigen(int cantidadSolicitada, 
+            int cantidadExistencias) {
+        Lote_Almacenado lote_almacenado = new Lote_Almacenado();
+        lote_almacenado.setLote_idLote(tvProductos.
+                getSelectionModel().getSelectedItem().getIdLote());
+        lote_almacenado.setAlmacen_idAlmacen(cbSucursalOrigen.
+                getSelectionModel().getSelectedItem().getIdSucursal());
+        lote_almacenado.setCantidad(cantidadExistencias - cantidadSolicitada);
         
-        int resultado = Producto_AlmacenadoDAO.modificarProducto_Almacenado(producto_almacenadoOrigen);        
+        int resultado = Lote_AlmacenadoDAO.modificarLote_Almacenado(lote_almacenado);
         
         switch (resultado) {
             case Constantes.OPERACION_EXITOSA:
@@ -297,35 +290,36 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
     
     private int obtenerCantidadDeProductoAlmacenado() {
         int cantidadProductoAlmacenado = 0;
-        Producto_Almacenado producto_Almacenado = Producto_AlmacenadoDAO.
-            recuperarProductoAlmacenado(idProductoSeleccionadoEnTabla, 
-                    idAlmacenOrigenSeleccionado);
+        Lote_Almacenado lote_Almacenado = Lote_AlmacenadoDAO.
+                recuperarLoteAlmacenado(tvProductos.getSelectionModel().
+                    getSelectedItem().getIdProducto(), 
+                    cbSucursalOrigen.getSelectionModel().getSelectedItem().getIdSucursal());
             
-            switch (producto_Almacenado.getCodigoRespuesta()){
-                case Constantes.OPERACION_EXITOSA :
-                    cantidadProductoAlmacenado = producto_Almacenado.getCantidad();
-                    break;
-                case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error en la solicitud", 
-                        "Por el momento no se puede procesar la solicitud", 
-                            Alert.AlertType.ERROR);
-                    break;
-                case Constantes.ERROR_CONEXION:
-                    Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Por el momento no hay conexión, intentelo más tarde", 
-                            Alert.AlertType.ERROR);
-                    break;
-                case Constantes.SIN_RESULTADOS:
-                    Utilidades.mostrarDialogoSimple("Sin resultados", 
-                            "El producto seleccionado no cuenta con las suficientes existencias", 
-                            Alert.AlertType.ERROR);
-                    break;
-                default:
-                    Utilidades.mostrarDialogoSimple("Error de petición", 
-                            "El sistema no está disponible por el momento", 
-                            Alert.AlertType.ERROR);
-                    break;
-            }
+        switch (lote_Almacenado.getCodigoRespuesta()) {
+            case Constantes.OPERACION_EXITOSA :
+                cantidadProductoAlmacenado = lote_Almacenado.getCantidad();
+                break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error en la solicitud", 
+                    "Por el momento no se puede procesar la solicitud", 
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexión", 
+                        "Por el momento no hay conexión, intentelo más tarde", 
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.SIN_RESULTADOS:
+                Utilidades.mostrarDialogoSimple("Sin resultados", 
+                        "El producto seleccionado no cuenta con las suficientes existencias", 
+                        Alert.AlertType.ERROR);
+                break;
+            default:
+                Utilidades.mostrarDialogoSimple("Error de petición", 
+                        "El sistema no está disponible por el momento", 
+                        Alert.AlertType.ERROR);
+                break;
+        }
         return cantidadProductoAlmacenado;
     }   
     

@@ -5,6 +5,23 @@ import javafx.scene.image.ImageView;
 
 public class Producto {
     
+    public static enum TipoDeProducto{
+        SALUD("artículo para salud"),
+        HIGIENE("artículo para higiene"),
+        MEDICAMENTO("medicamento");
+        
+        private TipoDeProducto(String tipo){
+            this.tipo = tipo;
+        }
+                
+        private String tipo;
+
+        @Override
+        public String toString() {
+            return tipo;
+        }
+    }
+    
     private int idProducto;
     private String nombre;
     private String tipoProducto;
@@ -12,16 +29,16 @@ public class Producto {
     private int cantidad;
     private Sucursal sucursal;
     private boolean requiereReceta;
-    private int precio;
-    private int numeroLote;
+    private double precio;
+    private int idLote;
+    private String numeroLote;
     private Date fechaCaducidad;
     private byte[] foto;
-    private ImageView visualizacionFoto;
 
     public Producto() {
     }
 
-    public Producto(int idProducto, String nombre, String tipoProducto, String disponibilidad, int cantidad, Sucursal sucursal, boolean requiereReceta, int precio, int numeroLote, Date fechaCaducidad, byte[] foto, ImageView visualizacionFoto) {
+    public Producto(int idProducto, String nombre, String tipoProducto, String disponibilidad, int cantidad, Sucursal sucursal, boolean requiereReceta, double precio, int idLote, String numeroLote, Date fechaCaducidad, byte[] foto) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.tipoProducto = tipoProducto;
@@ -30,10 +47,10 @@ public class Producto {
         this.sucursal = sucursal;
         this.requiereReceta = requiereReceta;
         this.precio = precio;
+        this.idLote = idLote;
         this.numeroLote = numeroLote;
         this.fechaCaducidad = fechaCaducidad;
         this.foto = foto;
-        this.visualizacionFoto = visualizacionFoto;
     }
     
     public int getIdProducto() {
@@ -100,20 +117,20 @@ public class Producto {
         this.fechaCaducidad = fechaCaducidad;
     }
 
-    public int getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 
-    public int getNumeroLote() {
-        return numeroLote;
+    public int getIdLote() {
+        return idLote;
     }
 
-    public void setNumeroLote(int numeroLote) {
-        this.numeroLote = numeroLote;
+    public void setIdLote(int idLote) {
+        this.idLote = idLote;
     }
 
     public byte[] getFoto() {
@@ -124,12 +141,12 @@ public class Producto {
         this.foto = foto;
     }
 
-    public ImageView getVisualizacionFoto() {
-        return visualizacionFoto;
+    public String getNumeroLote() {
+        return numeroLote;
     }
 
-    public void setVisualizacionFoto(ImageView visualizacionFoto) {
-        this.visualizacionFoto = visualizacionFoto;
+    public void setNumeroLote(String numeroLote) {
+        this.numeroLote = numeroLote;
     }
     
     @Override

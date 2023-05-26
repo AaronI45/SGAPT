@@ -9,12 +9,17 @@ public class Pedido {
     private String fechaEnvio;
     private String fechaEntrega;
     private String estadoRastreo;
+    private String numPedido;
+    private double precioProductos;
+    private double precioEnvio;
     private double montoTotal;
+    private int idProveedor;
+    private int idSucursal;
 
     public Pedido() {
     }
 
-    public Pedido(int idPedido, String nombreProveedor, String direccionEntrega, String fechaPedido, String fechaEnvio, String fechaEntrega, String estadoRastreo, double montoTotal) {
+    public Pedido(int idPedido, String nombreProveedor, String direccionEntrega, String fechaPedido, String fechaEnvio, String fechaEntrega, String estadoRastreo, String numPedido, double precioProductos, double precioEnvio, double montoTotal, int idProveedor, int idFarmacia) {
         this.idPedido = idPedido;
         this.nombreProveedor = nombreProveedor;
         this.direccionEntrega = direccionEntrega;
@@ -22,7 +27,12 @@ public class Pedido {
         this.fechaEnvio = fechaEnvio;
         this.fechaEntrega = fechaEntrega;
         this.estadoRastreo = estadoRastreo;
+        this.numPedido = numPedido;
+        this.precioProductos = precioProductos;
+        this.precioEnvio = precioEnvio;
         this.montoTotal = montoTotal;
+        this.idProveedor = idProveedor;
+        this.idSucursal = idFarmacia;
     }
 
     public int getIdPedido() {
@@ -81,17 +91,57 @@ public class Pedido {
         this.estadoRastreo = estadoRastreo;
     }
 
+    public String getNumPedido() {
+        return numPedido;
+    }
+
+    public void setNumPedido(String numPedido) {
+        this.numPedido = numPedido;
+    }
+
+    public double getPrecioProductos() {
+        return precioProductos;
+    }
+
+    public void setPrecioProductos(double precioProductos) {
+        this.precioProductos = precioProductos;
+    }
+
+    public double getPrecioEnvio() {
+        return precioEnvio;
+    }
+
+    public void setPrecioEnvio(double precioEnvio) {
+        this.precioEnvio = precioEnvio;
+    }
+
     public double getMontoTotal() {
         return montoTotal;
     }
 
     public void setMontoTotal(double montoTotal) {
         this.montoTotal = montoTotal;
-    }    
+    }
+
+    public int getIdProveedor() {
+        return idProveedor;
+    }
+
+    public void setIdProveedor(int idProveedor) {
+        this.idProveedor = idProveedor;
+    }
+
+    public int getIdSucursal() {
+        return idSucursal;
+    }
+
+    public void setIdSucursal(int idSucursal) {
+        this.idSucursal = idSucursal;
+    }
 
     @Override
     public String toString() {
-        return "Pedido{" + "idPedido=" + idPedido + ", nombreProveedor=" + nombreProveedor + ", direccionEntrega=" + direccionEntrega + ", fechaPedido=" + fechaPedido + ", fechaEnvio=" + fechaEnvio + ", fechaEntrega=" + fechaEntrega + ", estadoRastreo=" + estadoRastreo + ", montoTotal=" + montoTotal + '}';
-    }    
-    
+        return "Pedido{" + "idPedido=" + idPedido + ", nombreProveedor=" + nombreProveedor + ", direccionEntrega=" + direccionEntrega + ", fechaPedido=" + fechaPedido + ", fechaEnvio=" + fechaEnvio + ", fechaEntrega=" + fechaEntrega + ", estadoRastreo=" + estadoRastreo + ", numPedido=" + numPedido + ", precioProductos=" + precioProductos + ", precioEnvio=" + precioEnvio + ", montoTotal=" + montoTotal + ", idProveedor=" + idProveedor + ", idFarmacia=" + idSucursal + '}';
+    }
+
 }
