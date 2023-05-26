@@ -153,8 +153,8 @@ public class FXMLAdministracionProductosController implements Initializable {
     }
     
     private Producto verificarProductoSeleccionado(){
-        int filaSeleccionada = tvProductos.getSelectionModel().getSelectedIndex();
-        return (filaSeleccionada >= 0)? listaProductos.get(filaSeleccionada) : null;
+        Producto filaSeleccionada = tvProductos.getSelectionModel().getSelectedItem();
+        return filaSeleccionada;
     }
     
     public void regresarAventanaAnterior(){
@@ -212,6 +212,7 @@ public class FXMLAdministracionProductosController implements Initializable {
             Scene escenaFormulario = new Scene(vista);
             Stage escenario = (Stage) tvProductos.getScene().getWindow();
             escenario.setScene(escenaFormulario);
+            formulario.inicializarValores(producto);
         } catch (IOException e) {
             Utilidades.mostrarDialogoSimple("Error", "No se puede mostrar la pantalla de formulario", 
                     Alert.AlertType.ERROR);
@@ -220,14 +221,13 @@ public class FXMLAdministracionProductosController implements Initializable {
     
     @FXML
     private void clicEditarProducto(ActionEvent event) {
+        Producto productoSeleccionado = verificarProductoSeleccionado();
+        if (productoSeleccionado != null){
+            irAFormulario(productoSeleccionado);
+        }else{
+            Utilidades.mostrarDialogoSimple("Error de selección", "Por favor seleccione un producto para editar", 
+                    Alert.AlertType.ERROR);
+        }
     }
 
-    @FXML
-    private void clicAgregarProducto(ActionEvent event) {
-        irAFormulario(null);
-    }
-
-    @FXML
-    private void clicVisualizarProducto(ActionEvent event) {
-    }
 }

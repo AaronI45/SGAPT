@@ -42,19 +42,23 @@ public class FXMLFormularioProductoController implements Initializable {
     private boolean esEdicion;
     private Producto productoEdicion;
     private ObservableList<Producto.TipoDeProducto> tipos;
-    
+    private ObservableList<Producto.RequiereReceta> requiereReceta;
+    private ObservableList<Producto.EstadoProducto> estadoProducto;
+            
     @FXML
-    private ComboBox<String> cbRequiereReceta;
+    private ComboBox<Producto.RequiereReceta> cbRequiereReceta;
     @FXML
     private ComboBox<Producto.TipoDeProducto> cbTipoProducto;
+    @FXML
+    private ComboBox<Producto.EstadoProducto> cbDisponibilidad;
     @FXML
     private TextField tfNombre;
     @FXML
     private ImageView ivProducto;
     @FXML
-    private TextField tfNombre2;
-    @FXML
     private Label lbRequiereReceta;
+    @FXML
+    private TextField tfPrecio;
 
     /**
      * Initializes the controller class.
@@ -62,6 +66,8 @@ public class FXMLFormularioProductoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         inicializarCbTipoProducto();
+        inicilizarCbRequiereReceta();
+        inicializarCbDisponibilidad();
         lbRequiereReceta.setVisible(false);
         cbRequiereReceta.setVisible(false);
         cbTipoProducto.valueProperty().addListener(new ChangeListener<Producto.TipoDeProducto>(){
@@ -100,6 +106,8 @@ public class FXMLFormularioProductoController implements Initializable {
     }
     
     private void cargarInformacionProducto(){
+        tfNombre.setText(productoEdicion.getNombre());
+        tfPrecio.setText(String.valueOf(productoEdicion.getPrecio()));
         
     }
     
@@ -120,7 +128,15 @@ public class FXMLFormularioProductoController implements Initializable {
     }
 
     public void inicilizarCbRequiereReceta(){
-        
+        requiereReceta = FXCollections.observableArrayList();
+        requiereReceta.addAll(Producto.RequiereReceta.values());
+        cbRequiereReceta.setItems(requiereReceta);
+    }
+    
+    public void inicializarCbDisponibilidad(){
+        estadoProducto = FXCollections.observableArrayList();
+        estadoProducto.addAll(Producto.EstadoProducto.values());
+        cbDisponibilidad.setItems(estadoProducto);
     }
     
     @FXML
@@ -130,6 +146,10 @@ public class FXMLFormularioProductoController implements Initializable {
         stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionProductos.fxml"));
         stagePrincipal.setTitle("Administracion de productos");
         stagePrincipal.show();
+    }
+
+    @FXML
+    private void clicRegistrarProducto(ActionEvent event) {
     }
     
 }
