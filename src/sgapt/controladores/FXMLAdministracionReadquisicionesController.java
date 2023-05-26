@@ -91,7 +91,11 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
                 sucursalSeleccionada);
         switch (pr.getCodigoRespuesta()){
                 case Constantes.OPERACION_EXITOSA:
-                    productos.addAll(pr.getProductos());
+                    for (Producto producto : pr.getProductos()){
+                        if(producto.getDisponibilidad().equals("disponible")){
+                           productos.add(producto);
+                        }
+                    }
                     tvProductos.setItems(productos);
                 break;
                 case Constantes.ERROR_CONSULTA:

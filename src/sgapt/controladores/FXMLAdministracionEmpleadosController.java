@@ -1,5 +1,8 @@
 package sgapt.controladores;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -12,6 +15,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.EmpleadoDAO;
 import sgapt.modelo.pojo.Empleado;
@@ -35,25 +40,46 @@ public class FXMLAdministracionEmpleadosController implements Initializable {
     private TableColumn    colDireccion;
     @FXML
     private TableColumn   colNumeroTelefonico;
-    @FXML
-    private TableColumn     colImagen;
     private ObservableList<Empleado> empleados;
+    @FXML
+    private ImageView ivEmpleado;
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarInformacionTabla();
+        
+        tvEmpleados.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null){
+                if (newSelection.getFoto() !=null){
+                    try {
+                        ByteArrayInputStream inputFoto = new ByteArrayInputStream(newSelection.getFoto());
+                        Image imgFotoEdicion = new Image(inputFoto);
+                        ivEmpleado.setImage(imgFotoEdicion);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                }else{
+                    try {
+                        Image img = new Image(new FileInputStream("src\\sgapt\\img\\usuario-sin-imagen.png"));
+                        ivEmpleado.setImage(img);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        System.out.println("no hay fotografía disponible");
+                    }
+                }
+            }
+        });
     }    
 
       public void configurarTabla(){
         colNombreEmpleado.setCellValueFactory(new PropertyValueFactory("nombre"));
-        colApellidoPaterno.setCellValueFactory(new PropertyValueFactory("apellido paterno"));
-        colApellidoMaterno.setCellValueFactory(new PropertyValueFactory("apellido materno"));
-        colCorreoElectronico.setCellValueFactory(new PropertyValueFactory("correo electronico"));
-        colDireccion.setCellValueFactory(new PropertyValueFactory("direccion del empleado"));
-        colNumeroTelefonico.setCellValueFactory(new PropertyValueFactory("numero telfonico"));
-        colImagen.setCellValueFactory(new PropertyValueFactory("visualizacionFoto"));
+        colApellidoPaterno.setCellValueFactory(new PropertyValueFactory("apellidoPaterno"));
+        colApellidoMaterno.setCellValueFactory(new PropertyValueFactory("apellidoMaterno"));
+        colCorreoElectronico.setCellValueFactory(new PropertyValueFactory("correo"));
+        colNumeroTelefonico.setCellValueFactory(new PropertyValueFactory("numeroTelefonico"));
+        colDireccion.setCellValueFactory(new PropertyValueFactory("direccion"));
     }
     
     

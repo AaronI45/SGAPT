@@ -12,6 +12,8 @@ public class Empleado {
     private String username;
     private String password;
     private String correo;
+    private String numeroTelefonico;
+    private String direccion;
     private byte[] foto;
     private String tipoEmpleado;
     private int codigoRespuesta;
@@ -20,7 +22,7 @@ public class Empleado {
         
     }
 
-    public Empleado(int idEmpleado, int idFarmacia, String nombre, String apellidoPaterno, String apellidoMaterno, String username, String password, String correo, byte[] foto, String tipoEmpleado, int codigoRespuesta) {
+    public Empleado(int idEmpleado, int idFarmacia, String nombre, String apellidoPaterno, String apellidoMaterno, String username, String password, String correo, String numeroTelefonico, String direccion, byte[] foto, String tipoEmpleado, int codigoRespuesta) {
         this.idEmpleado = idEmpleado;
         this.idFarmacia = idFarmacia;
         this.nombre = nombre;
@@ -29,11 +31,13 @@ public class Empleado {
         this.username = username;
         this.password = password;
         this.correo = correo;
+        this.numeroTelefonico = numeroTelefonico;
+        this.direccion = direccion;
         this.foto = foto;
         this.tipoEmpleado = tipoEmpleado;
         this.codigoRespuesta = codigoRespuesta;
     }
-
+    
     public int getIdEmpleado() {
         return idEmpleado;
     }
@@ -120,6 +124,22 @@ public class Empleado {
 
     public void setCodigoRespuesta(int codigoRespuesta) {
         this.codigoRespuesta = codigoRespuesta;
+    }
+
+    public String getNumeroTelefonico() {
+        return numeroTelefonico;
+    }
+
+    public void setNumeroTelefonico(String numeroTelefonico) {
+        this.numeroTelefonico = numeroTelefonico;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
     
     @Override

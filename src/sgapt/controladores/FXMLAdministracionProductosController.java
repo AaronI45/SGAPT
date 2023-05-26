@@ -1,8 +1,6 @@
 package sgapt.controladores;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -12,7 +10,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +24,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import javax.imageio.ImageIO;
 import sgapt.modelo.dao.ProductoDAO;
 import sgapt.modelo.pojo.ProductoRespuesta;
 import sgapt.modelo.dao.SucursalDAO;
@@ -201,10 +197,6 @@ public class FXMLAdministracionProductosController implements Initializable {
                             "Se está intentando eliminar un producto que ya está eliminado, por favor seleccione un producto distinto para eliminarlo", 
                             Alert.AlertType.ERROR);
                 }
-            }else{
-            Utilidades.mostrarDialogoSimple("Error de selección", 
-                    "Por favor seleccione los distintos productos a eliminar y vuelva a intentarlo", 
-                    Alert.AlertType.ERROR);
             }
         }
     }
