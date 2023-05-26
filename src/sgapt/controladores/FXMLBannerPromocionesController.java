@@ -30,9 +30,6 @@ public class FXMLBannerPromocionesController implements Initializable {
     @FXML
     private AnchorPane panel3;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -73,7 +70,7 @@ public class FXMLBannerPromocionesController implements Initializable {
     private void clicBtnGestionar(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPromociones2.fxml"));
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPromociones3.fxml"));
         stagePrincipal.setTitle("Administración de promociones");
         stagePrincipal.show();
     }

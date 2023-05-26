@@ -202,7 +202,7 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
      private void irFormulario(boolean esEdicion, Promocion promocionEdicion){
          try{
              FXMLLoader accesoControlador = new FXMLLoader
-                     (sgapt.SGAPT.class.getResource("vistas/FXMLFormularioPromocion4.fxml"));
+                     (sgapt.SGAPT.class.getResource("vistas/FXMLFormularioPromocion5.fxml"));
              Parent vista= accesoControlador.load();
              FXMLFormularioPromocionController formulario = accesoControlador.getController();
              formulario.inicializarInformacionFormulario(esEdicion, promocionEdicion, this);

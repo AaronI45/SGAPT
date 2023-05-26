@@ -56,10 +56,6 @@
       </Label>
       <DatePicker fx:id="dpFechaInicio" layoutX="67.0" layoutY="360.0" />
       <DatePicker fx:id="dpFechaFin" layoutX="67.0" layoutY="494.0" />
-      <ImageView fitHeight="286.0" fitWidth="333.0" layoutX="524.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../img/Productos/91795820-ojo-cerrado-oculto-sin-visualización-icono-invisible.png" />
-         </image>
-      </ImageView>
+      <ImageView fx:id="ivFotoProducto" fitHeight="286.0" fitWidth="333.0" layoutX="524.0" layoutY="285.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

@@ -23,6 +23,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import static jdk.nashorn.internal.objects.NativeRegExp.source;
 import sgapt.interfaz.INotificacionOperacion;
@@ -51,8 +52,6 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
     private Label lbErrorFechaFin;
     @FXML
     private ComboBox<Producto> cbIdProducto;
-    @FXML
-    private ComboBox<Sucursal> cbSucursal;
     private ObservableList<Producto> productos;
     private ObservableList<Sucursal> sucursales;
     @FXML
@@ -67,6 +66,8 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
     private DatePicker dpFechaFin;
 
     private INotificacionOperacion interfazNotificacion;
+    @FXML
+    private ImageView ivFotoProducto;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
