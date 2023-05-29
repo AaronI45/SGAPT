@@ -2,6 +2,7 @@ package sgapt.controladores;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,13 +17,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sgapt.SGAPT;
 import sgapt.modelo.dao.LoteDAO;
+import sgapt.modelo.dao.Lote_PedidoDAO;
 import sgapt.modelo.dao.PedidoDAO;
+import sgapt.modelo.pojo.Lote_Pedido;
+import sgapt.modelo.pojo.Lote_PedidoRespuesta;
+import sgapt.modelo.pojo.Lote;
 import sgapt.modelo.pojo.PedidoRespuesta;
 import sgapt.modelo.pojo.Pedido;
 import sgapt.util.Constantes;
@@ -53,6 +59,31 @@ public class FXMLAdministracionPedidosController implements Initializable {
         colNumeroPedido.setCellValueFactory(new PropertyValueFactory("idPedido"));
         colProveedor.setCellValueFactory(new PropertyValueFactory("nombreProveedor"));
         colEstado.setCellValueFactory(new PropertyValueFactory("estadoRastreo"));
+        
+        colEstado.setCellFactory(e -> new TableCell<ObservableList<String>, String>() {
+            @Override
+            public void updateItem(String item, boolean empty) {
+                // Always invoke super constructor.
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    setText(item);
+
+                    // If index is two we set the background color explicitly.
+                    if (item.equals("sin enviar")) {
+                        this.setStyle("-fx-background-color: #ffc93c");
+                    } else if (item.equals("enviado")) {
+                        this.setStyle("-fx-background-color: #4A90E2");
+                    } else if (item.equals("con demora")) {
+                        this.setStyle("-fx-background-color: #D0021B");
+                    } else if (item.equals("entregado")) {
+                        this.setStyle("-fx-background-color: #12CC48");
+                    }
+                }
+            }
+        });
     }
     
     private void cargarInformacionTabla() {
@@ -177,8 +208,16 @@ public class FXMLAdministracionPedidosController implements Initializable {
                         "que desea cancelar el pedido?");
                 
                 if (cancelarPedido) {
-                    int respuestaLoteDesenlazado = LoteDAO.desenlazarLotesDePedido(pedidoSeleccion.getIdPedido());
+                    Lote_PedidoRespuesta lotesPedidoRespuesta = Lote_PedidoDAO.
+                            obtenerLotesEnPedido(pedidoSeleccion.getIdPedido());
                     
+                    ArrayList<Lote_Pedido> lotesPedido = lotesPedidoRespuesta.getLotesPedido();
+                    for (Lote_Pedido lote_Pedido : lotesPedido) {
+                        LoteDAO.agregarCantidadLotesEnLote(
+                                lote_Pedido.getLote_idLote(), lote_Pedido.getCantidadLotes());
+                    }
+                    
+                    int respuestaLoteDesenlazado = Lote_PedidoDAO.eliminarLotesDePedido(pedidoSeleccion.getIdPedido());
                     switch (respuestaLoteDesenlazado) {
                     case Constantes.ERROR_CONEXION:
                             Utilidades.mostrarDialogoSimple("Sin conexión", 

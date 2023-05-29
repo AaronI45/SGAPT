@@ -39,10 +39,10 @@
       </Label>
       <TableView fx:id="tvLotesProveedor" layoutX="55.0" layoutY="302.0" prefHeight="285.0" prefWidth="504.0" stylesheets="@../css/estilos.css">
         <columns>
-          <TableColumn fx:id="colNumLotePro" prefWidth="110.0" text="N° de lote" />
-          <TableColumn fx:id="colNombreProductoPro" minWidth="0.0" prefWidth="193.0" text="Nombre producto" />
-            <TableColumn fx:id="colCantidadPro" prefWidth="75.0" text="Cantidad" />
-            <TableColumn fx:id="colPrecioPro" prefWidth="125.0" text="Precio" />
+          <TableColumn fx:id="colNumLotesPro" prefWidth="135.0" text="Num lotes" />
+          <TableColumn fx:id="colNombreProductoPro" minWidth="0.0" prefWidth="174.0" text="Nombre producto" />
+            <TableColumn fx:id="colCantidadPro" prefWidth="81.0" text="Cantidad" />
+            <TableColumn fx:id="colPrecioPro" prefWidth="113.0" text="Precio" />
         </columns>
       </TableView>
       <Label layoutX="54.0" layoutY="200.0" text="Ubicación:">
@@ -70,8 +70,8 @@
       </Button>
       <TableView fx:id="tvLotesPedido" layoutX="742.0" layoutY="302.0" prefHeight="285.0" prefWidth="504.0" stylesheets="@../css/estilos.css">
          <columns>
-            <TableColumn fx:id="colNumLotePed" prefWidth="110.0" text="N° de lote" />
-            <TableColumn fx:id="colNombreProductoPed" minWidth="0.0" prefWidth="193.0" text="Nombre producto" />
+            <TableColumn fx:id="colNumLotesPed" prefWidth="112.0" text="Num lotes" />
+            <TableColumn fx:id="colNombreProductoPed" minWidth="0.0" prefWidth="191.0" text="Nombre producto" />
             <TableColumn fx:id="colCantidadPed" prefWidth="75.0" text="Cantidad" />
             <TableColumn fx:id="colPrecioPed" prefWidth="125.0" text="Precio" />
          </columns>
@@ -130,5 +130,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
+      <TextField fx:id="tfCantidadLotes" layoutX="619.0" layoutY="311.0" onKeyTyped="#permitirInputSoloNumeros" prefHeight="31.0" prefWidth="66.0" />
+      <Label layoutX="594.0" layoutY="283.0" text="Número de lotes:" />
    </children>
 </AnchorPane>

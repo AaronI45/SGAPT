@@ -18,13 +18,15 @@ public class LoteDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idLote, numeroDeLote, producto.nombre, producto.tipoProducto, " + 
+                String consulta = "SELECT DISTINCT idLote, numeroDeLote, producto.nombre, producto.tipoProducto, " + 
                         "fechaDeCaducidad, cantidad, (lote.cantidad * producto.precio) " + 
-                        "AS 'precioLote' " + 
+                        "AS 'precioLote', lote_pedido.cantidadLotes " + 
                         "FROM lote " + 
                         "INNER JOIN producto " + 
                         "ON lote.Producto_idProducto = producto.idProducto " + 
-                        "WHERE lote.Pedido_idPedido = ?";
+                        "INNER JOIN Lote_Pedido " + 
+                        "ON Lote_Pedido.Lote_idLote = Lote.idLote " + 
+                        "WHERE Lote_Pedido.Pedido_idPedido = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idPedido);
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -39,6 +41,7 @@ public class LoteDAO {
                     lote.setFechaDeCaducidad(resultado.getString("fechaDeCaducidad"));
                     lote.setCantidad(resultado.getInt("cantidad"));
                     lote.setPrecioLote(resultado.getDouble("precioLote"));
+                    lote.setCantidadLotes(resultado.getInt("cantidadLotes"));
                     lotesConsulta.add(lote);
                 }
                 respuesta.setLotes(lotesConsulta);
@@ -58,13 +61,16 @@ public class LoteDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idLote, numeroDeLote, producto.nombre, producto.tipoProducto, " + 
+                String consulta = "SELECT DISTINCT idLote, numeroDeLote, producto.nombre, producto.tipoProducto, " + 
                         "fechaDeCaducidad, cantidad, (lote.cantidad * producto.precio) " + 
-                        "AS 'precioLote' " + 
+                        "AS 'precioLote', lote.cantidadLotes " + 
                         "FROM lote " + 
                         "INNER JOIN producto " + 
                         "ON lote.Producto_idProducto = producto.idProducto " + 
-                        "WHERE lote.Proveedor_idProveedor = ? AND lote.Pedido_idPedido IS null";
+                        "INNER JOIN Lote_Pedido " + 
+                        "ON Lote_Pedido.Lote_idLote = Lote.idLote " + 
+                        "WHERE lote.Proveedor_idProveedor = ? " + 
+                        "AND lote.cantidadLotes > 0";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 prepararSentencia.setInt(1, idProveedor);
                 ResultSet resultado = prepararSentencia.executeQuery();
@@ -79,6 +85,7 @@ public class LoteDAO {
                     lote.setFechaDeCaducidad(resultado.getString("fechaDeCaducidad"));
                     lote.setCantidad(resultado.getInt("cantidad"));
                     lote.setPrecioLote(resultado.getDouble("precioLote"));
+                    lote.setCantidadLotes(resultado.getInt("cantidadLotes"));
                     lotesConsulta.add(lote);
                 }
                 respuesta.setLotes(lotesConsulta);
@@ -92,70 +99,56 @@ public class LoteDAO {
         return respuesta;
     }
     
-    public static int desenlazarLotesDePedido(int idPedido) {
+    public static int modificarLote(Lote lote){
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
-        if (conexionBD != null) {
-            try {
-                String sentencia = "UPDATE lote SET Pedido_idPedido = null WHERE Pedido_idPedido = ?";
+        if(conexionBD != null){
+            try{
+                String sentencia = "UPDATE Lote SET " + 
+                       "numeroDeLote = ?, cantidad = ?, " + 
+                       "fechaDeCaducidad = ?, cantidadLotes = ? " + 
+                       "WHERE idLote = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setInt(1, idPedido);
-                int filasAfectadas = prepararSentencia.executeUpdate();
-                if (filasAfectadas != 0)
-                    respuesta = Constantes.OPERACION_EXITOSA;
-                else
-                    respuesta = Constantes.ERROR_CONSULTA;
-                conexionBD.close();
-            } catch (SQLException e) {
-                respuesta = Constantes.ERROR_CONSULTA;
-            }
-        } else {
-            respuesta = Constantes.ERROR_CONEXION;
-        }
-        return respuesta;
-    }
-    
-    public static int desenlazarLoteDePedido(int idLote, int idPedido) {
-        int respuesta;
-        Connection conexionBD = ConexionBD.abrirConexionBD();
-        if (conexionBD != null) {
-            try {
-                String sentencia = "UPDATE lote set Pedido_idPedido = null " + 
-                        "WHERE idLote = ? AND Pedido_idPedido = ?";
-                PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setInt(1, idLote);
-                prepararSentencia.setInt(2, idPedido);
+                prepararSentencia.setString(1, lote.getNumeroDeLote());
+                prepararSentencia.setInt(2, lote.getCantidad());
+                prepararSentencia.setString(3, lote.getFechaDeCaducidad());
+                prepararSentencia.setInt(4, lote.getCantidadLotes());
+                prepararSentencia.setInt(5, lote.getIdLote());
+               
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
                 conexionBD.close();
-            } catch (SQLException e) {
-                respuesta = Constantes.ERROR_CONSULTA;
+            }catch(SQLException e){
+                 respuesta = Constantes.ERROR_CONSULTA;
             }
-        } else {
-            respuesta = Constantes.ERROR_CONEXION;
+        }else{
+             respuesta = Constantes.ERROR_CONEXION;
         }
         return respuesta;
     }
     
-    public static int enlazarLoteAPedido(int idLote, int idPedido) {
+    public static int agregarCantidadLotesEnLote(int idLote, int cantidadLotes){
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
-        if (conexionBD != null) {
-            try {
-                String sentencia = "UPDATE lote set Pedido_idPedido = ? WHERE idLote = ?";
+        if(conexionBD != null){
+            try{
+                String sentencia = "UPDATE Lote SET " + 
+                       "cantidadLotes = (cantidadLotes + ?) " + 
+                       "WHERE idLote = ?";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(sentencia);
-                prepararSentencia.setInt(1, idPedido);
+                prepararSentencia.setInt(1, cantidadLotes);
                 prepararSentencia.setInt(2, idLote);
+               
                 int filasAfectadas = prepararSentencia.executeUpdate();
                 respuesta = (filasAfectadas == 1) ? Constantes.OPERACION_EXITOSA : 
                         Constantes.ERROR_CONSULTA;
                 conexionBD.close();
-            } catch (SQLException e) {
-                respuesta = Constantes.ERROR_CONSULTA;
+            }catch(SQLException e){
+                 respuesta = Constantes.ERROR_CONSULTA;
             }
-        } else {
-            respuesta = Constantes.ERROR_CONEXION;
+        }else{
+             respuesta = Constantes.ERROR_CONEXION;
         }
         return respuesta;
     }

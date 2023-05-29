@@ -8,11 +8,12 @@ public class Lote {
     private String fechaDeCaducidad;
     private int cantidad;
     private double precioLote;
+    private int cantidadLotes;
 
     public Lote() {
     }
 
-    public Lote(int idLote, String numeroDeLote, String nombre, String tipoProducto, String fechaDeCaducidad, int cantidad, double precioLote) {
+    public Lote(int idLote, String numeroDeLote, String nombre, String tipoProducto, String fechaDeCaducidad, int cantidad, double precioLote, int cantidadLotes) {
         this.idLote = idLote;
         this.numeroDeLote = numeroDeLote;
         this.nombre = nombre;
@@ -20,6 +21,7 @@ public class Lote {
         this.fechaDeCaducidad = fechaDeCaducidad;
         this.cantidad = cantidad;
         this.precioLote = precioLote;
+        this.cantidadLotes = cantidadLotes;
     }
 
     public int getIdLote() {
@@ -78,9 +80,17 @@ public class Lote {
         this.precioLote = precioLote;
     }
 
+    public int getCantidadLotes() {
+        return cantidadLotes;
+    }
+
+    public void setCantidadLotes(int cantidadLotes) {
+        this.cantidadLotes = cantidadLotes;
+    }
+
     @Override
     public String toString() {
-        return "Lote{" + "idLote=" + idLote + ", numeroDeLote=" + numeroDeLote + ", nombre=" + nombre + ", tipoProducto=" + tipoProducto + ", fechaDeCaducidad=" + fechaDeCaducidad + ", cantidad=" + cantidad + ", precioLote=" + precioLote + '}';
+        return "Lote{" + "idLote=" + idLote + ", numeroDeLote=" + numeroDeLote + ", nombre=" + nombre + ", tipoProducto=" + tipoProducto + ", fechaDeCaducidad=" + fechaDeCaducidad + ", cantidad=" + cantidad + ", precioLote=" + precioLote + ", cantidadLotes=" + cantidadLotes + '}';
     }
 
 }
