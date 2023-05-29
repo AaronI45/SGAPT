@@ -48,6 +48,7 @@ public class ProductoDAO {
                     producto.setTipoProducto(resultado.getString("tipoProducto"));
                     producto.setFechaCaducidad(resultado.getDate("fechaDeCaducidad"));
                     producto.setRequiereReceta(resultado.getBoolean("requiereReceta"));
+                    producto.setIdLote(resultado.getInt("Lote_idLote"));
                     producto.setNumeroLote(resultado.getString("numeroDeLote"));
                     producto.setPrecio(resultado.getDouble("precio"));
                     producto.setFoto(resultado.getBytes("foto"));
