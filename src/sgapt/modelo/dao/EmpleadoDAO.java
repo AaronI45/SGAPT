@@ -27,32 +27,32 @@ public class EmpleadoDAO {
         respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
         if (conexionBD != null) {
             try {
-                String consulta = "SELECT idEmpleado, idFarmacia, "
-                        + "nombres, ApellidoPaterno, ApellidoMaterno,correo,foto " + 
-                        "FROM Usuario " +  
-                        "INNER JOIN Empleado " + 
-                        "ON Usuario.Empleado_idEmpleado = Empleado.idEmpleado";
+                String consulta = "SELECT `usuario`.*, `empleado`.*, `empleados`.*, `farmacia`.*\n" +
+                        "FROM `usuario` \n" +
+                        "LEFT JOIN `empleado` ON `empleado`.`Usuario_idUsuario` = `usuario`.`idUsuario` \n" +
+                        "LEFT JOIN `empleados` ON `empleado`.`Empleados_idEmpleados` = `empleados`.`idEmpleados` \n" +
+                        "LEFT JOIN `farmacia` ON `farmacia`.`Empleados_idEmpleados` = `empleados`.`idEmpleados`";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Empleado> empleadosConsulta = new ArrayList();
                 while (resultado.next())
                 {
                     Empleado empleado = new Empleado();
-                    empleado.setIdEmpleado(resultado.getInt("empleado"));
-                    empleado.setIdFarmacia(resultado.getInt("farmacia"));
-                    empleado.setNombre(resultado.getString("nombre"));
-                    empleado.setApellidoPaterno(resultado.getString("apellido paterno"));
-                    empleado.setApellidoPaterno(resultado.getString("apellido materno"));
-                    //  empleado.setUsername(resultado.getString("username"));
-                    //   empleado.setPassword(resultado.getString("password"));
-                    //empleado.setTipoEmpleado(resultado.getString("tipo de empleado"));
-                    empleado.setCorreo(resultado.getString("correo electronico"));
-                    empleado.setFoto(resultado.getBytes("fotografia"));
+                    empleado.setIdEmpleado(resultado.getInt("idUsuario"));
+                    empleado.setIdFarmacia(resultado.getInt("idFarmacia"));
+                    empleado.setNombre(resultado.getString("nombres"));
+                    empleado.setApellidoPaterno(resultado.getString("apellidoPaterno"));
+                    empleado.setApellidoMaterno(resultado.getString("apellidoMaterno"));
+                    empleado.setCorreo(resultado.getString("correoElectronico"));
+                    empleado.setDireccion(resultado.getString("estado"));
+                    empleado.setNumeroTelefonico(resultado.getString("numeroTelefonico"));
+                    empleado.setFoto(resultado.getBytes("foto"));
                     empleadosConsulta.add(empleado);
                 }
                 respuesta.setEmpleados(empleadosConsulta);
                 conexionBD.close();
             } catch (SQLException e) {
+                e.printStackTrace();
                 respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
             }
         } else {

@@ -33,6 +33,7 @@ public class Lote_AlmacenadoDAO {
                 }
                 conexionBD.close();
             } catch (SQLException e) {
+                e.printStackTrace();
                 producto_almacenadoRespuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
             }
         } else {
@@ -41,6 +42,7 @@ public class Lote_AlmacenadoDAO {
         return producto_almacenadoRespuesta;
     }
     
+    //TODO
     public static int guardarLote_Almacenado(Lote_Almacenado lote_Almacenado) {
         int respuesta;
         Connection conexionBD = ConexionBD.abrirConexionBD();
@@ -59,6 +61,7 @@ public class Lote_AlmacenadoDAO {
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
             }
         } else {
             respuesta = Constantes.ERROR_CONEXION;
@@ -84,6 +87,7 @@ public class Lote_AlmacenadoDAO {
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
             }
         } else {
             respuesta = Constantes.ERROR_CONEXION;
@@ -108,6 +112,7 @@ public class Lote_AlmacenadoDAO {
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta = Constantes.ERROR_CONSULTA;
+                e.printStackTrace();
             }
         } else {
             respuesta = Constantes.ERROR_CONEXION;
