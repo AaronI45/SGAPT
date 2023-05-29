@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.controladores.FXMLAdministracionEmpleadosController">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sgapt.controladores.FXMLAdministracionEmpleadosController">
    <children>
       <Button layoutX="62.0" layoutY="57.0" mnemonicParsing="false" onAction="#clicBtnRegresar" prefHeight="60.0" prefWidth="61.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css" textFill="WHITE">
          <font>
@@ -56,6 +57,12 @@
       <Label layoutX="443.0" layoutY="57.0" text="Administración de Empleados">
          <font>
             <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="ivEmpleado" fitHeight="206.0" fitWidth="200.0" layoutX="1061.0" layoutY="282.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="1062.0" layoutY="229.0" text="Imagen de empleado">
+         <font>
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
    </children>

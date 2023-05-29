@@ -22,7 +22,7 @@
         <columns>
           <TableColumn fx:id="colNumeroLote" editable="false" prefWidth="167.0" sortable="false" text="N° lote" />
           <TableColumn fx:id="colNombreProducto" editable="false" prefWidth="362.0" sortable="false" text="Nombre producto" />
-            <TableColumn fx:id="colCantidadProducto" editable="false" prefWidth="133.0" sortable="false" text="Cantidad" />
+            <TableColumn fx:id="colCantidadLotes" editable="false" prefWidth="133.0" sortable="false" text="CantidadLotes" />
             <TableColumn fx:id="colPrecioLote" editable="false" prefWidth="151.0" sortable="false" text="Precio de lote" />
         </columns>
       </TableView>

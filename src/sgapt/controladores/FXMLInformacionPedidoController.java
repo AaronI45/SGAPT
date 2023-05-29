@@ -31,7 +31,7 @@ public class FXMLInformacionPedidoController implements Initializable {
     @FXML
     private TableColumn colNombreProducto;
     @FXML
-    private TableColumn colCantidadProducto;
+    private TableColumn colCantidadLotes;
     @FXML
     private TableColumn colPrecioLote;
     @FXML
@@ -50,7 +50,6 @@ public class FXMLInformacionPedidoController implements Initializable {
     private Label lbFechaEntrega;
     @FXML
     private Label lbFechaEnvio;    
-    private Pedido pedido;
     @FXML
     private Label lbTitulo;
     @FXML
@@ -61,6 +60,8 @@ public class FXMLInformacionPedidoController implements Initializable {
     private Label lbEntregadoEl;
     @FXML
     private Label lbEnviadoEl;
+    
+    private Pedido pedido;
     private ObservableList<Lote> lotes;   
         
     @Override        
@@ -88,7 +89,7 @@ public class FXMLInformacionPedidoController implements Initializable {
     }
     
     private void establecerColumnasFijas() {
-        colCantidadProducto.setResizable(false);
+        colCantidadLotes.setResizable(false);
         colNombreProducto.setResizable(false);
         colNumeroLote.setResizable(false);
         colPrecioLote.setResizable(false);
@@ -117,7 +118,7 @@ public class FXMLInformacionPedidoController implements Initializable {
     private void configurarTabla() {
         colNumeroLote.setCellValueFactory(new PropertyValueFactory("numeroDeLote"));
         colNombreProducto.setCellValueFactory(new PropertyValueFactory("nombre"));
-        colCantidadProducto.setCellValueFactory(new PropertyValueFactory("cantidad"));
+        colCantidadLotes.setCellValueFactory(new PropertyValueFactory("cantidadLotes"));
         colPrecioLote.setCellValueFactory(new PropertyValueFactory("precioLote"));
         establecerColumnasFijas();
     }
