@@ -53,7 +53,7 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <TextField fx:id="tfPrecio" layoutX="470.0" layoutY="213.0" prefHeight="42.0" prefWidth="215.0" styleClass="textField" stylesheets="@../css/estilos.css" />
+      <TextField fx:id="tfPrecio" layoutX="470.0" layoutY="213.0" onKeyTyped="#permitirInputSoloNumeros" prefHeight="42.0" prefWidth="215.0" styleClass="textField" stylesheets="@../css/estilos.css" />
       <Button layoutX="1000.0" layoutY="611.0" mnemonicParsing="false" onAction="#clicEditarProducto" prefHeight="45.0" prefWidth="221.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Editar producto">
          <font>
             <Font name="System Bold" size="20.0" />

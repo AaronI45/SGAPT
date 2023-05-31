@@ -5,6 +5,7 @@
 package sgapt.controladores;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -104,7 +106,17 @@ public class FXMLFormularioProductoController implements Initializable {
     private void cargarInformacionProducto(){
         tfNombre.setText(productoEdicion.getNombre());
         tfPrecio.setText(String.valueOf(productoEdicion.getPrecio()));
-        
+        cbTipoProducto.getSelectionModel().select(Producto.TipoDeProducto.t(productoEdicion.getTipoProducto()));
+        cbRequiereReceta.getSelectionModel().select(Producto.RequiereReceta.requiere(productoEdicion.isRequiereReceta()));
+        if (productoEdicion.getFoto() != null){
+            try {
+            ByteArrayInputStream inputFoto = new ByteArrayInputStream(productoEdicion.getFoto());
+            Image imgFotoEdicion = new Image(inputFoto);
+            ivProducto.setImage(imgFotoEdicion);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
     
     public void inicializarValores(Producto producto){
@@ -141,6 +153,13 @@ public class FXMLFormularioProductoController implements Initializable {
     @FXML
     private void clicEditarProducto(ActionEvent event) {
         
+    }
+
+    @FXML
+    private void permitirInputSoloNumeros(KeyEvent event) {
+        String entrada = event.getCharacter();
+        if (!".0123456789".contains(entrada)) 
+            event.consume();
     }
     
 }

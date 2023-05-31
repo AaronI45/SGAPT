@@ -2,6 +2,7 @@ package sgapt.modelo.pojo;
 
 import java.util.Date;
 import javafx.scene.image.ImageView;
+import javax.management.modelmbean.RequiredModelMBean;
 
 public class Producto {
     
@@ -16,6 +17,18 @@ public class Producto {
                 
         private String tipo;
 
+        public static TipoDeProducto t(String valor){
+            if(valor.equals("articulo para salud")){
+                return SALUD;
+            }else if(valor.equals("articulo para higiene")){
+                return HIGIENE;
+            }else if(valor.equals("medicamento")){
+                return MEDICAMENTO;
+            }else{
+                return null;
+            }
+        }
+        
         @Override
         public String toString() {
             return tipo;
@@ -32,6 +45,13 @@ public class Producto {
         
         private boolean requiereRec;
         
+        public static RequiereReceta requiere(boolean r){
+            if (r){
+                return SI;
+            }else{
+                return NO;
+            }
+        }
     }
     
     private int idProducto;
