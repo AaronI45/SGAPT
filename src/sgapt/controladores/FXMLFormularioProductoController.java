@@ -43,14 +43,11 @@ public class FXMLFormularioProductoController implements Initializable {
     private Producto productoEdicion;
     private ObservableList<Producto.TipoDeProducto> tipos;
     private ObservableList<Producto.RequiereReceta> requiereReceta;
-    private ObservableList<Producto.EstadoProducto> estadoProducto;
             
     @FXML
     private ComboBox<Producto.RequiereReceta> cbRequiereReceta;
     @FXML
     private ComboBox<Producto.TipoDeProducto> cbTipoProducto;
-    @FXML
-    private ComboBox<Producto.EstadoProducto> cbDisponibilidad;
     @FXML
     private TextField tfNombre;
     @FXML
@@ -67,7 +64,6 @@ public class FXMLFormularioProductoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         inicializarCbTipoProducto();
         inicilizarCbRequiereReceta();
-        inicializarCbDisponibilidad();
         lbRequiereReceta.setVisible(false);
         cbRequiereReceta.setVisible(false);
         cbTipoProducto.valueProperty().addListener(new ChangeListener<Producto.TipoDeProducto>(){
@@ -132,13 +128,7 @@ public class FXMLFormularioProductoController implements Initializable {
         requiereReceta.addAll(Producto.RequiereReceta.values());
         cbRequiereReceta.setItems(requiereReceta);
     }
-    
-    public void inicializarCbDisponibilidad(){
-        estadoProducto = FXCollections.observableArrayList();
-        estadoProducto.addAll(Producto.EstadoProducto.values());
-        cbDisponibilidad.setItems(estadoProducto);
-    }
-    
+
     @FXML
     private void clicVolver(ActionEvent event) {
         Node source = (Node) event.getSource();
@@ -149,7 +139,8 @@ public class FXMLFormularioProductoController implements Initializable {
     }
 
     @FXML
-    private void clicRegistrarProducto(ActionEvent event) {
+    private void clicEditarProducto(ActionEvent event) {
+        
     }
     
 }

@@ -126,10 +126,30 @@ public class ProductoDAO {
         return resultadoEliminacion;
     }
 
-    public static ResultadoOperacion editarEstadoProducto (Producto productoAEditar, String nuevoEstado){
-        ResultadoOperacion resultadoEdicion = new ResultadoOperacion();
-        //TODO
-        return resultadoEdicion;
+    public static ResultadoOperacion caducarProducto (Producto productoACaducar){
+        ResultadoOperacion resultadoCaducar = new ResultadoOperacion();
+        resultadoCaducar.setError(true);
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        if (conexionBD != null){
+            try{
+                String consulta = "UPDATE producto SET disponibilidad = ? WHERE idProducto = ?";
+                PreparedStatement prepararConsulta = conexionBD.prepareStatement(consulta);
+                prepararConsulta.setString(1, "caducado");
+                prepararConsulta.setInt(2, productoACaducar.getIdProducto());
+                int filasAfectadas = prepararConsulta.executeUpdate();
+                if(filasAfectadas > 0){
+                    resultadoCaducar.setMensaje("El producto " + productoACaducar.toString() +" se ha registrado como caducado");
+                    resultadoCaducar.setError(false);
+                }else{
+                    resultadoCaducar.setMensaje("No se pudo caducar el producto de manera correcta");
+                }
+            }catch (SQLException e){
+                resultadoCaducar.setMensaje("Error de conexión");
+            }
+        }else{
+            resultadoCaducar.setMensaje("No hay conexión con la base de datos");
+        }
+        return resultadoCaducar;
     }
     
     public static ResultadoOperacion agregarProducto (Producto productoNuevo) throws SQLException{

@@ -5,6 +5,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -122,9 +125,15 @@ public class FXMLAdministracionProductosController implements Initializable {
     public void cargarDatosTabla(Sucursal sucursalSeleccionada){
             listaProductos = FXCollections.observableArrayList();
             ProductoRespuesta pr = ProductoDAO.recuperarProductosEnSucursal(sucursalSeleccionada);
+            ArrayList<Producto> listaProductosActualizados = actualizarProductosCaducados(pr.getProductos());
+            pr.setProductos(listaProductosActualizados);
             switch (pr.getCodigoRespuesta()){
                     case Constantes.OPERACION_EXITOSA:
-                        listaProductos.addAll(pr.getProductos());                                
+                        for (Producto producto : listaProductosActualizados){
+                            if (producto.getDisponibilidad().equals("disponible")){
+                                listaProductos.add(producto);
+                            }
+                        }
                         tvProductos.setItems(listaProductos);
                         break;
                     case Constantes.ERROR_CONSULTA:
@@ -145,6 +154,27 @@ public class FXMLAdministracionProductosController implements Initializable {
             }
     }
 
+    private ArrayList<Producto> actualizarProductosCaducados(ArrayList<Producto> productos){
+        ResultadoOperacion resultadoEdicion;
+        for (Producto producto : productos){
+            if (!producto.getDisponibilidad().equals("caducado")){
+                if(Date.from(Instant.now()).after(producto.getFechaCaducidad())){
+                    resultadoEdicion = ProductoDAO.caducarProducto(producto);
+                    producto.setDisponibilidad("caducado");
+                    if (!resultadoEdicion.isError()){
+                        Utilidades.mostrarDialogoSimple("Nuevo producto caducado", 
+                                resultadoEdicion.getMensaje(),
+                                Alert.AlertType.WARNING);
+                    }else{
+                        Utilidades.mostrarDialogoSimple("Error al registrar producto caducado", 
+                                resultadoEdicion.getMensaje(), Alert.AlertType.ERROR);
+                    }
+                }
+            }
+        }
+        return productos;
+    }
+    
     private void cargarListaSucursales(){
         listaSucursales = FXCollections.observableArrayList();
         SucursalRespuesta sr = SucursalDAO.recuperarSucursales();

@@ -22,6 +22,18 @@ public class Producto {
         }
     }
     
+    public static enum RequiereReceta{
+        SI(true),
+        NO(false);
+        
+        private RequiereReceta(boolean requiereRec){
+            this.requiereRec = requiereRec;
+        }
+        
+        private boolean requiereRec;
+        
+    }
+    
     private int idProducto;
     private String nombre;
     private String tipoProducto;

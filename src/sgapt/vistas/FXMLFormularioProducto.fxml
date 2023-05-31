@@ -54,16 +54,10 @@
          </font>
       </Label>
       <TextField fx:id="tfPrecio" layoutX="470.0" layoutY="213.0" prefHeight="42.0" prefWidth="215.0" styleClass="textField" stylesheets="@../css/estilos.css" />
-      <Button layoutX="1000.0" layoutY="611.0" mnemonicParsing="false" onAction="#clicRegistrarProducto" prefHeight="45.0" prefWidth="221.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Registrar producto">
+      <Button layoutX="1000.0" layoutY="611.0" mnemonicParsing="false" onAction="#clicEditarProducto" prefHeight="45.0" prefWidth="221.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Editar producto">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <Label layoutX="97.0" layoutY="513.0" text="Disponibilidad">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="cbDisponibilidad" layoutX="119.0" layoutY="558.0" prefHeight="42.0" prefWidth="221.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
    </children>
 </AnchorPane>
