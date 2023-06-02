@@ -190,7 +190,7 @@ public class FXMLAdministracionProductosController implements Initializable {
     public void regresarAventanaAnterior(){
         Stage stagePrincipal = (Stage) tvProductos.getScene().getWindow();
         stagePrincipal.setScene(Utilidades.inicializarEscena("/sgapt/vistas/FXMLMenuPrincipalAdmin.fxml"));
-        stagePrincipal.setTitle("Administración de inventario");
+        stagePrincipal.setTitle("Home");
         stagePrincipal.show();
     }
 

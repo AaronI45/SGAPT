@@ -5,6 +5,8 @@
  */
 package sgapt.modelo.dao;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -67,6 +69,37 @@ public class ProductoDAO {
         return productos;
     }
 
+    public static ResultadoOperacion editarProductoPorID (Producto productoEditado, int idProducto, byte[] foto){
+        ResultadoOperacion resultadoEdicion = new ResultadoOperacion();
+        Connection conexionBD = ConexionBD.abrirConexionBD();
+        resultadoEdicion.setError(true);
+        if (conexionBD != null){
+            try{
+                String consulta = "UPDATE `producto` SET `requiereReceta` = ?, `precio` = ?, `tipoProducto` = ?, foto = ? "
+                        + "WHERE `producto`.`idProducto` = ?";
+                PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
+                prepararSentencia.setBoolean(1, productoEditado.isRequiereReceta());
+                prepararSentencia.setDouble(2, productoEditado.getPrecio());
+                prepararSentencia.setString(3, productoEditado.getTipoProducto());
+                prepararSentencia.setBytes(4, foto);
+                prepararSentencia.setInt(5, idProducto);
+                int numeroFilas = prepararSentencia.executeUpdate();
+                if (numeroFilas > 0){
+                    resultadoEdicion.setError(false);
+                    resultadoEdicion.setMensaje("El producto ha sido editado correctamente");
+                }else{
+                    resultadoEdicion.setMensaje("No se pudo editar el producto correctamente ");
+                }
+            }catch(SQLException e){
+                resultadoEdicion.setMensaje("Error de conexión");
+                e.printStackTrace();
+            }                
+        }else{
+            resultadoEdicion.setMensaje("No hay conexión a la base de datos");
+        }
+        return resultadoEdicion;
+    }
+    
     public static ProductoRespuesta mostrarDisponibilidad (Producto product){
         ProductoRespuesta productos = new ProductoRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();

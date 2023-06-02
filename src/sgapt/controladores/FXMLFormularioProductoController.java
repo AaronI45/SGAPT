@@ -7,8 +7,9 @@ package sgapt.controladores;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.nio.file.Files;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -29,8 +31,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import sgapt.modelo.dao.ProductoDAO;
 import sgapt.modelo.pojo.Producto;
-import sgapt.modelo.pojo.Sucursal;
+import sgapt.modelo.pojo.ResultadoOperacion;
 import sgapt.util.Utilidades;
 
 /**
@@ -141,6 +144,40 @@ public class FXMLFormularioProductoController implements Initializable {
         cbRequiereReceta.setItems(requiereReceta);
     }
 
+    public boolean validarPrecio(){
+        double precio = 0;
+        boolean precioValido = false;
+        if (tfPrecio.getText() != null){
+            try{
+                precio = Double.parseDouble(tfPrecio.getText());
+                if (precio >0){
+                    precioValido = true;                
+                }else{
+                    Utilidades.mostrarDialogoSimple("Error de asignación de precio", 
+                            "Por favor introduzca un precio mayor a 0 y vuelva a intentarlo", 
+                            Alert.AlertType.ERROR);
+                }
+            }catch (NumberFormatException e){
+                Utilidades.mostrarDialogoSimple("Error de asignación de precio", 
+                        "Por favor introduzca un valor válido para el precio", 
+                        Alert.AlertType.ERROR);
+            }
+        }
+            else {
+            Utilidades.mostrarDialogoSimple("Error de asignación de precio", 
+                    "El campo de precio no puede quedar vacío, indique un precio y vuelva a intentarlo", 
+                    Alert.AlertType.ERROR);
+        }
+        return precioValido;
+    }
+    
+    public void regresarAventanaAnterior(){
+        Stage stagePrincipal = (Stage) tfNombre.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionProductos.fxml"));
+        stagePrincipal.setTitle("Administración de productos");
+        stagePrincipal.show();
+    }
+    
     @FXML
     private void clicVolver(ActionEvent event) {
         Node source = (Node) event.getSource();
@@ -152,7 +189,40 @@ public class FXMLFormularioProductoController implements Initializable {
 
     @FXML
     private void clicEditarProducto(ActionEvent event) {
-        
+        if (validarPrecio()){
+            Producto producto = new Producto();
+            producto.setPrecio(Double.parseDouble(tfPrecio.getText()));
+            producto.setTipoProducto(cbTipoProducto.getValue().toString().toLowerCase());
+            if (producto.getTipoProducto() == "medicamento"){
+                producto.setRequiereReceta(Producto.RequiereReceta.getRequiere(cbRequiereReceta.getValue()));
+            }else{
+                producto.setRequiereReceta(false);
+            }
+            if(fotografiaProducto != null){
+                try {
+                    producto.setFoto(Files.readAllBytes(fotografiaProducto.toPath()));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }else{
+                    producto.setFoto(productoEdicion.getFoto());
+            }
+            if(producto.getFoto() != null){
+                ResultadoOperacion resultadoEdicion = ProductoDAO.editarProductoPorID(producto, productoEdicion.getIdProducto(), producto.getFoto());
+                if(!resultadoEdicion.isError()){
+                    Utilidades.mostrarDialogoSimple("Éxito al editar el producto", 
+                            resultadoEdicion.getMensaje(), Alert.AlertType.INFORMATION);
+                    regresarAventanaAnterior();
+                }else{
+                    Utilidades.mostrarDialogoSimple("Error al editar el producto", 
+                            resultadoEdicion.getMensaje(), Alert.AlertType.ERROR);
+                }
+            }else{
+                Utilidades.mostrarDialogoSimple("Error de edición de producto", 
+                        "Por favor seleccione una imágen para el producto", 
+                        Alert.AlertType.ERROR);
+            }
+        }
     }
 
     @FXML

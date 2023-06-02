@@ -7,8 +7,8 @@ import javax.management.modelmbean.RequiredModelMBean;
 public class Producto {
     
     public static enum TipoDeProducto{
-        SALUD("artículo para salud"),
-        HIGIENE("artículo para higiene"),
+        SALUD("articulo para salud"),
+        HIGIENE("articulo para higiene"),
         MEDICAMENTO("medicamento");
         
         private TipoDeProducto(String tipo){
@@ -44,6 +44,10 @@ public class Producto {
         }
         
         private boolean requiereRec;
+        
+        public static boolean getRequiere (RequiereReceta req){
+            return req.requiereRec;
+        }
         
         public static RequiereReceta requiere(boolean r){
             if (r){
