@@ -3,6 +3,7 @@ package sgapt.controladores;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,7 +20,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.LoteDAO;
 import sgapt.modelo.dao.PedidoDAO;
@@ -27,6 +30,7 @@ import sgapt.modelo.dao.ProveedorDAO;
 import sgapt.modelo.dao.SucursalDAO;
 import sgapt.modelo.pojo.Lote;
 import sgapt.modelo.pojo.LoteRespuesta;
+import sgapt.modelo.dao.Lote_PedidoDAO;
 import sgapt.modelo.pojo.Pedido;
 import sgapt.modelo.pojo.PedidoRespuesta;
 import sgapt.modelo.pojo.Proveedor;
@@ -41,7 +45,7 @@ public class FXMLFormularioPedidoController implements Initializable {
     @FXML
     private Label lbTitulo;
     @FXML
-    private TableColumn colNumLotePro;
+    private TableColumn colNumLotesPro;
     @FXML
     private TableColumn colNombreProductoPro;
     @FXML
@@ -49,7 +53,7 @@ public class FXMLFormularioPedidoController implements Initializable {
     @FXML
     private TableColumn colPrecioPro;
     @FXML
-    private TableColumn colNumLotePed;
+    private TableColumn colNumLotesPed;
     @FXML
     private TableColumn colNombreProductoPed;
     @FXML
@@ -77,8 +81,8 @@ public class FXMLFormularioPedidoController implements Initializable {
     private ObservableList<Proveedor> proveedores;
     private ObservableList<Lote> lotesProveedor;
     private ObservableList<Lote> lotesPedido; 
-    private ObservableList<Lote> lotesOriginalesProveedor;
-    private ObservableList<Lote> lotesOriginalesPedido;
+    private ArrayList<Lote> lotesOriginalesProveedor;
+//    private ArrayList<Lote> lotesOriginalesPedido;
     
     private boolean esEdicion;
     private Pedido pedidoEdicion;
@@ -86,6 +90,8 @@ public class FXMLFormularioPedidoController implements Initializable {
     private ComboBox<Sucursal> cbSucursales;
     @FXML
     private TextArea taUbicacionSucursal;
+    @FXML
+    private TextField tfCantidadLotes;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -143,8 +149,8 @@ public class FXMLFormularioPedidoController implements Initializable {
         colCantidadPro.setCellValueFactory(new PropertyValueFactory("cantidad"));
         colNombreProductoPed.setCellValueFactory(new PropertyValueFactory("nombre"));
         colNombreProductoPro.setCellValueFactory(new PropertyValueFactory("nombre"));
-        colNumLotePed.setCellValueFactory(new PropertyValueFactory("numeroDeLote"));
-        colNumLotePro.setCellValueFactory(new PropertyValueFactory("numeroDeLote"));
+        colNumLotesPed.setCellValueFactory(new PropertyValueFactory("cantidadLotes"));
+        colNumLotesPro.setCellValueFactory(new PropertyValueFactory("cantidadLotes"));
         colPrecioPed.setCellValueFactory(new PropertyValueFactory("precioLote"));
         colPrecioPro.setCellValueFactory(new PropertyValueFactory("precioLote"));
     }
@@ -184,10 +190,22 @@ public class FXMLFormularioPedidoController implements Initializable {
             btnRealizarPedido.setVisible(false);
             cbProveedores.setDisable(true);
             lbTitulo.setText("Modificación de pedido");
-            lotesOriginalesProveedor = FXCollections.observableArrayList();
-            lotesOriginalesPedido = FXCollections.observableArrayList();
-            lotesOriginalesProveedor.setAll(lotesProveedor);
-            lotesOriginalesPedido.setAll(lotesPedido);
+            lotesOriginalesProveedor = new ArrayList();
+            
+            for (Lote loteProveedor : lotesProveedor) {
+                Lote copiaLoteProveedor = new Lote();
+                copiaLoteProveedor.setCantidad(loteProveedor.getCantidad());
+                copiaLoteProveedor.setCantidadLotes(loteProveedor.getCantidadLotes());
+                copiaLoteProveedor.setFechaDeCaducidad(loteProveedor.getFechaDeCaducidad());
+                copiaLoteProveedor.setIdLote(loteProveedor.getIdLote());
+                copiaLoteProveedor.setNombre(loteProveedor.getNombre());
+                copiaLoteProveedor.setNumeroDeLote(loteProveedor.getNumeroDeLote());
+                copiaLoteProveedor.setPrecioLote(loteProveedor.getPrecioLote());
+                copiaLoteProveedor.setTipoProducto(loteProveedor.getTipoProducto());
+                
+                lotesOriginalesProveedor.add(copiaLoteProveedor);
+            }
+            
             lbPrecioProductos.setText(String.valueOf(pedidoEdicion.getPrecioProductos()));
             lbPrecioTotal.setText(String.valueOf(pedidoEdicion.getMontoTotal()));
         } else {
@@ -196,6 +214,9 @@ public class FXMLFormularioPedidoController implements Initializable {
         }
         
     }
+    
+    
+    
     
     private void cargarInformacionEdicion() {
         seleccionarProveedorPedidoEdicion();
@@ -250,40 +271,146 @@ public class FXMLFormularioPedidoController implements Initializable {
 
     @FXML
     private void clicBtnRemover(ActionEvent event) {
-        int posicion = tvLotesPedido.getSelectionModel().getSelectedIndex();
-        if (posicion != -1) {
-            double precioProductos = Double.parseDouble(lbPrecioProductos.getText());
-            precioProductos -= lotesPedido.get(posicion).getPrecioLote();
-            lbPrecioProductos.setText(String.valueOf(precioProductos));
-            lbPrecioTotal.setText(String.valueOf(precioProductos + 500.00));
-            lotesProveedor.add(lotesPedido.get(posicion));
-            lotesPedido.remove(posicion);
-            if (lotesPedido.isEmpty() && esEdicion == false) 
-                cbProveedores.setDisable(false);
+        int posicionEnPedido = tvLotesPedido.getSelectionModel().getSelectedIndex();
+        if (tfCantidadLotes.getText().length() > 0) {
+            int cantidadLotesDevolucion = Integer.parseInt(tfCantidadLotes.getText());
+
+            if (posicionEnPedido != -1) {
+                if (cantidadLotesDevolucion <= lotesPedido.get(posicionEnPedido).getCantidadLotes()) {
+                    Lote loteSeleccionado = lotesPedido.get(posicionEnPedido);
+                    
+                    double precioProductos = Double.parseDouble(lbPrecioProductos.getText());
+                    precioProductos -= (lotesPedido.get(posicionEnPedido).getPrecioLote() * 
+                            cantidadLotesDevolucion);
+                    lbPrecioProductos.setText(String.valueOf(precioProductos));
+                    lbPrecioTotal.setText(String.valueOf(precioProductos + 500.00));
+
+                    boolean loteExisteEnProveedor = false;
+                    int posicionEnProveedor = 0;
+                    for (Lote loteProveedor : lotesProveedor) {
+                        if (loteSeleccionado.getIdLote() == loteProveedor.getIdLote()) {
+                            loteExisteEnProveedor = true;
+                            break;
+                        } else {
+                            posicionEnProveedor++;
+                        }
+                    }
+
+                    if (loteExisteEnProveedor) {
+                        lotesProveedor.get(posicionEnProveedor).setCantidadLotes(
+                            lotesProveedor.get(posicionEnProveedor).getCantidadLotes() + cantidadLotesDevolucion);
+                    }
+
+                    if (!loteExisteEnProveedor) {
+                        lotesProveedor.add(loteSeleccionado);
+                    }
+
+                    if (cantidadLotesDevolucion == loteSeleccionado.getCantidadLotes()) {
+                        lotesPedido.remove(posicionEnPedido);
+                        if (lotesPedido.isEmpty() && esEdicion == false) 
+                            cbProveedores.setDisable(false);
+                    } else if (cantidadLotesDevolucion > 0 && 
+                            cantidadLotesDevolucion < loteSeleccionado.getCantidadLotes()) {
+                        lotesPedido.get(posicionEnPedido).setCantidadLotes(
+                            lotesPedido.get(posicionEnPedido).getCantidadLotes() - cantidadLotesDevolucion);
+                    }
+                    
+                    tvLotesPedido.setItems(lotesPedido);
+                    tvLotesPedido.refresh();
+                    tvLotesProveedor.setItems(lotesProveedor);
+                    tvLotesProveedor.refresh();
+                    System.out.println("Lotes originales de proveedor : " + lotesOriginalesProveedor);
+//                    System.out.println("Lotes originales de pedido : " + lotesOriginalesPedido);
+                } else {
+                    Utilidades.mostrarDialogoSimple("Error en cantidad de lotes", 
+                            "La cantidad de lotes seleccionada es menor de la solicitada, " + 
+                            "establezca una cantidad dentro del rango de existencias", 
+                            Alert.AlertType.WARNING);
+                }
+            }
+        } else {
+            Utilidades.mostrarDialogoSimple("Cantidad de lotes necesaria", 
+                    "Debe seleccionar la cantidad de lotes para agregar al pedido", 
+                    Alert.AlertType.WARNING);
         }
     }
 
     @FXML
     private void clicBtnAgregar(ActionEvent event) {
-        int posicion = tvLotesProveedor.getSelectionModel().getSelectedIndex();
-        if (posicion != -1) {
-            double precioProductos = Double.parseDouble(lbPrecioProductos.getText());
-            precioProductos += lotesProveedor.get(posicion).getPrecioLote();
-            lbPrecioProductos.setText(String.valueOf(precioProductos));
-            lbPrecioTotal.setText(String.valueOf(precioProductos + 500.00));
-            lotesPedido.add(lotesProveedor.get(posicion));
-            lotesProveedor.remove(posicion);
-            tvLotesPedido.setItems(lotesPedido);
-            cbProveedores.setDisable(true);
+        int posicionEnProveedor = tvLotesProveedor.getSelectionModel().getSelectedIndex();
+        if (tfCantidadLotes.getText().length() > 0) {
+            int cantidadLotesAgregar = Integer.parseInt(tfCantidadLotes.getText());
+            
+            if (posicionEnProveedor != -1) {
+                if (cantidadLotesAgregar <= lotesProveedor.get(posicionEnProveedor).getCantidadLotes()) {
+                    Lote loteSeleccionado = new Lote();
+                    loteSeleccionado.setIdLote(lotesProveedor.get(posicionEnProveedor).getIdLote());
+                    loteSeleccionado.setCantidad(lotesProveedor.get(posicionEnProveedor).getCantidad());
+                    loteSeleccionado.setCantidadLotes(cantidadLotesAgregar);
+                    loteSeleccionado.setFechaDeCaducidad(lotesProveedor.get(posicionEnProveedor).getFechaDeCaducidad());
+                    loteSeleccionado.setNombre(lotesProveedor.get(posicionEnProveedor).getNombre());
+                    loteSeleccionado.setNumeroDeLote(lotesProveedor.get(posicionEnProveedor).getNumeroDeLote());
+                    loteSeleccionado.setPrecioLote(lotesProveedor.get(posicionEnProveedor).getPrecioLote());
+                    loteSeleccionado.setTipoProducto(lotesProveedor.get(posicionEnProveedor).getTipoProducto());
+                    
+                    double precioProductos = Double.parseDouble(lbPrecioProductos.getText());
+                    precioProductos += (lotesProveedor.get(posicionEnProveedor).getPrecioLote() * 
+                            cantidadLotesAgregar);
+                    lbPrecioProductos.setText(String.valueOf(precioProductos));
+                    lbPrecioTotal.setText(String.valueOf(precioProductos + 500.00));
+                    
+                    boolean loteExisteEnPedido = false;
+                    int posicionEnPedido = 0;
+                    
+                    for (Lote lotePedido : lotesPedido) {
+                        if (loteSeleccionado.getIdLote() == lotePedido.getIdLote()) {
+                            loteExisteEnPedido = true;
+                            break;
+                        } else
+                            posicionEnPedido++;
+                    }
+                    
+                    if (loteExisteEnPedido) {
+                        lotesPedido.get(posicionEnPedido).setCantidadLotes(
+                            lotesPedido.get(posicionEnPedido).getCantidadLotes() + cantidadLotesAgregar);
+                        tvLotesPedido.setItems(lotesPedido);
+                    }
+                    
+                    if (!loteExisteEnPedido) {
+                        lotesPedido.add(loteSeleccionado);
+                        
+                    }
+                    
+                    if (cantidadLotesAgregar > 0 && 
+                            cantidadLotesAgregar <= lotesProveedor.get(posicionEnProveedor).getCantidadLotes()) {
+                        lotesProveedor.get(posicionEnProveedor).setCantidadLotes(
+                            lotesProveedor.get(posicionEnProveedor).getCantidadLotes() - cantidadLotesAgregar);
+                    }
+                    
+                    tvLotesPedido.setItems(lotesPedido);
+                    tvLotesPedido.refresh();
+                    tvLotesProveedor.setItems(lotesProveedor);
+                    tvLotesProveedor.refresh();
+                    cbProveedores.setDisable(true);
+                    
+                    System.out.println("Lotes originales de proveedor : " + lotesOriginalesProveedor);
+//                    System.out.println("Lotes originales de pedido : " + lotesOriginalesPedido);
+                } else {
+                    Utilidades.mostrarDialogoSimple("Error en cantidad de lotes", 
+                            "La cantidad de lotes existentes es menor de la solicitada, " + 
+                            "establezca una cantidad dentro del rango de existencias", 
+                            Alert.AlertType.WARNING);
+                }
+            }
+        } else {
+            Utilidades.mostrarDialogoSimple("Cantidad de lotes necesaria", 
+                    "Debe seleccionar la cantidad de lotes para agregar al pedido", 
+                    Alert.AlertType.WARNING);
         }
     }
 
     @FXML
     private void clicBtnRealizarPedido(ActionEvent event) {
-        realizarValidacionesParaCrearPedido();
-    }
-    
-    private void realizarValidacionesParaCrearPedido() {
         if (cbSucursales.getSelectionModel().getSelectedItem() != null) {
             if (!lotesPedido.isEmpty()) {
                 boolean realizarPedido = Utilidades.mostrarDialogoConfirmacion(
@@ -338,7 +465,12 @@ public class FXMLFormularioPedidoController implements Initializable {
                 int idPedido = resultadoPedido.getIdPedido();
                 if (idPedido != 0) {
                     lotesPedido.forEach((lote) -> { 
-                        LoteDAO.enlazarLoteAPedido(lote.getIdLote(), idPedido);
+                        Lote_PedidoDAO.agregarLoteAPedido(lote.getIdLote(), 
+                                idPedido, lote.getCantidadLotes());
+                        
+                    });
+                    lotesProveedor.forEach((lote) -> {
+                        LoteDAO.modificarLote(lote);
                     });
                     Utilidades.mostrarDialogoSimple("Pedido realizado", 
                             "Se ha realizado el pedido satisfactoriamente",
@@ -355,6 +487,7 @@ public class FXMLFormularioPedidoController implements Initializable {
         lbPrecioProductos.setText(String.valueOf(0.00));
         lbPrecioTotal.setText(String.valueOf(0.00));
         tvLotesPedido.setItems(lotesPedido);
+        tfCantidadLotes.setText("");
     }
     
     @FXML
@@ -394,8 +527,7 @@ public class FXMLFormularioPedidoController implements Initializable {
                 pedidoEdicion.setPrecioProductos(Double.parseDouble(
                         lbPrecioProductos.getText()));
                 
-                actualizarLotesProveedorEditados();
-                actualizarLotesPedidoEditados();
+                actualizarLotesEditados();
                 
                 int respuesta = PedidoDAO.modificarPedido(pedidoEdicion);
                 switch (respuesta) {
@@ -422,34 +554,53 @@ public class FXMLFormularioPedidoController implements Initializable {
         }
     }
     
-    private void actualizarLotesProveedorEditados() {
+    private void actualizarLotesEditados() {
         for (Lote loteProveedor : lotesProveedor) {
-            boolean loteSinEditar = false;
+            boolean cantidadEditada = false;
+            
             for (Lote loteOriginal : lotesOriginalesProveedor) {
-                if (loteProveedor.equals(loteOriginal)) {
-                    loteSinEditar = true;
+                if (loteProveedor.getIdLote() == loteOriginal.getIdLote()) {
+                    if (loteProveedor.getCantidadLotes() != loteOriginal.getCantidadLotes()) {
+                        cantidadEditada = true;
+                        break;
+                    }
                 }
             }
-            if (!loteSinEditar) {
-                LoteDAO.desenlazarLoteDePedido(loteProveedor.getIdLote(), 
-                        pedidoEdicion.getIdPedido());
+            
+            if (cantidadEditada) {
+                LoteDAO.modificarLote(loteProveedor);
+                boolean loteEstaEnTablaPedido = false;
+                int cantidadLoteEnPedido = 0;
+                for (Lote lotePedido : lotesPedido) {
+                    if (loteProveedor.getIdLote() == lotePedido.getIdLote()) {
+                        loteEstaEnTablaPedido = true;
+                        cantidadLoteEnPedido = lotePedido.getCantidadLotes();
+                    }
+                }
+                
+                if (!loteEstaEnTablaPedido) {
+                    int filasAfectadas = Lote_PedidoDAO.eliminarLoteDePedido(
+                            loteProveedor.getIdLote(), pedidoEdicion.getIdPedido());
+                } else if (loteEstaEnTablaPedido) {
+                    int filasAfectadas = Lote_PedidoDAO.
+                            modificarCantidadLotesDePedido(loteProveedor.getIdLote(), 
+                                    pedidoEdicion.getIdPedido(), 
+                                    cantidadLoteEnPedido);
+                    if (filasAfectadas == Constantes.SIN_RESULTADOS) {
+                        Lote_PedidoDAO.agregarLoteAPedido(loteProveedor.getIdLote(), 
+                            pedidoEdicion.getIdPedido(), cantidadLoteEnPedido);
+                    }
+                }
+                
             }
         }
     }
     
-    private void actualizarLotesPedidoEditados() {
-        for (Lote lotePedido : lotesPedido) {
-            boolean loteSinEditar = false;
-            for (Lote loteOriginal : lotesOriginalesPedido) {
-                if (lotePedido.equals(loteOriginal)) {
-                    loteSinEditar = true;
-                }
-            }
-            if (!loteSinEditar) {
-                LoteDAO.enlazarLoteAPedido(lotePedido.getIdLote(), 
-                        pedidoEdicion.getIdPedido());
-            }
-        }
+    @FXML
+    private void permitirInputSoloNumeros(KeyEvent event) {
+        String entrada = event.getCharacter();
+        if (!".0123456789".contains(entrada)) 
+            event.consume();
     }
     
 }
