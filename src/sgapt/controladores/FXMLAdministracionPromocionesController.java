@@ -1,6 +1,7 @@
 package sgapt.controladores;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -63,8 +64,7 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
     private ImageView ivProducto;
     
     private Producto producto;
-    @FXML
-    private Button btImagen;
+   
     @FXML
     private TextField tfBusqueda;
     
@@ -72,6 +72,29 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarInformacionTabla();
+        
+            tvPromocion.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null){
+                if (newSelection.getFoto() !=null){
+                    try {
+                        ByteArrayInputStream inputFoto = new ByteArrayInputStream(newSelection.getFoto());
+                        Image imgFotoEdicion = new Image(inputFoto);
+                        ivProducto.setImage(imgFotoEdicion);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                }else{
+                    try {
+                        Image img = new Image(new FileInputStream("src\\sgapt\\img\\imagen-no-disponible.png"));
+                        ivProducto.setImage(img);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        System.out.println("no hay fotografía disponible");
+                    }
+                }
+            }
+        });
+        
     }    
 
     @FXML
@@ -202,7 +225,7 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
      private void irFormulario(boolean esEdicion, Promocion promocionEdicion){
          try{
              FXMLLoader accesoControlador = new FXMLLoader
-                     (sgapt.SGAPT.class.getResource("vistas/FXMLFormularioPromocion5.fxml"));
+                     (sgapt.SGAPT.class.getResource("vistas/FXMLFormularioPromocion6.fxml"));
              Parent vista= accesoControlador.load();
              FXMLFormularioPromocionController formulario = accesoControlador.getController();
              formulario.inicializarInformacionFormulario(esEdicion, promocionEdicion, this);

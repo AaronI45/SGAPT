@@ -40,17 +40,7 @@
             <Image url="@../img/FarmaTech.png" />
          </image>
       </ImageView>
-      <Label layoutX="518.0" layoutY="36.0" prefHeight="41.0" prefWidth="244.0" text="PROMOCIONES">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="20.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../img/etiqueta-de-descuento.png" />
-         </image>
-      </ImageView>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.0">
+      <AnchorPane layoutX="7.0" layoutY="36.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="-7.0" AnchorPane.topAnchor="36.0">
          <children>
             <Button layoutX="807.0" layoutY="592.0" mnemonicParsing="false" onAction="#clicBtnRegresar" prefHeight="68.0" prefWidth="200.0" styleClass="buttonGeneral" stylesheets="@../css/estilos.css" text="Regresar">
                <font>
@@ -82,7 +72,13 @@
                   <Font name="Microsoft New Tai Lue" size="15.0" />
                </font>
             </Button>
+            <ImageView fx:id="hola" fitHeight="164.0" fitWidth="344.0" layoutX="27.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
+      <Label layoutX="548.0" layoutY="14.0" prefHeight="41.0" prefWidth="244.0" text="PROMOCIONES">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

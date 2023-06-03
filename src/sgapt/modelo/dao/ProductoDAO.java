@@ -211,7 +211,7 @@ public class ProductoDAO {
         if (conexionBD != null)
         {
             try{
-                String consulta = "SELECT idProducto, nombre, requiereReceta, precio, disponibilidad, tipoProducto FROM producto";
+                String consulta = "SELECT idProducto, nombre, requiereReceta, precio, disponibilidad, tipoProducto, foto FROM producto";
                 PreparedStatement prepararSentencia = conexionBD.prepareStatement(consulta);
                 ResultSet resultado = prepararSentencia.executeQuery();
                 ArrayList<Producto> productosConsulta = new ArrayList();
@@ -223,6 +223,7 @@ public class ProductoDAO {
                     producto.setTipoProducto(resultado.getString("tipoProducto"));
                     producto.setRequiereReceta(resultado.getBoolean("requiereReceta"));
                     producto.setPrecio(resultado.getInt("precio"));
+                    producto.setFoto(resultado.getBytes("foto"));
                     productosConsulta.add(producto);
                 }
                 productos.setProductos(productosConsulta);

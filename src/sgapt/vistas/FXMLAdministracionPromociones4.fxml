@@ -56,15 +56,6 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="btImagen" layoutX="581.0" layoutY="107.0" mnemonicParsing="false" onAction="#clicMostrarImagen" prefHeight="59.0" prefWidth="84.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css">
-         <graphic>
-            <ImageView fitHeight="49.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/galeria-de-imagenes.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
       <TextField fx:id="tfBusqueda" layoutX="52.0" layoutY="131.0" prefHeight="31.0" prefWidth="383.0" promptText="Busqueda de promocion" />
    </children>
 </AnchorPane>

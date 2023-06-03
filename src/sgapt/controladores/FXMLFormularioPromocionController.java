@@ -1,5 +1,8 @@
 package sgapt.controladores;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -23,6 +26,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import static jdk.nashorn.internal.objects.NativeRegExp.source;
@@ -53,7 +57,6 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
     @FXML
     private ComboBox<Producto> cbIdProducto;
     private ObservableList<Producto> productos;
-    private ObservableList<Sucursal> sucursales;
     @FXML
     private Label lbErrorSucursal;
     @FXML
@@ -68,11 +71,44 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
     private INotificacionOperacion interfazNotificacion;
     @FXML
     private ImageView ivFotoProducto;
+    
+    String estiloError="-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 2;";
+    String estiloNormal="-fx-border-width: 0;";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       //cargarInformacionSucursal();
        cargarInformacionProducto();
+       
+       cbIdProducto.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+           if(newSelection != null){
+               if(newSelection.getFoto()!= null){
+                   try {
+                       ByteArrayInputStream inputFoto = new ByteArrayInputStream(newSelection.getFoto());
+                       Image imgFotoEdicion = new Image(inputFoto);
+                       ivFotoProducto.setImage(imgFotoEdicion);
+                   }catch (Exception e) {
+                       e.printStackTrace();
+                   }
+               }else{
+                   try {
+                       Image img = new Image(new FileInputStream("src\\sgapt\\img\\capsule.png"));
+                       ivFotoProducto.setImage(img);
+                   }catch (IOException e) {
+                       e.printStackTrace();
+                   }
+               }
+           }
+       });
+       
+       tfPorcentaje.textProperty().addListener(new ChangeListener<String>() {
+        @Override
+        public void changed(ObservableValue<? extends String> observable, String oldValue, 
+            String newValue) {
+        if (!newValue.matches("\\d*")) {
+            tfPorcentaje.setText(newValue.replaceAll("[^\\d]", ""));
+        }
+    }});
+       
     }
 
     @FXML
@@ -81,91 +117,84 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
     }
 
     private void validarCamposRegistros(){
+        establecerEstiloNormal();
+        
         String porcentajeDescuento = tfPorcentaje.getText();
-        double descuento = Double.parseDouble(porcentajeDescuento);
         LocalDate fechaInicio = dpFechaInicio.getValue();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-LLLL-dd");
-        String fomrStringInicio = fechaInicio.format(formatter);
         LocalDate fechaFin = dpFechaFin.getValue();
-        String formStringFin = fechaFin.format(formatter);
-        SingleSelectionModel<Producto> producto= cbIdProducto.getSelectionModel();
-        int idProducto = cbIdProducto.getSelectionModel().getSelectedItem().getIdProducto();
+        double descuento;
+        int posicionProducto =cbIdProducto.getSelectionModel().getSelectedIndex();
         boolean sonValidos=true;
-        boolean sinDisponibilidad;
+        boolean sinDisponibilidad=false;
         //TO DO Validaciones
         
         //Validacion del porcentaje de descuento
-        if(descuento==0){
+        if(porcentajeDescuento.isEmpty()){
             sonValidos=false;
-            lbErrorTipo.setText("Campo vacío");
+            tfPorcentaje.setStyle(estiloError);
         }else{
-            if(descuento>=100){
+            descuento = Double.parseDouble(porcentajeDescuento);
+            if(descuento<=0){
                 sonValidos=false;
-                lbErrorTipo.setText("Dato inválido");
+                tfPorcentaje.setStyle(estiloError);
             }else{
-                if(descuento<=0){
-                sonValidos=false;
-                lbErrorTipo.setText("Dato inválido");
-                }else{
-                lbErrorTipo.setText("");
+                if(descuento>=100){
+                    sonValidos=false;
+                    tfPorcentaje.setStyle(estiloError);
                 }
             }
         }
         
         ///Validacion fecha inicio
-        if(fomrStringInicio.isEmpty()){
+        if(fechaInicio == null){
+            dpFechaInicio.setStyle(estiloError);
             sonValidos=false;
-            lbErrorFechaInicio.setText("Campo vacío");
         }else{
             if(fechaInicio.isAfter(fechaFin)){
+                dpFechaInicio.setStyle(estiloError);
                 sonValidos=false;
-                lbErrorFechaInicio.setText("Dato inválido");
-            }else
-            lbErrorFechaInicio.setText("");
+            }
         }
         
         //Validacion fecha fin
-        if(formStringFin.isEmpty()){
+        if(fechaFin==null){
+            dpFechaFin.setStyle(estiloError);
             sonValidos=false;
-            lbErrorFechaFin.setText("Campo vacío");
         }else{
             if(fechaFin.isBefore(fechaInicio)){
+                dpFechaFin.setStyle(estiloError);
                 sonValidos=false;
-                lbErrorFechaFin.setText("Dato inválido");
-            }else{
-                lbErrorFechaFin.setText("");
             }
         }
         
         //Validacion producto    
-        if(cbIdProducto.getSelectionModel().isEmpty()){
+        if(posicionProducto == -1){
+            cbIdProducto.setStyle(estiloError);
             sonValidos=false;
-            lbErrorProducto.setText("Campo vacío");
-        }
-        
-        //Validacion de disponibilidad del producto
-        if("disponible".equals(cbIdProducto.getSelectionModel().getSelectedItem().getDisponibilidad())){
-            sinDisponibilidad=false;
         }else{
-            sinDisponibilidad=true;
-            Utilidades.mostrarDialogoSimple("Sin disponibilidad", "No hay disponibilidad del producto en el inventario",
+             //Validacion de disponibilidad del producto
+            if("disponible".equals(cbIdProducto.getSelectionModel().getSelectedItem().getDisponibilidad())){
+                //hay disponibilidad del producto
+            }else{ 
+                sinDisponibilidad=true;
+                Utilidades.mostrarDialogoSimple("Sin disponibilidad", "No hay disponibilidad del producto en el inventario",
                         Alert.AlertType.WARNING);
+            }
         }
         
         //Registro o actualizacion de la promocion
-        if(sonValidos==false){
-                mostrarMensajeDatos();
-            }else{
-                //---------
-                if(sinDisponibilidad==true){
+        
+        if(sonValidos==true){
+            Promocion promocionValidada = new Promocion();
+            promocionValidada.setIdProducto(cbIdProducto.getSelectionModel().getSelectedItem().getIdProducto());
+            descuento = Double.parseDouble(porcentajeDescuento);
+            promocionValidada.setPorcentajeDescuento(descuento);
+            promocionValidada.setFechaInicio(fechaInicio.toString());
+            promocionValidada.setFechaFin(fechaFin.toString());
+            if(sinDisponibilidad==true){
                     //no guardara la promocion
                 }
                 else{
-                        Promocion promocionValidada = new Promocion();
-                        promocionValidada.setIdProducto(idProducto);
-                        promocionValidada.setPorcentajeDescuento(descuento);
-                        promocionValidada.setFechaInicio(fomrStringInicio);
-                        promocionValidada.setFechaFin(formStringFin);
                     if(esEdicion){
                         promocionValidada.setIdPromocion(promocionEdicion.getIdPromocion());
                         actualizarPromocion(promocionValidada);
@@ -173,8 +202,8 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
                          registrarPromocion(promocionValidada);
                     }
             }
-           //-------
         }
+       
     }
 
     private void mostrarMensajeDatos(){
@@ -200,18 +229,9 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
     }
 
     private void cerrarVentana(){
-        /*Stage stagePrincipal = (Stage) lbTitulo.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPromociones1.fxml"));
-        stagePrincipal.setTitle("Aministracion de promociones");
-        stagePrincipal.show();*/
         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
         escenarioBase.close();
     }
-
-    /*private void cerrarVentanaFormulario(){
-         Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-         escenarioBase.close();
-    }*/
 
     private void registrarPromocion(Promocion promocionRegistro){
         int codigoRespuesta = PromocionDAO.guardarPromocion(promocionRegistro);
@@ -246,25 +266,6 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
             lbTitulo.setText("Registrar nueva promocion");
         }
     }
-
-    /* private void cargarInformacionSucursal(){
-        sucursales = FXCollections.observableArrayList();
-        SucursalRespuesta sucursalBD=SucursalDAO.recuperarSucursales();
-        switch(sucursalBD.getCodigoRespuesta()){
-            case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", "Error en la conexion con la base de datos",
-                        Alert.AlertType.ERROR);
-                break;
-            case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se pudo obtener la informacion",
-                        Alert.AlertType.ERROR);
-                break;
-            case Constantes.OPERACION_EXITOSA:
-                sucursales.addAll(sucursalBD.getSucursales());
-                cbSucursal.setItems(sucursales);
-                break;
-        }
-    }*/
 
     private void cargarInformacionProducto(){
         productos = FXCollections.observableArrayList();
@@ -307,25 +308,30 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
 
     //
     private void cargarInformacionEdicion(){
-        tfPorcentaje.setText(Double.toString(promocionEdicion.getPorcentajeDescuento()));
+        double desc=promocionEdicion.getPorcentajeDescuento();
+        int des= (int) desc;
+        String porDesc= Integer.toString(des);
+        tfPorcentaje.setText(porDesc);
         LocalDate fechaInicio = LocalDate.parse(promocionEdicion.getFechaInicio());
         dpFechaInicio.setValue(fechaInicio);
         LocalDate fechaFin = LocalDate.parse(promocionEdicion.getFechaFin());
         dpFechaFin.setValue(fechaFin);
-        /*int posicionSucursal=obtenerPosicionComboSucursal(promocionEdicion.getIdSucursal());
-        cbSucursal.getSelectionModel().select(posicionSucursal);*/
         int posicionProducto=obtenerPosicionComboProducto(promocionEdicion.getIdProducto());
         cbIdProducto.getSelectionModel().select(posicionProducto);
-    }
-
-    /*private int obtenerPosicionComboSucursal(int idSucursal){
-        for(int i=0; i <sucursales.size(); i++){
-            if(sucursales.get(i).getIdSucursal()== idSucursal){
-                return i;
-            }
+        if(promocionEdicion.getFoto()!=null){
+            ByteArrayInputStream inputFoto = new ByteArrayInputStream(promocionEdicion.getFoto());
+            Image imgFotoAlumno = new Image(inputFoto);
+            ivFotoProducto.setImage(imgFotoAlumno);
+        }else{
+            try{
+                Image img = new Image(new FileInputStream("src\\sgapt\\img\\capsule.png"));
+                ivFotoProducto.setImage(img);
+            }catch(IOException e){
+               e.printStackTrace();
+               System.out.println("no hay fotografía disponible");
         }
-        return 0;
-    }*/
+      }
+    }
 
     private int obtenerPosicionComboProducto(int idProducto){
          for(int i=0; i <productos.size(); i++){
@@ -344,6 +350,13 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
     @Override
     public void notificarOperacionActualizar() {
 
+    }
+    
+    private void establecerEstiloNormal(){
+        tfPorcentaje.setStyle(estiloNormal);
+        dpFechaInicio.setStyle(estiloNormal);
+        dpFechaFin.setStyle(estiloNormal);
+        cbIdProducto.setStyle(estiloNormal);
     }
 
 }
