@@ -3,31 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLAdministracionPromocionesController.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLInformacionPedidoController.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/vistas/FXMLEliminacionProductos.fxml</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLFormularioProductoController.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLBannerPromocionesController.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/dao/SesionDAO.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLAdministracionPedidosController.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/pojo/SucursalRespuesta.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLInicioSesionController.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLMenuPrincipalEncargadoController.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/dao/SucursalDAO.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/pojo/Producto.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/util/Utilidades.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/SGAPT.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/dao/PromocionDAO.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/css/estilos.css</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLAdministracionProductosController.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/ConexionBD.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/pojo/Sucursal.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLEliminacionProductosController.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/controladores/FXMLMenuPrincipalAdminController.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/dao/ProductoDAO.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/pojo/Empleado.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/pojo/Lote.java</file>
-            <file>file:/C:/Users/super/Documents/escuelini/6to/procesos/actividades/PROYECTO/código/SGAPT/src/sgapt/modelo/pojo/Promocion.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/dao/SesionDAO.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/dao/PedidoDAO.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/dao/EmpleadoDAO.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/dao/ProveedorDAO.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/ConexionBD.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/pojo/Pedido.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/controladores/FXMLAdministracionEmpleadosController.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/controladores/FXMLAdministracionProductosController.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/dao/SucursalDAO.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/pojo/EmpleadoRespuesta.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/pojo/PedidoRespuesta.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/controladores/FXMLAdministracionPedidosController.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/dao/ProductoDAO.java</file>
+            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/pojo/Empleado.java</file>
         </group>
     </open-files>
 </project-private>

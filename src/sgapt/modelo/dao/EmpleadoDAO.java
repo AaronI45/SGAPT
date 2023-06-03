@@ -24,7 +24,7 @@ public class EmpleadoDAO {
      public static EmpleadoRespuesta obtenerInformacionEmpleado() {
         EmpleadoRespuesta respuesta = new EmpleadoRespuesta();
         Connection conexionBD = ConexionBD.abrirConexionBD();
-        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);
+        respuesta.setCodigoRespuesta(Constantes.OPERACION_EXITOSA);//ayuda por avor ya no puedo mas 
         if (conexionBD != null) {
             try {
                 String consulta = "SELECT `usuario`.*, `empleado`.*, `empleados`.*, `farmacia`.*\n" +
