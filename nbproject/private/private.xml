@@ -3,20 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/dao/SesionDAO.java</file>
-            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/dao/PedidoDAO.java</file>
-            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/dao/EmpleadoDAO.java</file>
-            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/dao/ProveedorDAO.java</file>
-            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/ConexionBD.java</file>
-            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/pojo/Pedido.java</file>
-            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/controladores/FXMLAdministracionEmpleadosController.java</file>
-            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/controladores/FXMLAdministracionProductosController.java</file>
-            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/dao/SucursalDAO.java</file>
-            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/pojo/EmpleadoRespuesta.java</file>
-            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/pojo/PedidoRespuesta.java</file>
-            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/controladores/FXMLAdministracionPedidosController.java</file>
-            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/dao/ProductoDAO.java</file>
-            <file>file:/C:/Users/zS21022065/Desktop/bd/SGAPT/src/sgapt/modelo/pojo/Empleado.java</file>
+            <file>file:/C:/Users/samue/OneDrive%20-%20Universidad%20Veracruzana/UV/Semestre%204/Procesos%20para%20ingeniería%20de%20software/Codigo%20Proyecto/SGAPT/src/sgapt/controladores/FXMLFormularioPedidoController.java</file>
+            <file>file:/C:/Users/samue/OneDrive%20-%20Universidad%20Veracruzana/UV/Semestre%204/Procesos%20para%20ingeniería%20de%20software/Codigo%20Proyecto/SGAPT/src/sgapt/controladores/FXMLAdministracionPedidosController.java</file>
         </group>
     </open-files>
 </project-private>

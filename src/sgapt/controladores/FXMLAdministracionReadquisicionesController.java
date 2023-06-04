@@ -99,18 +99,19 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
                     tvProductos.setItems(productos);
                 break;
                 case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error en la solicitud", 
-                        "Por el momento no se puede procesar la solicitud", 
+                    Utilidades.mostrarDialogoSimple("Error al consultar información", 
+                        "Por el momento no se puede obtener la información de los productos. " + 
+                            "Por favor, inténtelo más tarde.", 
                             Alert.AlertType.ERROR);
                 break;
                 case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Por el momento no hay conexión, intentelo más tarde", 
+                            "Por el momento no hay conexión, intentelo más tarde.", 
                             Alert.AlertType.ERROR);
                 break;
                 default:
                     Utilidades.mostrarDialogoSimple("Error de petición", 
-                            "El sistema no está disponible por el momento", 
+                            "El sistema no está disponible por el momento.", 
                             Alert.AlertType.ERROR);
                 break;
         }
@@ -185,18 +186,19 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
                 
                 switch (resultado) {
                     case Constantes.OPERACION_EXITOSA:
-                        Utilidades.mostrarDialogoSimple("Operacion exitosa", 
-                            "La readquisición se ha realizado correctamente", 
+                        Utilidades.mostrarDialogoSimple("Readquisición realizada correctamente", 
+                            "Se ha notificado a la sucursal de origen sobre los productos readquiridos.", 
                             Alert.AlertType.INFORMATION);
                         break;
                     case Constantes.ERROR_CONSULTA:
-                        Utilidades.mostrarDialogoSimple("Error en la solicitud", 
-                            "Por el momento no se puede procesar la solicitud", 
+                        Utilidades.mostrarDialogoSimple("Error al modificar la cantidad de productos", 
+                        "Por el momento no se puede modificar la cantidad del producto seleccionado. " + 
+                            "Por favor, inténtelo más tarde.", 
                                 Alert.AlertType.ERROR);
                         break;
                     case Constantes.ERROR_CONEXION:
                         Utilidades.mostrarDialogoSimple("Error de conexión", 
-                                "Por el momento no hay conexión, intentelo más tarde", 
+                                "Por el momento no hay conexión, inténtelo más tarde", 
                                 Alert.AlertType.ERROR);
                         break;
                     default:
@@ -207,13 +209,14 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
                 }
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error en la solicitud", 
-                    "Por el momento no se puede procesar la solicitud", 
+                Utilidades.mostrarDialogoSimple("Error al consultar producto", 
+                    "Por el momento no se puede consultar la cantidad de existencias. " + 
+                        "Por favor, inténtelo más tarde.", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexión", 
-                        "Por el momento no hay conexión, intentelo más tarde", 
+                        "Por el momento no hay conexión, intentelo más tarde.", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.SIN_RESULTADOS:
@@ -226,13 +229,14 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
                     
                     switch (respuesta) {
                         case Constantes.OPERACION_EXITOSA:
-                            Utilidades.mostrarDialogoSimple("Operacion exitosa", 
-                                "La readquisición se ha realizado correctamente", 
+                            Utilidades.mostrarDialogoSimple("Readquisición realizada correctamente", 
+                            "Se ha notificado a la sucursal de origen sobre los productos readquiridos.", 
                                 Alert.AlertType.INFORMATION);
                             break;
                         case Constantes.ERROR_CONSULTA:
-                            Utilidades.mostrarDialogoSimple("Error en la solicitud", 
-                                "Por el momento no se puede procesar la solicitud", 
+                            Utilidades.mostrarDialogoSimple("Error al realizar nuevo registro de productos", 
+                                "Por el momento no se puede generar un nuevo registro de productos. " + 
+                                    "Por favor, inténtelo más tarde.", 
                                     Alert.AlertType.ERROR);
                             break;
                         case Constantes.ERROR_CONEXION:
@@ -270,8 +274,9 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
             case Constantes.OPERACION_EXITOSA:
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error en la solicitud", 
-                    "Por el momento no se puede procesar la solicitud", 
+                Utilidades.mostrarDialogoSimple("Error al modificar la cantidad de productos", 
+                    "Por el momento no se puede modificar la cantidad del producto seleccionado. " + 
+                            "Por favor, inténtelo más tarde.",
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONEXION:
@@ -300,18 +305,19 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
                 cantidadProductoAlmacenado = lote_Almacenado.getCantidad();
                 break;
             case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error en la solicitud", 
-                    "Por el momento no se puede procesar la solicitud", 
-                        Alert.AlertType.ERROR);
+                Utilidades.mostrarDialogoSimple("Error al consultar cantidad de productos", 
+                    "Por el momento no se puede consultar la cantidad de existencias del producto. " + 
+                    "Por favor, inténtelo más tarde.", 
+                    Alert.AlertType.ERROR);
                 break;
             case Constantes.ERROR_CONEXION:
                 Utilidades.mostrarDialogoSimple("Error de conexión", 
-                        "Por el momento no hay conexión, intentelo más tarde", 
+                        "Por el momento no hay conexión. Por favor, inténtelo más tarde.", 
                         Alert.AlertType.ERROR);
                 break;
             case Constantes.SIN_RESULTADOS:
                 Utilidades.mostrarDialogoSimple("Sin resultados", 
-                        "El producto seleccionado no cuenta con las suficientes existencias", 
+                        "El producto seleccionado no cuenta con las suficientes existencias.", 
                         Alert.AlertType.ERROR);
                 break;
             default:
