@@ -127,8 +127,6 @@ public class FXMLFormularioProductoController implements Initializable {
         esEdicion = (producto != null);
         if (esEdicion){
             cargarInformacionProducto();
-        }else{
-            inicializarCbTipoProducto();
         }
     }
     

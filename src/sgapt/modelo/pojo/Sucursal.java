@@ -1,6 +1,36 @@
 package sgapt.modelo.pojo;
 
 public class Sucursal {
+    
+    public static enum Estado{
+        MICHOACAN("Michoacán"),
+        VERACRUZ("Veracruz"),
+        JALISCO("Jalisco");
+        
+        private String nombreEstado;
+        
+        private Estado(String nombreEstado){
+            this.nombreEstado = nombreEstado;
+        }
+
+        public static Estado obtenerEstado(String e){
+            if(e.equals("Michoacán")){
+                return MICHOACAN;
+            }else if(e.equals("Veracruz")){
+                return VERACRUZ;
+            }else if(e.equals("Jalisco")){
+                return JALISCO;
+            }else{
+                return null;
+            }
+        }
+        
+        @Override
+        public String toString(){
+            return nombreEstado;
+        }
+    }
+    
     private int idSucursal;
     private String estado;
     private String ciudad;

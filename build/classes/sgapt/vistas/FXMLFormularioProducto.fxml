@@ -19,21 +19,21 @@
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
-      <Label fx:id="lbRequiereReceta" layoutX="462.0" layoutY="418.0" text="Requiere receta">
+      <Label fx:id="lbRequiereReceta" layoutX="464.0" layoutY="316.0" text="Requiere receta">
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
-      <Label layoutX="112.0" layoutY="418.0" text="Tipo de producto">
+      <Label layoutX="112.0" layoutY="316.0" text="Tipo de producto">
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
-      <ComboBox fx:id="cbRequiereReceta" layoutX="464.0" layoutY="482.0" prefHeight="42.0" prefWidth="221.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
+      <ComboBox fx:id="cbRequiereReceta" layoutX="467.0" layoutY="383.0" prefHeight="42.0" prefWidth="221.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
       <Label layoutX="817.0" layoutY="255.0" text="Fotografía del producto">
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
-      <ComboBox fx:id="cbTipoProducto" layoutX="112.0" layoutY="482.0" prefHeight="42.0" prefWidth="221.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
-      <TextField fx:id="tfNombre" layoutX="112.0" layoutY="213.0" prefHeight="42.0" prefWidth="215.0" styleClass="textField" stylesheets="@../css/estilos.css" />
+      <ComboBox fx:id="cbTipoProducto" layoutX="119.0" layoutY="383.0" prefHeight="42.0" prefWidth="221.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
+      <TextField fx:id="tfNombre" editable="false" layoutX="122.0" layoutY="213.0" prefHeight="42.0" prefWidth="215.0" styleClass="textField" stylesheets="@../css/estilos.css" />
       <Button layoutX="52.0" layoutY="47.0" mnemonicParsing="false" onAction="#clicVolver" prefHeight="60.0" prefWidth="77.0" styleClass="buttonCancelar" stylesheets="@../css/estilos.css">
          <graphic>
             <ImageView fitHeight="37.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
@@ -48,13 +48,13 @@
             <Image url="@../img/icons8_Add_Image_512px_1.png" />
          </image>
       </ImageView>
-      <Label layoutX="484.0" layoutY="155.0" text="Precio">
+      <Label layoutX="465.0" layoutY="155.0" text="Precio">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <TextField fx:id="tfPrecio" layoutX="484.0" layoutY="213.0" prefHeight="42.0" prefWidth="215.0" styleClass="textField" stylesheets="@../css/estilos.css" />
-      <Button layoutX="1000.0" layoutY="611.0" mnemonicParsing="false" onAction="#clicRegistrarProducto" prefHeight="45.0" prefWidth="221.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Registrar producto">
+      <TextField fx:id="tfPrecio" layoutX="470.0" layoutY="213.0" onKeyTyped="#permitirInputSoloNumeros" prefHeight="42.0" prefWidth="215.0" styleClass="textField" stylesheets="@../css/estilos.css" />
+      <Button layoutX="1000.0" layoutY="611.0" mnemonicParsing="false" onAction="#clicEditarProducto" prefHeight="45.0" prefWidth="221.0" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" text="Editar producto">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
