@@ -44,7 +44,7 @@
             <TableColumn fx:id="colApellidoPaterno" prefWidth="156.0" text="Apellido Paterno" />
             <TableColumn fx:id="colApellidoMaterno" minWidth="7.0" prefWidth="201.0" text="Apellido Materno" />
             <TableColumn fx:id="colCorreoElectronico" minWidth="0.0" prefWidth="166.0" text="Correo Electronico" />
-            <TableColumn fx:id="colDireccion" minWidth="0.0" prefWidth="110.0" text="Direccion" />
+            <TableColumn fx:id="colSucursal" minWidth="0.0" prefWidth="110.0" text="Sucursal" />
             <TableColumn fx:id="colNumeroTelefonico" prefWidth="148.0" text="Numero Telefonico" />
          </columns>
       </TableView>

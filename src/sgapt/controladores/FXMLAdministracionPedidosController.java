@@ -218,13 +218,13 @@ public class FXMLAdministracionPedidosController implements Initializable {
                     switch (respuestaLoteDesenlazado) {
                     case Constantes.ERROR_CONEXION:
                             Utilidades.mostrarDialogoSimple("Sin conexión", 
-                            "Lo sentimos, por el momento no hay conexión para poder eliminar el pedido" + 
+                            "Lo sentimos, por el momento no hay conexión para poder cancelar el pedido" + 
                             ", por favor inténtelo más tarde", 
                             Alert.AlertType.ERROR);
                         break;
                     case Constantes.ERROR_CONSULTA:
-                            Utilidades.mostrarDialogoSimple("Error al eliminar el pedido", 
-                            "Hubo un error al eliminar el pedido, por favor inténtelo más tarde", 
+                            Utilidades.mostrarDialogoSimple("Error al cancelar el pedido", 
+                            "Hubo un error al cancelar el pedido, por favor inténtelo más tarde", 
                             Alert.AlertType.WARNING);
                         break;
                     case Constantes.OPERACION_EXITOSA:
@@ -233,18 +233,18 @@ public class FXMLAdministracionPedidosController implements Initializable {
                             switch (respuesta) {
                             case Constantes.ERROR_CONEXION:
                                     Utilidades.mostrarDialogoSimple("Sin conexión", 
-                                    "Lo sentimos, por el momento no hay conexión para poder eliminar el pedido, " + 
+                                    "Lo sentimos, por el momento no hay conexión para poder cancelar el pedido, " + 
                                     "por favor inténtelo más tarde", 
                                     Alert.AlertType.ERROR);
                                 break;
                             case Constantes.ERROR_CONSULTA:
                                     Utilidades.mostrarDialogoSimple("Error al eliminar el pedido", 
-                                    "Hubo un error al eliminar el pedido, por favor inténtelo más tarde", 
+                                    "Hubo un error al cancelar el pedido, por favor inténtelo más tarde", 
                                     Alert.AlertType.WARNING);
                                 break;
                             case Constantes.OPERACION_EXITOSA:
                                     Utilidades.mostrarDialogoSimple("Operación exitosa", 
-                                            "Se ha eliminado el pedido satisfactoriamente", 
+                                            "Se ha cancelado el pedido satisfactoriamente", 
                                             Alert.AlertType.INFORMATION);
                                     cargarInformacionTabla();
                                 break;

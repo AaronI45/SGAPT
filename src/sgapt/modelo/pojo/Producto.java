@@ -2,12 +2,13 @@ package sgapt.modelo.pojo;
 
 import java.util.Date;
 import javafx.scene.image.ImageView;
+import javax.management.modelmbean.RequiredModelMBean;
 
 public class Producto {
     
     public static enum TipoDeProducto{
-        SALUD("artículo para salud"),
-        HIGIENE("artículo para higiene"),
+        SALUD("articulo para salud"),
+        HIGIENE("articulo para higiene"),
         MEDICAMENTO("medicamento");
         
         private TipoDeProducto(String tipo){
@@ -16,9 +17,44 @@ public class Producto {
                 
         private String tipo;
 
+        public static TipoDeProducto t(String valor){
+            if(valor.equals("articulo para salud")){
+                return SALUD;
+            }else if(valor.equals("articulo para higiene")){
+                return HIGIENE;
+            }else if(valor.equals("medicamento")){
+                return MEDICAMENTO;
+            }else{
+                return null;
+            }
+        }
+        
         @Override
         public String toString() {
             return tipo;
+        }
+    }
+    
+    public static enum RequiereReceta{
+        SI(true),
+        NO(false);
+        
+        private RequiereReceta(boolean requiereRec){
+            this.requiereRec = requiereRec;
+        }
+        
+        private boolean requiereRec;
+        
+        public static boolean getRequiere (RequiereReceta req){
+            return req.requiereRec;
+        }
+        
+        public static RequiereReceta requiere(boolean r){
+            if (r){
+                return SI;
+            }else{
+                return NO;
+            }
         }
     }
     

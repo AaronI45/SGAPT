@@ -9,8 +9,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -37,7 +40,7 @@ public class FXMLAdministracionEmpleadosController implements Initializable {
     @FXML
     private TableColumn    colCorreoElectronico;
     @FXML
-    private TableColumn    colDireccion;
+    private TableColumn<?, ?> colSucursal;
     @FXML
     private TableColumn   colNumeroTelefonico;
     private ObservableList<Empleado> empleados;
@@ -49,7 +52,6 @@ public class FXMLAdministracionEmpleadosController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         configurarTabla();
         cargarInformacionTabla();
-        
         tvEmpleados.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null){
                 if (newSelection.getFoto() !=null){
@@ -79,9 +81,8 @@ public class FXMLAdministracionEmpleadosController implements Initializable {
         colApellidoMaterno.setCellValueFactory(new PropertyValueFactory("apellidoMaterno"));
         colCorreoElectronico.setCellValueFactory(new PropertyValueFactory("correo"));
         colNumeroTelefonico.setCellValueFactory(new PropertyValueFactory("numeroTelefonico"));
-        colDireccion.setCellValueFactory(new PropertyValueFactory("direccion"));
+        colSucursal.setCellValueFactory(new PropertyValueFactory("direccion"));
     }
-    
     
          private void cargarInformacionTabla() {
         empleados = FXCollections.observableArrayList();
@@ -121,29 +122,48 @@ public class FXMLAdministracionEmpleadosController implements Initializable {
         stagePrincipal.show();
     }
     
+    private Empleado verificarSeleccion(){
+        int filaSeleccionada = tvEmpleados.getSelectionModel().getSelectedIndex();
+        return (filaSeleccionada >= 0) ? empleados.get(filaSeleccionada) : null;
+    }
     
+    private void irFormularioEmpleado(Empleado empleado){
+        try{
+        FXMLLoader accesoControlador = new FXMLLoader(getClass().getResource("/sgapt/vistas/FXMLFormularioEmpleado.fxml"));
+        Parent vista = accesoControlador.load();
+        
+        FXMLFormularioEmpleadoController formulario = accesoControlador.getController();
+        Scene sceneFormulario = new Scene(vista);
+        Stage escenarioPrincipal = (Stage)ivEmpleado.getScene().getWindow();
+        escenarioPrincipal.setScene(sceneFormulario);
+        formulario.inicializarValores(empleado);
+        }catch(IOException e){
+            Utilidades.mostrarDialogoSimple("Error", "No se puede mostrar la pantalla de formulario", 
+                    Alert.AlertType.ERROR);  
+        }
+        
+    }
 
     @FXML
     private void clicIrModifcarEmpleado(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLModificarEmpleado.fxml"));
-        stagePrincipal.setTitle("Modificación de empleado");
-        stagePrincipal.show(); 
- 
+        Empleado empleadoEdicion = verificarSeleccion();
+        if (empleadoEdicion != null){
+            irFormularioEmpleado(empleadoEdicion);
+        }else{
+            Utilidades.mostrarDialogoSimple("Error de selección", 
+                    "Por favor seleccione un empleado para editar y vuelva a intentarlo", 
+                    Alert.AlertType.ERROR);
+        }
     }
 
 
 
     @FXML
     private void clicIrDarDeAltaEmpleado(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLFormularioEmpleado.fxml"));
-        stagePrincipal.setTitle("Alta de empleado");
-        stagePrincipal.show(); 
+        irFormularioEmpleado(null);
     }
 
+    
     @FXML
     private void clicDarDeBajaEmpleado(ActionEvent event) {
         Node source = (Node) event.getSource();
