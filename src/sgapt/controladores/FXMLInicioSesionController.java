@@ -43,23 +43,6 @@ public class FXMLInicioSesionController implements Initializable {
     private void clicIniciarSesion(ActionEvent event) {
         lbErrorUsuario.setText("");
         lbErrorPassword.setText("");
-        
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Tipo de usuario");
-        alert.setHeaderText("Seleccione el tipo de usuario");
-
-        ButtonType btnEncargado = new ButtonType("Encargado");
-        ButtonType btnAdministrador = new ButtonType("Administrador");
-        alert.getButtonTypes().setAll(btnEncargado, btnAdministrador);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == btnEncargado) {            
-            tfUsuario.setText("jamez");
-            tfPassword.setText("hola");
-        } else {
-            tfUsuario.setText("brendamar");
-            tfPassword.setText("abcd123");
-        }        
         validarCampos();
     }
     

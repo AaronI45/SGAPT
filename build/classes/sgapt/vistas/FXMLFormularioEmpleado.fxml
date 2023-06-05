@@ -87,7 +87,7 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <TextField fx:id="tfNumeroTelefonico" layoutX="393.0" layoutY="435.0" prefHeight="31.0" prefWidth="262.0" promptText="2282363992" />
+      <TextField fx:id="tfNumeroTelefonico" layoutX="393.0" layoutY="435.0" onKeyTyped="#permitirInputSoloNumeros" prefHeight="31.0" prefWidth="262.0" promptText="2282363992" />
       <ImageView fx:id="ivEmpleado" fitHeight="248.0" fitWidth="250.0" layoutX="989.0" layoutY="233.0" onMousePressed="#clcAgregarImagen" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../img/icons8_Add_Image_512px_1.png" />
