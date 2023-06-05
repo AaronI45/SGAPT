@@ -82,7 +82,6 @@ public class FXMLFormularioPedidoController implements Initializable {
     private ObservableList<Lote> lotesProveedor;
     private ObservableList<Lote> lotesPedido; 
     private ArrayList<Lote> lotesOriginalesProveedor;
-//    private ArrayList<Lote> lotesOriginalesPedido;
     
     private boolean esEdicion;
     private Pedido pedidoEdicion;
@@ -319,8 +318,6 @@ public class FXMLFormularioPedidoController implements Initializable {
                     tvLotesPedido.refresh();
                     tvLotesProveedor.setItems(lotesProveedor);
                     tvLotesProveedor.refresh();
-                    System.out.println("Lotes originales de proveedor : " + lotesOriginalesProveedor);
-//                    System.out.println("Lotes originales de pedido : " + lotesOriginalesPedido);
                 } else {
                     Utilidades.mostrarDialogoSimple("Error en cantidad de lotes", 
                             "La cantidad de lotes seleccionada es menor de la solicitada, " + 
@@ -393,8 +390,6 @@ public class FXMLFormularioPedidoController implements Initializable {
                     tvLotesProveedor.refresh();
                     cbProveedores.setDisable(true);
                     
-                    System.out.println("Lotes originales de proveedor : " + lotesOriginalesProveedor);
-//                    System.out.println("Lotes originales de pedido : " + lotesOriginalesPedido);
                 } else {
                     Utilidades.mostrarDialogoSimple("Error en cantidad de lotes", 
                             "La cantidad de lotes existentes es menor de la solicitada, " + 
@@ -476,6 +471,7 @@ public class FXMLFormularioPedidoController implements Initializable {
                             "Se ha realizado el pedido satisfactoriamente",
                             Alert.AlertType.INFORMATION);
                     limpiarInformacionPedidoRealizado();
+                    regresarPantallaAnterior();
                 }
                 break;
         }

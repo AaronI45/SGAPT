@@ -59,6 +59,8 @@ public class FXMLFormularioEmpleadoController implements Initializable {
     private ObservableList<Sucursal> listaSucursales;
     String estiloError = "-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 2;";
     String estiloNormal = "-fx-border-width: 0;";
+    @FXML
+    private Label lbNumeroError;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -81,9 +83,7 @@ public class FXMLFormularioEmpleadoController implements Initializable {
         tfApellidoMaterno.setText(empleadoEdicion.getApellidoMaterno());
         tfCorreo.setText(empleadoEdicion.getCorreo());
         tfNumeroTelefonico.setText(empleadoEdicion.getNumeroTelefonico());
-        System.out.println("Es edicion: " + esEdicion);
         if (esEdicion) {
-            System.out.println("Tipo empleado: " + empleadoEdicion.getTipoEmpleado());
             if (empleadoEdicion.getTipoEmpleado().equals("administrador")) {
                cbSucursal.setDisable(esEdicion);
             }
@@ -162,6 +162,7 @@ public class FXMLFormularioEmpleadoController implements Initializable {
         if(tfNumeroTelefonico.getLength() != 10) {
             tfNumeroTelefonico.setStyle(estiloError);
             datosInvalidos = true;
+            lbNumeroError.setText("Número telefónico a 10 dígitos");
         }
         if (!Utilidades.correoValido(correo)) {
             tfCorreo.setStyle(estiloError);
@@ -178,6 +179,8 @@ public class FXMLFormularioEmpleadoController implements Initializable {
         tfCorreo.setStyle(estiloNormal);
         tfNumeroTelefonico.setStyle(estiloNormal);
         cbSucursal.setStyle(estiloNormal);
+        lbNumeroError.setText("");
+        ivEmpleado.setStyle(estiloNormal);
     }
     
     @FXML
@@ -239,6 +242,7 @@ public class FXMLFormularioEmpleadoController implements Initializable {
                                 "Para editar el registro del alumno debes seleccionar " + 
                                         "su foto desde la opción seleccionar imagen", 
                                 Alert.AlertType.WARNING);
+                        ivEmpleado.setStyle(estiloError);
                     }
                 } else {
                     if (fotoEmpleado != null) {
@@ -250,6 +254,7 @@ public class FXMLFormularioEmpleadoController implements Initializable {
                                 "Para guardar el registro del alumno debes seleccionar " + 
                                         "su foto desde la opción seleccionar imagen", 
                                 Alert.AlertType.WARNING);
+                        ivEmpleado.setStyle(estiloError);
                     }
                 }
             } catch (IOException e) {

@@ -179,6 +179,7 @@ public class FXMLAdministracionEmpleadosController implements Initializable {
                         "Se ha realizado la baja al usuario correctamente.", 
                         Alert.AlertType.INFORMATION);
                 cargarInformacionTabla();
+                ivEmpleado.setImage(null);
             }
         } else {
             Utilidades.mostrarDialogoSimple("Selección necesaria", 

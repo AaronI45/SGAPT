@@ -94,5 +94,6 @@
          </image>
       </ImageView>
       <ComboBox fx:id="cbSucursal" layoutX="695.0" layoutY="433.0" prefHeight="31.0" prefWidth="252.0" promptText="Seleccionar sucursal" styleClass="buttonInicioSesion" stylesheets="@../css/estilos.css" />
+      <Label fx:id="lbNumeroError" layoutX="398.0" layoutY="481.0" prefHeight="21.0" prefWidth="252.0" textFill="RED" />
    </children>
 </AnchorPane>
