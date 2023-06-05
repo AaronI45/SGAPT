@@ -33,7 +33,6 @@ public class Lote_AlmacenadoDAO {
                 }
                 conexionBD.close();
             } catch (SQLException e) {
-                e.printStackTrace();
                 producto_almacenadoRespuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
             }
         } else {
@@ -61,7 +60,6 @@ public class Lote_AlmacenadoDAO {
                 conexionBD.close();
             } catch (SQLException e) {
                 respuesta = Constantes.ERROR_CONSULTA;
-                e.printStackTrace();
             }
         } else {
             respuesta = Constantes.ERROR_CONEXION;

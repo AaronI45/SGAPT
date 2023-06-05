@@ -1,7 +1,5 @@
 package sgapt.modelo.pojo;
 
-import java.util.Date;
-
 public class Empleado {
     
     private int idEmpleado;

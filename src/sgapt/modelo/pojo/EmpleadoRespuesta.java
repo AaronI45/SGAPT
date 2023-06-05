@@ -12,6 +12,7 @@ import java.util.ArrayList;
  */
 public class EmpleadoRespuesta {
     private int codigoRespuesta;
+    private int idEmpleado;
     private ArrayList <Empleado> empleados;
     
     public EmpleadoRespuesta(){
@@ -34,6 +35,14 @@ public class EmpleadoRespuesta {
     }
     public void setEmpleados(ArrayList<Empleado> empleados){
         this.empleados = empleados;
+    }
+
+    public int getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(int idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
     
     @Override

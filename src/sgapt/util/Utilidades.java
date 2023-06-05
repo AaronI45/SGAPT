@@ -2,6 +2,8 @@ package sgapt.util;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -40,5 +42,15 @@ public class Utilidades {
             System.err.println("ERROR: " + ex.getMessage());
         }
         return escena;
+    }
+    
+    public static boolean correoValido(String correo) {
+        if (correo != null && !correo.isEmpty()) {
+            Pattern patronCorreo = Pattern.compile("([a-z0-9]+(\\.?[a-z0-9])*)+@(([a-z]+)\\.([a-z]+))+");
+            Matcher matchPatron = patronCorreo.matcher(correo);
+            return matchPatron.find();
+        } else {
+            return false;
+        }
     }
 }

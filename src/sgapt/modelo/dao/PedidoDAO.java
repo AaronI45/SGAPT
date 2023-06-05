@@ -109,9 +109,7 @@ public class PedidoDAO {
                 }
                 else
                     respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
-                        
                 conexionBD.close();
-                
             }catch(SQLException e){
                 respuesta.setCodigoRespuesta(Constantes.ERROR_CONSULTA);
             }
