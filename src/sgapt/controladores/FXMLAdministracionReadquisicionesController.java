@@ -129,44 +129,58 @@ public class FXMLAdministracionReadquisicionesController implements Initializabl
             } else {                
                 int posicion = tvProductos.getSelectionModel().getSelectedIndex();
                     if (posicion != -1) {
-                        boolean realizarReadquisicion = Utilidades.mostrarDialogoConfirmacion(
-                                "Readquisición de productos", 
-                                "¿Está seguro de que desea realizar la readquisición?");
-                        if (realizarReadquisicion) {                    
-                            validarCantidadReadquisicion();
-                        }
+                            boolean realizarReadquisicion = Utilidades.mostrarDialogoConfirmacion(
+                                    "Readquisición de productos", 
+                                    "¿Está seguro de que desea realizar la readquisición?");
+                            if (realizarReadquisicion) {                    
+                                validarCantidadReadquisicion();
+                            }
                     } else
                         Utilidades.mostrarDialogoSimple("Selecciona un producto", 
                                 "Para realizar la readquisicion debes seleccionar el producto " + 
                                         "de la tabla", Alert.AlertType.WARNING);
                 
             }
+        }else if(sucursalOrigen == null){
+            Utilidades.mostrarDialogoSimple("Error", 
+                    "Por favor seleccione una sucursal de origen para realizar la readquisición y seleccione el producto", 
+                    Alert.AlertType.WARNING);
+        }
+        else if(sucursalDestino == null){
+            Utilidades.mostrarDialogoSimple("Error", 
+                    "Por favor seleccione una sucursal destino para realizar la readquisición", 
+                    Alert.AlertType.WARNING);
         }
     }
 
     private void validarCantidadReadquisicion() {
-        int cantidadReadquisicion = Integer.parseInt(tfCantidad.getText());
-        
-        if (cantidadReadquisicion > 0) {
-            int cantidadExistencias = obtenerCantidadDeProductoAlmacenado();
-            if (cantidadExistencias > 0) {
-                if (cantidadReadquisicion <= cantidadExistencias) {
-                    realizarActualizacionDeProductosEnFarmacias(cantidadReadquisicion, 
-                            cantidadExistencias);
-                    cargarDatosTabla(cbSucursalOrigen.getSelectionModel().getSelectedItem());                        
-                } else {
-                    Utilidades.mostrarDialogoSimple("Error", 
-                        "Debe introducir una cantidad de productos menor o igual " + 
-                                "a la cantidad en almacen", 
-                        Alert.AlertType.WARNING);
-                    tfCantidad.setText("");
+        if (!tfCantidad.getText().isEmpty()){
+            int cantidadReadquisicion = Integer.parseInt(tfCantidad.getText());
+            if (cantidadReadquisicion > 0) {
+                int cantidadExistencias = obtenerCantidadDeProductoAlmacenado();
+                if (cantidadExistencias > 0) {
+                    if (cantidadReadquisicion <= cantidadExistencias) {
+                        realizarActualizacionDeProductosEnFarmacias(cantidadReadquisicion, 
+                                cantidadExistencias);
+                        cargarDatosTabla(cbSucursalOrigen.getSelectionModel().getSelectedItem());                        
+                    } else {
+                        Utilidades.mostrarDialogoSimple("Error", 
+                            "Debe introducir una cantidad de productos menor o igual " + 
+                                    "a la cantidad en almacen", 
+                            Alert.AlertType.WARNING);
+                        tfCantidad.setText("");
+                    }
                 }
+            } else {
+                Utilidades.mostrarDialogoSimple("Error", 
+                        "Debe introducir una cantidad de productos mayor a 0", 
+                        Alert.AlertType.WARNING);
+                tfCantidad.setText("");
             }
-        } else {
+        }else{
             Utilidades.mostrarDialogoSimple("Error", 
-                    "Debe introducir una cantidad de productos mayor a 0", 
+                    "Por favor introduzca la cantidad de productos para readquirir", 
                     Alert.AlertType.WARNING);
-            tfCantidad.setText("");
         }
     }
     

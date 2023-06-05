@@ -157,7 +157,7 @@ public class FXMLFormularioProductoController implements Initializable {
                 }
             }catch (NumberFormatException e){
                 Utilidades.mostrarDialogoSimple("Error de asignación de precio", 
-                        "Por favor introduzca un valor válido para el precio", 
+                        "Por favor introduzca un valor correcto para el precio", 
                         Alert.AlertType.ERROR);
             }
         }
