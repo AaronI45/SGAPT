@@ -4,10 +4,12 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import static java.time.temporal.TemporalQueries.localDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -17,28 +19,22 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import static jdk.nashorn.internal.objects.NativeRegExp.source;
 import sgapt.interfaz.INotificacionOperacion;
 import sgapt.modelo.dao.ProductoDAO;
 import sgapt.modelo.dao.PromocionDAO;
-import sgapt.modelo.dao.SucursalDAO;
 import sgapt.modelo.pojo.Producto;
 import sgapt.modelo.pojo.ProductoRespuesta;
 import sgapt.modelo.pojo.Promocion;
-import sgapt.modelo.pojo.Sucursal;
-import sgapt.modelo.pojo.SucursalRespuesta;
+import sgapt.modelo.pojo.PromocionRespuesta;
 import sgapt.util.Constantes;
 import sgapt.util.Utilidades;
 
@@ -57,6 +53,7 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
     @FXML
     private ComboBox<Producto> cbIdProducto;
     private ObservableList<Producto> productos;
+     private ObservableList<Promocion> promociones;
     @FXML
     private Label lbErrorSucursal;
     @FXML
@@ -78,6 +75,7 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        cargarInformacionProducto();
+       cargarInformacionPromociones();
        
        cbIdProducto.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
            if(newSelection != null){
@@ -101,13 +99,15 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
        });
        
        tfPorcentaje.textProperty().addListener(new ChangeListener<String>() {
-        @Override
-        public void changed(ObservableValue<? extends String> observable, String oldValue, 
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
             String newValue) {
-        if (!newValue.matches("\\d*")) {
-            tfPorcentaje.setText(newValue.replaceAll("[^\\d]", ""));
-        }
-    }});
+                if (!newValue.matches("\\d*")) {
+                     tfPorcentaje.setText(newValue.replaceAll("[^\\d]", ""));
+                 }
+            }});
+       
+      
        
     }
 
@@ -126,6 +126,9 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
         int posicionProducto =cbIdProducto.getSelectionModel().getSelectedIndex();
         boolean sonValidos=true;
         boolean sinDisponibilidad=false;
+        boolean existente=false;
+        String dateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                .format(LocalDateTime.now());
         //TO DO Validaciones
         
         //Validacion del porcentaje de descuento
@@ -164,6 +167,11 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
             if(fechaFin.isBefore(fechaInicio)){
                 dpFechaFin.setStyle(estiloError);
                 sonValidos=false;
+            }else{
+                if(fechaFin.toString().equals(dateTime)){
+                    sonValidos=false;
+                    dpFechaFin.setStyle(estiloError);
+                }
             }
         }
         
@@ -174,13 +182,14 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
         }else{
              //Validacion de disponibilidad del producto
             if("disponible".equals(cbIdProducto.getSelectionModel().getSelectedItem().getDisponibilidad())){
-                //hay disponibilidad del producto
+                //hay disponibilidad del producto y procede a hacer el registro
             }else{ 
                 sinDisponibilidad=true;
                 Utilidades.mostrarDialogoSimple("Sin disponibilidad", "No hay disponibilidad del producto en el inventario",
                         Alert.AlertType.WARNING);
             }
         }
+        
         
         //Registro o actualizacion de la promocion
         
@@ -192,18 +201,25 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
             promocionValidada.setFechaInicio(fechaInicio.toString());
             promocionValidada.setFechaFin(fechaFin.toString());
             if(sinDisponibilidad==true){
-                    //no guardara la promocion
-                }
-                else{
-                    if(esEdicion){
-                        promocionValidada.setIdPromocion(promocionEdicion.getIdPromocion());
-                        actualizarPromocion(promocionValidada);
-                    }else{
-                         registrarPromocion(promocionValidada);
+                //no guardara la promocion
+            }else{
+                if(esEdicion){
+                    promocionValidada.setIdPromocion(promocionEdicion.getIdPromocion());
+                    actualizarPromocion(promocionValidada);
+                }else{
+                     for(int i=0; i<promociones.size(); i++){
+                     if(promocionValidada.getIdProducto()== promociones.get(i).getIdProducto()){
+                       existente=true;
+                       Utilidades.mostrarDialogoSimple("Promocion existente", "Ya hay una promocion existente sobre este producto."
+                            ,Alert.AlertType.ERROR);
+                        }
                     }
+                    if(existente!=true){
+                        registrarPromocion(promocionValidada);
+                    } 
+                }
             }
         }
-       
     }
 
     private void mostrarMensajeDatos(){
@@ -285,6 +301,25 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
                 break;
         }
     }
+    
+     private void cargarInformacionPromociones(){
+        promociones = FXCollections.observableArrayList();
+        PromocionRespuesta productoBD=PromocionDAO.obtenerInformacionPromocion();
+        switch(productoBD.getCodigoRespuesta()){
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexion", "Error en la conexion con la base de datos",
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error de consulta", "Por el momento no se pudo obtener la informacion",
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                promociones.addAll(productoBD.getPromociones());
+                break;
+        }
+    }
+    
     private void actualizarPromocion(Promocion promocionActualizar){
         int codigoRespuesta = PromocionDAO.modificarPromocion(promocionActualizar);
          switch(codigoRespuesta){

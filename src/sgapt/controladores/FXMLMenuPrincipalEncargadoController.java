@@ -37,7 +37,7 @@ public class FXMLMenuPrincipalEncargadoController implements Initializable {
     private void clicBtnAdministrarPromociones(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLBannerPromociones.fxml"));
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLBannerPromociones1.fxml"));
         stagePrincipal.setTitle("Promociones");
         stagePrincipal.show();
     }

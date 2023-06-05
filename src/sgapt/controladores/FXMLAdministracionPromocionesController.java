@@ -22,7 +22,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -64,9 +63,6 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
     private ImageView ivProducto;
     
     private Producto producto;
-   
-    @FXML
-    private TextField tfBusqueda;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -101,24 +97,14 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
     private void clicBtnRegresar(ActionEvent event) {
         Node source = (Node) event.getSource();
         Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLBannerPromociones.fxml"));
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLBannerPromociones1.fxml"));
         stagePrincipal.setTitle("Promociones");
         stagePrincipal.show();
     }
-    
-    /* private void cerrarVentana(){
-        Stage escenarioBase = (Stage) lbTitulo.getScene().getWindow();
-        escenarioBase.close();
-    }*/ 
 
     @FXML
     private void clicBtnCrearProm(ActionEvent event) {
         irFormulario(false, null);
-        /*Node source = (Node) event.getSource();
-        Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLFormularioPromocion2.fxml"));
-        stagePrincipal.setTitle("Formulario de promoción");
-        stagePrincipal.show();*/
     }
     
      private void configurarTabla() {
@@ -147,39 +133,9 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
             case Constantes.OPERACION_EXITOSA:
                     promociones.addAll(respuestaBD.getPromociones());
                     tvPromocion.setItems(promociones);
-                    configurarBusquedaTabla();
                 break;
         }
     }
-    
-    private void configurarBusquedaTabla(){
-        if(promociones.size()>0){
-            FilteredList<Promocion> filtradoPromociones = new FilteredList<>(promociones, p-> true); //p es una funcion anonima que flitra las opciones
-            tfBusqueda.textProperty().addListener(new ChangeListener<String>(){
-                @Override
-                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    filtradoPromociones.setPredicate(promocionFiltro -> {
-                        //Caso defalut o vacío
-                        if(newValue == null || newValue.isEmpty()){
-                            return true;
-                        }
-                        //Criterio de búsqueda
-                        String lowerNewValue = newValue.toLowerCase();
-                        if(promocionFiltro.getProducto().toLowerCase().contains(newValue)){
-                            return true;
-                        }else if(promocionFiltro.getFechaFin().toLowerCase().contains(lowerNewValue)){
-                            return true;
-                        }
-                        return false;
-                    });
-                }
-        });
-            //SortedList<Alumno> sortedListaAlumnos = new SortedList<>();
-            SortedList<Promocion> sortedListaAlumnos = new SortedList<>(filtradoPromociones);
-            sortedListaAlumnos.comparatorProperty().bind(tvPromocion.comparatorProperty());
-            tvPromocion.setItems(sortedListaAlumnos);
-        }
-    } 
 
     @FXML
     private void clicBtnExpirar(ActionEvent event) {
@@ -213,9 +169,9 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
     
     @FXML
     private void clicBtnModificar(ActionEvent event) {
-        int posicion = tvPromocion.getSelectionModel().getSelectedIndex();
-        if(posicion!= -1){
-            irFormulario(true, promociones.get(posicion));
+        Promocion promocion = tvPromocion.getSelectionModel().getSelectedItem();
+        if(promocion != null){
+            irFormulario(true, promocion);
         }else{
             Utilidades.mostrarDialogoSimple("Selecciona una promocion", "Selecciona el registro en la tabla de la promocion para su edicion", 
                     Alert.AlertType.WARNING);
@@ -243,32 +199,11 @@ public class FXMLAdministracionPromocionesController implements Initializable, I
     @Override
     public void notificarOperacionGuardar() {
         cargarInformacionTabla();
-         //Utilidades.mostrarDialogoSimple("Notificacion", 
-            //    "Promocion del producto "+nombreProducto+" guardada", Alert.AlertType.INFORMATION);
     }
 
     @Override
     public void notificarOperacionActualizar() {
         cargarInformacionTabla();
-        //Utilidades.mostrarDialogoSimple("Notificacion", 
-               // "Promocion del producto "+nombreProducto+" actualizada", Alert.AlertType.INFORMATION);
-    }
-    
-
-    private void mostrarImagenProducto(){
-        int posicion = tvPromocion.getSelectionModel().getSelectedIndex();
-        if(posicion!= -1){
-            /*ByteArrayInputStream inputFoto = new ByteArrayInputStream(promociones.get(posicion).getFoto());
-            Image imgFotoAlumno = new Image(inputFoto);
-            ivProducto.setImage(imgFotoAlumno);*/
-        }else{
-            System.out.println("hola");
-        }        
-    }
-
-    @FXML
-    private void clicMostrarImagen(ActionEvent event) {
-//        mostrarImagenProducto();
-    }
+    }      
     
 }
