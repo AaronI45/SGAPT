@@ -214,6 +214,7 @@ public class FXMLAdministracionProductosController implements Initializable {
                                     resultado.getMensaje(), 
                                     Alert.AlertType.INFORMATION); 
                             cargarDatosTabla(productoSeleccionado.getSucursal());
+                            ivProducto.setImage(null);
                         }else{
                             Utilidades.mostrarDialogoSimple("Error en la operación", 
                                     resultado.getMensaje(), Alert.AlertType.ERROR);
