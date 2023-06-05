@@ -492,11 +492,7 @@ public class FXMLFormularioPedidoController implements Initializable {
     
     @FXML
     private void clicBtnRegresar(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPedidos.fxml"));
-        stagePrincipal.setTitle("Administracion de pedidos");
-        stagePrincipal.show();
+        regresarPantallaAnterior();
     }
     
     private void regresarPantallaAnterior() {
@@ -544,6 +540,7 @@ public class FXMLFormularioPedidoController implements Initializable {
                         Utilidades.mostrarDialogoSimple("Pedido modificado", 
                                 "Se ha modificado el pedido satisfactoriamente",
                                 Alert.AlertType.INFORMATION);
+                        regresarPantallaAnterior();
                         break;
                 }
             }

@@ -13,13 +13,13 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -182,11 +182,7 @@ public class FXMLFormularioEmpleadoController implements Initializable {
     
     @FXML
     private void clicBtnRegresar(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionEmpleados.fxml"));
-        stagePrincipal.setTitle("Administración de empleados");
-        stagePrincipal.show();
+        regresarAVentanaAnterior();
     }
 
     @FXML
@@ -283,10 +279,10 @@ public class FXMLFormularioEmpleadoController implements Initializable {
                    + "por favor verifique que sea correcta" , Alert.AlertType.WARNING);
             break;
         case Constantes.OPERACION_EXITOSA:
-            // Experimental
             modificarVinculoDeEmpleadoAFarmacia(empleadoEdicion);
             Utilidades.mostrarDialogoSimple("Empleado registrado", "La información del empleado "
             + "fue actualizada correctamente", Alert.AlertType.INFORMATION);
+            regresarAVentanaAnterior();
             break;
         }
     }
@@ -310,6 +306,7 @@ public class FXMLFormularioEmpleadoController implements Initializable {
                 vincularEmpleadoAFarmacia(empleadoRegistro);
                 Utilidades.mostrarDialogoSimple("Empleado registrado", "La información del empleado "
                 + "fue guardada correctamente", Alert.AlertType.INFORMATION);
+                regresarAVentanaAnterior();
                 break;
         }
     }
@@ -320,26 +317,20 @@ public class FXMLFormularioEmpleadoController implements Initializable {
             int codigoRespuesta1 = Empleado_FarmaciaDAO.eliminarEmpleadoDeSucursal(
                     empleado.getIdEmpleado(), 
                     empleadoEdicionOriginal.getIdFarmacia());
-            System.out.println("codigoRespuesta1 = " + codigoRespuesta1);
             int codigoRespuesta2 = Empleado_FarmaciaDAO.decrementarEmpleadoEnSucursal(
                     empleadoEdicionOriginal.getIdFarmacia());
-            System.out.println("codigoRespuesta2 = " + codigoRespuesta2);
             int codigoRespuesta3 = Empleado_FarmaciaDAO.agregarEmpleadoASucursal(
                     empleado.getIdEmpleado(), empleado.getIdFarmacia());
-            System.out.println("codigoRespuesta3 = " + codigoRespuesta3);
             int codigoRespuesta4 = Empleado_FarmaciaDAO.aumentarEmpleadoEnSucursal(
                     empleado.getIdFarmacia());
-            System.out.println("codigoRespuesta4 = " + codigoRespuesta4);
         }
     }
     
     private void vincularEmpleadoAFarmacia(Empleado empleado) {
         int codigoRespuesta1 = Empleado_FarmaciaDAO.agregarEmpleadoASucursal(
                 empleado.getIdEmpleado(), empleado.getIdFarmacia());
-        System.out.println("codigoRespuesta1 = " + codigoRespuesta1);
         int codigoRespuesta2 = Empleado_FarmaciaDAO.aumentarEmpleadoEnSucursal(
                 empleado.getIdFarmacia());
-        System.out.println("codigoRespuesta2 = " + codigoRespuesta2);
     }
     
     @FXML
@@ -360,6 +351,13 @@ public class FXMLFormularioEmpleadoController implements Initializable {
                 e.printStackTrace();
             }
         }
+    }
+
+    @FXML
+    private void permitirInputSoloNumeros(KeyEvent event) {
+        String entrada = event.getCharacter();
+        if (!".0123456789".contains(entrada)) 
+            event.consume();
     }
     
 }

@@ -28,7 +28,6 @@ import sgapt.modelo.dao.Lote_PedidoDAO;
 import sgapt.modelo.dao.PedidoDAO;
 import sgapt.modelo.pojo.Lote_Pedido;
 import sgapt.modelo.pojo.Lote_PedidoRespuesta;
-import sgapt.modelo.pojo.Lote;
 import sgapt.modelo.pojo.PedidoRespuesta;
 import sgapt.modelo.pojo.Pedido;
 import sgapt.util.Constantes;
@@ -63,7 +62,6 @@ public class FXMLAdministracionPedidosController implements Initializable {
         colEstado.setCellFactory(e -> new TableCell<ObservableList<String>, String>() {
             @Override
             public void updateItem(String item, boolean empty) {
-                // Always invoke super constructor.
                 super.updateItem(item, empty);
 
                 if (item == null || empty) {
@@ -71,7 +69,6 @@ public class FXMLAdministracionPedidosController implements Initializable {
                 } else {
                     setText(item);
 
-                    // If index is two we set the background color explicitly.
                     if (item.equals("sin enviar")) {
                         this.setStyle("-fx-background-color: #ffc93c");
                     } else if (item.equals("enviado")) {
