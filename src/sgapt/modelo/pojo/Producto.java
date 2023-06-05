@@ -1,7 +1,6 @@
 package sgapt.modelo.pojo;
 
 import java.util.Date;
-import javafx.scene.image.ImageView;
 import javax.management.modelmbean.RequiredModelMBean;
 
 public class Producto {

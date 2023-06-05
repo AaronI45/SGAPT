@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -81,6 +82,7 @@ public class FXMLFormularioPedidoController implements Initializable {
     private ObservableList<Lote> lotesProveedor;
     private ObservableList<Lote> lotesPedido; 
     private ArrayList<Lote> lotesOriginalesProveedor;
+//    private ArrayList<Lote> lotesOriginalesPedido;
     
     private boolean esEdicion;
     private Pedido pedidoEdicion;
@@ -90,8 +92,6 @@ public class FXMLFormularioPedidoController implements Initializable {
     private TextArea taUbicacionSucursal;
     @FXML
     private TextField tfCantidadLotes;
-    String estiloError = "-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 2;";
-    String estiloNormal = "-fx-border-width: 0;";
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -164,21 +164,18 @@ public class FXMLFormularioPedidoController implements Initializable {
                     tvLotesProveedor.setItems(lotesProveedor);
                 break;
                 case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar la información", 
-                        "No es posible cargar la información de los lotes del proveedor " + 
-                                proveedores.get(idProveedor) + 
-                                ", por favor intentelo más tarde.", 
+                    Utilidades.mostrarDialogoSimple("Error en la solicitud", 
+                        "Por el momento no se puede procesar la solicitud", 
                             Alert.AlertType.ERROR);
                 break;
                 case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Por el momento no hay conexión, por favor intentelo más tarde.", 
+                            "Por el momento no hay conexión, intentelo más tarde", 
                             Alert.AlertType.ERROR);
                 break;
                 default:
                     Utilidades.mostrarDialogoSimple("Error de petición", 
-                            "El sistema no está disponible por el momento, " +
-                                    "por favor intentelo más tarde.", 
+                            "El sistema no está disponible por el momento", 
                             Alert.AlertType.ERROR);
                 break;
         }
@@ -236,24 +233,19 @@ public class FXMLFormularioPedidoController implements Initializable {
                     tvLotesPedido.setItems(lotesPedido);
                 break;
                 case Constantes.ERROR_CONSULTA:
-                    Utilidades.mostrarDialogoSimple("Error al cargar la información", 
-                        "No es posible cargar la información de los lotes del pedido, "
-                                + "por favor intentelo más tarde.", 
+                    Utilidades.mostrarDialogoSimple("Error en la solicitud", 
+                        "Por el momento no se puede procesar la solicitud", 
                             Alert.AlertType.ERROR);
-                    regresarPantallaAnterior();
                 break;
                 case Constantes.ERROR_CONEXION:
                     Utilidades.mostrarDialogoSimple("Error de conexión", 
-                            "Por el momento no hay conexión, por favor intentelo más tarde.", 
+                            "Por el momento no hay conexión, intentelo más tarde", 
                             Alert.AlertType.ERROR);
-                    regresarPantallaAnterior();
                 break;
                 default:
                     Utilidades.mostrarDialogoSimple("Error de petición", 
-                            "El sistema no está disponible por el momento, " + 
-                                    "por favor intentelo más tarde.", 
+                            "El sistema no está disponible por el momento", 
                             Alert.AlertType.ERROR);
-                    regresarPantallaAnterior();
                 break;
         }
     }
@@ -280,7 +272,6 @@ public class FXMLFormularioPedidoController implements Initializable {
     @FXML
     private void clicBtnRemover(ActionEvent event) {
         int posicionEnPedido = tvLotesPedido.getSelectionModel().getSelectedIndex();
-        tfCantidadLotes.setStyle(estiloNormal);
         if (tfCantidadLotes.getText().length() > 0) {
             int cantidadLotesDevolucion = Integer.parseInt(tfCantidadLotes.getText());
 
@@ -328,31 +319,39 @@ public class FXMLFormularioPedidoController implements Initializable {
                     tvLotesPedido.refresh();
                     tvLotesProveedor.setItems(lotesProveedor);
                     tvLotesProveedor.refresh();
+                    System.out.println("Lotes originales de proveedor : " + lotesOriginalesProveedor);
+//                    System.out.println("Lotes originales de pedido : " + lotesOriginalesPedido);
                 } else {
                     Utilidades.mostrarDialogoSimple("Error en cantidad de lotes", 
                             "La cantidad de lotes seleccionada es menor de la solicitada, " + 
                             "establezca una cantidad dentro del rango de existencias", 
                             Alert.AlertType.WARNING);
-                    tfCantidadLotes.setStyle(estiloError);
                 }
             }
         } else {
-            tfCantidadLotes.setStyle(estiloError);
+            Utilidades.mostrarDialogoSimple("Cantidad de lotes necesaria", 
+                    "Debe seleccionar la cantidad de lotes para agregar al pedido", 
+                    Alert.AlertType.WARNING);
         }
     }
 
     @FXML
     private void clicBtnAgregar(ActionEvent event) {
         int posicionEnProveedor = tvLotesProveedor.getSelectionModel().getSelectedIndex();
-        tfCantidadLotes.setStyle(estiloNormal);
         if (tfCantidadLotes.getText().length() > 0) {
             int cantidadLotesAgregar = Integer.parseInt(tfCantidadLotes.getText());
             
             if (posicionEnProveedor != -1) {
-                if (cantidadLotesAgregar <= lotesProveedor.get(
-                        posicionEnProveedor).getCantidadLotes()) {
-                    Lote loteSeleccionado = generarCopiaDeLoteSeleccionado(
-                            posicionEnProveedor, cantidadLotesAgregar);
+                if (cantidadLotesAgregar <= lotesProveedor.get(posicionEnProveedor).getCantidadLotes()) {
+                    Lote loteSeleccionado = new Lote();
+                    loteSeleccionado.setIdLote(lotesProveedor.get(posicionEnProveedor).getIdLote());
+                    loteSeleccionado.setCantidad(lotesProveedor.get(posicionEnProveedor).getCantidad());
+                    loteSeleccionado.setCantidadLotes(cantidadLotesAgregar);
+                    loteSeleccionado.setFechaDeCaducidad(lotesProveedor.get(posicionEnProveedor).getFechaDeCaducidad());
+                    loteSeleccionado.setNombre(lotesProveedor.get(posicionEnProveedor).getNombre());
+                    loteSeleccionado.setNumeroDeLote(lotesProveedor.get(posicionEnProveedor).getNumeroDeLote());
+                    loteSeleccionado.setPrecioLote(lotesProveedor.get(posicionEnProveedor).getPrecioLote());
+                    loteSeleccionado.setTipoProducto(lotesProveedor.get(posicionEnProveedor).getTipoProducto());
                     
                     double precioProductos = Double.parseDouble(lbPrecioProductos.getText());
                     precioProductos += (lotesProveedor.get(posicionEnProveedor).getPrecioLote() * 
@@ -373,21 +372,19 @@ public class FXMLFormularioPedidoController implements Initializable {
                     
                     if (loteExisteEnPedido) {
                         lotesPedido.get(posicionEnPedido).setCantidadLotes(
-                            lotesPedido.get(posicionEnPedido).getCantidadLotes() + 
-                                    cantidadLotesAgregar);
+                            lotesPedido.get(posicionEnPedido).getCantidadLotes() + cantidadLotesAgregar);
                         tvLotesPedido.setItems(lotesPedido);
                     }
                     
                     if (!loteExisteEnPedido) {
                         lotesPedido.add(loteSeleccionado);
+                        
                     }
                     
                     if (cantidadLotesAgregar > 0 && 
-                            cantidadLotesAgregar <= lotesProveedor.get(posicionEnProveedor).
-                                    getCantidadLotes()) {
+                            cantidadLotesAgregar <= lotesProveedor.get(posicionEnProveedor).getCantidadLotes()) {
                         lotesProveedor.get(posicionEnProveedor).setCantidadLotes(
-                            lotesProveedor.get(posicionEnProveedor).getCantidadLotes() - 
-                                    cantidadLotesAgregar);
+                            lotesProveedor.get(posicionEnProveedor).getCantidadLotes() - cantidadLotesAgregar);
                     }
                     
                     tvLotesPedido.setItems(lotesPedido);
@@ -396,31 +393,20 @@ public class FXMLFormularioPedidoController implements Initializable {
                     tvLotesProveedor.refresh();
                     cbProveedores.setDisable(true);
                     
+                    System.out.println("Lotes originales de proveedor : " + lotesOriginalesProveedor);
+//                    System.out.println("Lotes originales de pedido : " + lotesOriginalesPedido);
                 } else {
                     Utilidades.mostrarDialogoSimple("Error en cantidad de lotes", 
                             "La cantidad de lotes existentes es menor de la solicitada, " + 
                             "establezca una cantidad dentro del rango de existencias", 
                             Alert.AlertType.WARNING);
-                    tfCantidadLotes.setStyle(estiloError);
                 }
             }
         } else {
-            tfCantidadLotes.setStyle(estiloError);
+            Utilidades.mostrarDialogoSimple("Cantidad de lotes necesaria", 
+                    "Debe seleccionar la cantidad de lotes para agregar al pedido", 
+                    Alert.AlertType.WARNING);
         }
-    }
-    
-    private Lote generarCopiaDeLoteSeleccionado(int posicion, int cantidad) {
-        Lote loteSeleccionado = new Lote();
-        loteSeleccionado.setIdLote(lotesProveedor.get(posicion).getIdLote());
-        loteSeleccionado.setCantidad(lotesProveedor.get(posicion).getCantidad());
-        loteSeleccionado.setCantidadLotes(cantidad);
-        loteSeleccionado.setFechaDeCaducidad(lotesProveedor.get(posicion).getFechaDeCaducidad());
-        loteSeleccionado.setNombre(lotesProveedor.get(posicion).getNombre());
-        loteSeleccionado.setNumeroDeLote(lotesProveedor.get(posicion).getNumeroDeLote());
-        loteSeleccionado.setPrecioLote(lotesProveedor.get(posicion).getPrecioLote());
-        loteSeleccionado.setTipoProducto(lotesProveedor.get(posicion).getTipoProducto());
-        
-        return loteSeleccionado;
     }
 
     @FXML
@@ -431,52 +417,21 @@ public class FXMLFormularioPedidoController implements Initializable {
                                 "Realizar pedido", 
                                 "¿Está seguro de que desea realizar el pedido?");
                 if (realizarPedido) {                    
-                    realizarNuevoPedido();
+                    generarNuevoPedido();
                 }
             } else {
-                Utilidades.mostrarDialogoSimple("Selección de productos necesaria", 
-                        "Agregue al menos un producto en su pedido.", 
+                Utilidades.mostrarDialogoSimple("Selección necesaria", 
+                        "Seleccione al menos un producto en su pedido", 
                         Alert.AlertType.WARNING);
             }
         } else {
-            Utilidades.mostrarDialogoSimple("Selección de sucursal necesaria", 
-                    "Seleccione la sucursal de destino.", 
+            Utilidades.mostrarDialogoSimple("Selección necesaria", 
+                    "Seleccione la sucursal de destino", 
                     Alert.AlertType.WARNING);
         }
     }
     
-    private void realizarNuevoPedido() {
-        Pedido nuevoPedido = generarNuevoPedido();
-        
-        PedidoRespuesta resultadoPedido = PedidoDAO.guardarPedido(nuevoPedido);
-        switch (resultadoPedido.getCodigoRespuesta()) {
-            case Constantes.ERROR_CONEXION:
-                Utilidades.mostrarDialogoSimple("Error de conexion", 
-                        "El pedido no pudo ser generado debido a un error de conexión, " + 
-                                "por favor inténtelo más tarde.", 
-                        Alert.AlertType.ERROR);
-                regresarPantallaAnterior();
-                break;
-            case Constantes.ERROR_CONSULTA:
-                Utilidades.mostrarDialogoSimple("Error al realizar el pedido",
-                        "El pedido no pudo ser generado, por favor inténtelo más tarde." , 
-                        Alert.AlertType.WARNING);
-                regresarPantallaAnterior();
-                break;
-            case Constantes.OPERACION_EXITOSA:
-                int idPedido = resultadoPedido.getIdPedido();
-                if (idPedido != 0) {
-                    agregarLotesAPedido(idPedido);
-                    Utilidades.mostrarDialogoSimple("Pedido realizado", 
-                            "Se ha realizado el pedido satisfactoriamente.",
-                            Alert.AlertType.INFORMATION);
-                    limpiarInformacionPedidoRealizado();
-                }
-                break;
-        }
-    }
-    
-    private Pedido generarNuevoPedido() {
+    private void generarNuevoPedido() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate now = LocalDate.now();
         String fechaPedido = now.format( formatter );
@@ -495,17 +450,36 @@ public class FXMLFormularioPedidoController implements Initializable {
         nuevoPedido.setPrecioProductos(Double.parseDouble(lbPrecioProductos.getText()));
         nuevoPedido.setPrecioEnvio(500.0);
         
-        return nuevoPedido;
-    }
-    
-    private void agregarLotesAPedido(int idPedido) {
-        lotesPedido.forEach((lote) -> { 
-            Lote_PedidoDAO.agregarLoteAPedido(lote.getIdLote(), 
-                    idPedido, lote.getCantidadLotes());
-        });
-        lotesProveedor.forEach((lote) -> {
-            LoteDAO.modificarLote(lote);
-        });
+        PedidoRespuesta resultadoPedido = PedidoDAO.guardarPedido(nuevoPedido);
+        switch (resultadoPedido.getCodigoRespuesta()) {
+            case Constantes.ERROR_CONEXION:
+                Utilidades.mostrarDialogoSimple("Error de conexion", 
+                        "El pedido no pudo ser generado debido a un error de conexión...", 
+                        Alert.AlertType.ERROR);
+                break;
+            case Constantes.ERROR_CONSULTA:
+                Utilidades.mostrarDialogoSimple("Error en la generación de pedido",
+                        "El pedido no pudo ser generado, por favor intentelo más tarde" , Alert.AlertType.WARNING);
+                break;
+            case Constantes.OPERACION_EXITOSA:
+                int idPedido = resultadoPedido.getIdPedido();
+                if (idPedido != 0) {
+                    lotesPedido.forEach((lote) -> { 
+                        Lote_PedidoDAO.agregarLoteAPedido(lote.getIdLote(), 
+                                idPedido, lote.getCantidadLotes());
+                        
+                    });
+                    lotesProveedor.forEach((lote) -> {
+                        LoteDAO.modificarLote(lote);
+                    });
+                    Utilidades.mostrarDialogoSimple("Pedido realizado", 
+                            "Se ha realizado el pedido satisfactoriamente",
+                            Alert.AlertType.INFORMATION);
+                    limpiarInformacionPedidoRealizado();
+                }
+                break;
+        }
+        
     }
     
     private void limpiarInformacionPedidoRealizado() {
@@ -518,14 +492,11 @@ public class FXMLFormularioPedidoController implements Initializable {
     
     @FXML
     private void clicBtnRegresar(ActionEvent event) {
-        if (esEdicion) {
-            boolean respuestaRegresar = Utilidades.mostrarDialogoConfirmacion("Cancelar modificación", 
-                    "¿Está seguro de que desea regresar? Los cambios realizados se descartarán.");
-            if (respuestaRegresar)
-                regresarPantallaAnterior();
-        } else {
-            regresarPantallaAnterior();
-        }
+        Node source = (Node) event.getSource();
+        Stage stagePrincipal = (Stage) source.getScene().getWindow();
+        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLAdministracionPedidos.fxml"));
+        stagePrincipal.setTitle("Administracion de pedidos");
+        stagePrincipal.show();
     }
     
     private void regresarPantallaAnterior() {
@@ -542,52 +513,45 @@ public class FXMLFormularioPedidoController implements Initializable {
                             "Realizar modificación", 
                             "¿Está seguro de que desea modificar la información del pedido?");
             if (modificarPedido) {                    
-                guardarDatosPedidoEdicion();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate now = LocalDate.now();
+                String fechaPedido = now.format( formatter );
+                
+                pedidoEdicion.setIdSucursal(cbSucursales.getSelectionModel().
+                        getSelectedItem().getIdSucursal());
+                pedidoEdicion.setFechaPedido(fechaPedido);
+                pedidoEdicion.setMontoTotal(Double.parseDouble(lbPrecioTotal.getText()));
+                pedidoEdicion.setDireccionEntrega(taUbicacionSucursal.getText());    
+                pedidoEdicion.setNumPedido(pedidoEdicion.getIdProveedor() + "-" + fechaPedido + 
+                        "-" + pedidoEdicion.getIdSucursal());
+                pedidoEdicion.setPrecioProductos(Double.parseDouble(
+                        lbPrecioProductos.getText()));
+                
                 actualizarLotesEditados();
+                
                 int respuesta = PedidoDAO.modificarPedido(pedidoEdicion);
                 switch (respuesta) {
                     case Constantes.ERROR_CONEXION:
                         Utilidades.mostrarDialogoSimple("Error de conexion", 
-                                "El pedido no pudo ser modificado debido a un error de conexión, " +
-                                "por favor intentelo más tarde.", 
+                                "El pedido no pudo ser modificado debido a un error de conexión...", 
                                 Alert.AlertType.ERROR);
-                        regresarPantallaAnterior();
                         break;
                     case Constantes.ERROR_CONSULTA:
                         Utilidades.mostrarDialogoSimple("Error en la modificación del pedido",
-                                "El pedido no pudo ser modificado, por favor intentelo más tarde.", 
-                                Alert.AlertType.WARNING);
-                        regresarPantallaAnterior();
+                                "El pedido no pudo ser modificado, por favor intentelo más tarde" , Alert.AlertType.WARNING);
                         break;
                     case Constantes.OPERACION_EXITOSA:
                         Utilidades.mostrarDialogoSimple("Pedido modificado", 
                                 "Se ha modificado el pedido satisfactoriamente",
                                 Alert.AlertType.INFORMATION);
-                        regresarPantallaAnterior();
                         break;
                 }
             }
         } else {
-            Utilidades.mostrarDialogoSimple("Selección de productos necesaria", 
-                    "No puede dejar el pedido sin productos, seleccione al menos uno.", 
+            Utilidades.mostrarDialogoSimple("Selección necesaria", 
+                    "No puede dejar el pedido sin productos, seleccione al menos uno", 
                     Alert.AlertType.WARNING);
         }
-    }
-    
-    private void guardarDatosPedidoEdicion(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate now = LocalDate.now();
-        String fechaPedido = now.format( formatter );
-
-        pedidoEdicion.setIdSucursal(cbSucursales.getSelectionModel().
-                getSelectedItem().getIdSucursal());
-        pedidoEdicion.setFechaPedido(fechaPedido);
-        pedidoEdicion.setMontoTotal(Double.parseDouble(lbPrecioTotal.getText()));
-        pedidoEdicion.setDireccionEntrega(taUbicacionSucursal.getText());    
-        pedidoEdicion.setNumPedido(pedidoEdicion.getIdProveedor() + "-" + fechaPedido + 
-                "-" + pedidoEdicion.getIdSucursal());
-        pedidoEdicion.setPrecioProductos(Double.parseDouble(
-                lbPrecioProductos.getText()));
     }
     
     private void actualizarLotesEditados() {
@@ -602,6 +566,7 @@ public class FXMLFormularioPedidoController implements Initializable {
                     }
                 }
             }
+            
             if (cantidadEditada) {
                 LoteDAO.modificarLote(loteProveedor);
                 boolean loteEstaEnTablaPedido = false;
@@ -612,6 +577,7 @@ public class FXMLFormularioPedidoController implements Initializable {
                         cantidadLoteEnPedido = lotePedido.getCantidadLotes();
                     }
                 }
+                
                 if (!loteEstaEnTablaPedido) {
                     int filasAfectadas = Lote_PedidoDAO.eliminarLoteDePedido(
                             loteProveedor.getIdLote(), pedidoEdicion.getIdPedido());
@@ -625,6 +591,7 @@ public class FXMLFormularioPedidoController implements Initializable {
                             pedidoEdicion.getIdPedido(), cantidadLoteEnPedido);
                     }
                 }
+                
             }
         }
     }
@@ -635,4 +602,5 @@ public class FXMLFormularioPedidoController implements Initializable {
         if (!".0123456789".contains(entrada)) 
             event.consume();
     }
+    
 }

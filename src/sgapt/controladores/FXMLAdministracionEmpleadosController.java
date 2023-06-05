@@ -22,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import sgapt.modelo.dao.EmpleadoDAO;
+import sgapt.modelo.dao.Empleado_FarmaciaDAO;
 import sgapt.modelo.pojo.Empleado;
 import sgapt.modelo.pojo.EmpleadoRespuesta;
 import sgapt.util.Constantes;
@@ -127,16 +128,15 @@ public class FXMLAdministracionEmpleadosController implements Initializable {
         return (filaSeleccionada >= 0) ? empleados.get(filaSeleccionada) : null;
     }
     
-    private void irFormularioEmpleado(Empleado empleado){
+    private void irFormularioEmpleado(Empleado empleado, boolean esEdicion){
         try{
         FXMLLoader accesoControlador = new FXMLLoader(getClass().getResource("/sgapt/vistas/FXMLFormularioEmpleado.fxml"));
         Parent vista = accesoControlador.load();
-        
         FXMLFormularioEmpleadoController formulario = accesoControlador.getController();
         Scene sceneFormulario = new Scene(vista);
         Stage escenarioPrincipal = (Stage)ivEmpleado.getScene().getWindow();
         escenarioPrincipal.setScene(sceneFormulario);
-        formulario.inicializarValores(empleado);
+        formulario.inicializarValores(empleado, esEdicion);
         }catch(IOException e){
             Utilidades.mostrarDialogoSimple("Error", "No se puede mostrar la pantalla de formulario", 
                     Alert.AlertType.ERROR);  
@@ -148,7 +148,7 @@ public class FXMLAdministracionEmpleadosController implements Initializable {
     private void clicIrModifcarEmpleado(ActionEvent event) {
         Empleado empleadoEdicion = verificarSeleccion();
         if (empleadoEdicion != null){
-            irFormularioEmpleado(empleadoEdicion);
+            irFormularioEmpleado(empleadoEdicion, true);
         }else{
             Utilidades.mostrarDialogoSimple("Error de selección", 
                     "Por favor seleccione un empleado para editar y vuelva a intentarlo", 
@@ -156,23 +156,34 @@ public class FXMLAdministracionEmpleadosController implements Initializable {
         }
     }
 
-
-
     @FXML
     private void clicIrDarDeAltaEmpleado(ActionEvent event) {
-        irFormularioEmpleado(null);
+        irFormularioEmpleado(null, false);
     }
 
     
     @FXML
     private void clicDarDeBajaEmpleado(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stagePrincipal = (Stage) source.getScene().getWindow();
-        stagePrincipal.setScene(Utilidades.inicializarEscena("vistas/FXMLBajaEmpleado.fxml"));
-        stagePrincipal.setTitle("Baja de empleado");
-        stagePrincipal.show();       
-        
+        int posicion = tvEmpleados.getSelectionModel().getSelectedIndex();
+        if (posicion != -1) {
+            boolean darDeBajaEmpleado = Utilidades.mostrarDialogoConfirmacion(
+                    "Confirmación de baja", 
+                    "¿Está seguro de que desea dar de baja al empleado?");
+            if (darDeBajaEmpleado) {
+                int respuesta1 = Empleado_FarmaciaDAO.eliminarEmpleadoDeSucursal(
+                        tvEmpleados.getSelectionModel().getSelectedItem().getIdEmpleado(), 
+                        tvEmpleados.getSelectionModel().getSelectedItem().getIdFarmacia());
+                int respuesta2 = Empleado_FarmaciaDAO.decrementarEmpleadoEnSucursal(
+                        tvEmpleados.getSelectionModel().getSelectedItem().getIdFarmacia());
+                Utilidades.mostrarDialogoSimple("Baja realizada exitosamente", 
+                        "Se ha realizado la baja al usuario correctamente.", 
+                        Alert.AlertType.INFORMATION);
+                cargarInformacionTabla();
+            }
+        } else {
+            Utilidades.mostrarDialogoSimple("Selección necesaria", 
+                    "Debe seleccionar un empleado previamente para darlo de baja", 
+                    Alert.AlertType.WARNING);
+        }
     }
-
-
 }

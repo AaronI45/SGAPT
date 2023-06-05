@@ -28,6 +28,7 @@ import sgapt.modelo.dao.Lote_PedidoDAO;
 import sgapt.modelo.dao.PedidoDAO;
 import sgapt.modelo.pojo.Lote_Pedido;
 import sgapt.modelo.pojo.Lote_PedidoRespuesta;
+import sgapt.modelo.pojo.Lote;
 import sgapt.modelo.pojo.PedidoRespuesta;
 import sgapt.modelo.pojo.Pedido;
 import sgapt.util.Constantes;
@@ -62,6 +63,7 @@ public class FXMLAdministracionPedidosController implements Initializable {
         colEstado.setCellFactory(e -> new TableCell<ObservableList<String>, String>() {
             @Override
             public void updateItem(String item, boolean empty) {
+                // Always invoke super constructor.
                 super.updateItem(item, empty);
 
                 if (item == null || empty) {
@@ -69,6 +71,7 @@ public class FXMLAdministracionPedidosController implements Initializable {
                 } else {
                     setText(item);
 
+                    // If index is two we set the background color explicitly.
                     if (item.equals("sin enviar")) {
                         this.setStyle("-fx-background-color: #ffc93c");
                     } else if (item.equals("enviado")) {
@@ -121,7 +124,7 @@ public class FXMLAdministracionPedidosController implements Initializable {
                 
             stagePrincipal.show();
         } catch (IOException ex) {
-            
+            Logger.getLogger(FXMLFormularioPedidoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -141,28 +144,28 @@ public class FXMLAdministracionPedidosController implements Initializable {
 
     @FXML
     private void clicBtnModificar(ActionEvent event) {
-        int posicion = tvPedidos.getSelectionModel().getSelectedIndex();
-        if (posicion != -1) {
-            Pedido pedidoSeleccion = pedidos.get(posicion);
-              if (pedidoSeleccion.getEstadoRastreo().equals("sin enviar")) {
-                  irFormularioPedido(true, pedidos.get(posicion));
-
-              } else if (pedidoSeleccion.getEstadoRastreo().equals("enviado") || 
-                      pedidoSeleccion.getEstadoRastreo().equals("con demora")) {
-                  Utilidades.mostrarDialogoSimple("Modificación no permitida", 
-                      "No es posible modificar el pedido debido a que ya se ha enviado", 
-                      Alert.AlertType.WARNING);
-
-              } if (pedidoSeleccion.getEstadoRastreo().equals("entregado")) {
-                  Utilidades.mostrarDialogoSimple("Modificación no permitida", 
-                      "No es posible modificar el pedido debido a que ya se ha entregado", 
-                      Alert.AlertType.WARNING);
-              }
-        } else {
-            Utilidades.mostrarDialogoSimple("Seleccion necesaria", 
-                  "Debe seleccionar un pedido previamente", 
-                  Alert.AlertType.WARNING);
-        }
+          int posicion = tvPedidos.getSelectionModel().getSelectedIndex();
+          if (posicion != -1) {
+              Pedido pedidoSeleccion = pedidos.get(posicion);
+                if (pedidoSeleccion.getEstadoRastreo().equals("sin enviar")) {
+                    irFormularioPedido(true, pedidos.get(posicion));
+                    
+                } else if (pedidoSeleccion.getEstadoRastreo().equals("enviado") || 
+                        pedidoSeleccion.getEstadoRastreo().equals("con demora")) {
+                    Utilidades.mostrarDialogoSimple("Modificación no permitida", 
+                        "No es posible modificar el pedido debido a que ya se ha enviado", 
+                        Alert.AlertType.WARNING);
+                    
+                } if (pedidoSeleccion.getEstadoRastreo().equals("entregado")) {
+                    Utilidades.mostrarDialogoSimple("Modificación no permitida", 
+                        "No es posible modificar el pedido debido a que ya se ha entregado", 
+                        Alert.AlertType.WARNING);
+                }
+          } else {
+              Utilidades.mostrarDialogoSimple("Seleccion necesaria", 
+                    "Debe seleccionar un pedido previamente", 
+                    Alert.AlertType.WARNING);
+          }
     }
 
     @FXML
@@ -218,13 +221,12 @@ public class FXMLAdministracionPedidosController implements Initializable {
                     switch (respuestaLoteDesenlazado) {
                     case Constantes.ERROR_CONEXION:
                             Utilidades.mostrarDialogoSimple("Sin conexión", 
-                            "Lo sentimos, por el momento no hay conexión para poder cancelar el pedido" + 
-                            ", por favor inténtelo más tarde", 
+                            "Lo sentimos, por el momento no hay conexión para poder eliminar el pedido", 
                             Alert.AlertType.ERROR);
                         break;
                     case Constantes.ERROR_CONSULTA:
-                            Utilidades.mostrarDialogoSimple("Error al cancelar el pedido", 
-                            "Hubo un error al cancelar el pedido, por favor inténtelo más tarde", 
+                            Utilidades.mostrarDialogoSimple("Error al eliminar el pedido", 
+                            "Hubo un error al eliminar el pedido, por favor inténtelo más tarde", 
                             Alert.AlertType.WARNING);
                         break;
                     case Constantes.OPERACION_EXITOSA:
@@ -233,18 +235,17 @@ public class FXMLAdministracionPedidosController implements Initializable {
                             switch (respuesta) {
                             case Constantes.ERROR_CONEXION:
                                     Utilidades.mostrarDialogoSimple("Sin conexión", 
-                                    "Lo sentimos, por el momento no hay conexión para poder cancelar el pedido, " + 
-                                    "por favor inténtelo más tarde", 
+                                    "Lo sentimos, por el momento no hay conexión para poder eliminar el pedido", 
                                     Alert.AlertType.ERROR);
                                 break;
                             case Constantes.ERROR_CONSULTA:
                                     Utilidades.mostrarDialogoSimple("Error al eliminar el pedido", 
-                                    "Hubo un error al cancelar el pedido, por favor inténtelo más tarde", 
+                                    "Hubo un error al eliminar el pedido, por favor inténtelo más tarde", 
                                     Alert.AlertType.WARNING);
                                 break;
                             case Constantes.OPERACION_EXITOSA:
                                     Utilidades.mostrarDialogoSimple("Operación exitosa", 
-                                            "Se ha cancelado el pedido satisfactoriamente", 
+                                            "Se ha eliminado el pedido satisfactoriamente", 
                                             Alert.AlertType.INFORMATION);
                                     cargarInformacionTabla();
                                 break;
