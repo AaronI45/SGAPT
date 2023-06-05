@@ -162,7 +162,7 @@ public class FXMLAdministracionProductosController implements Initializable {
                     resultadoEdicion = ProductoDAO.caducarProducto(producto);
                     producto.setDisponibilidad("caducado");
                     if (!resultadoEdicion.isError()){
-                        Utilidades.mostrarDialogoSimple("Nuevo producto caducado", 
+                        Utilidades.mostrarDialogoSimple("Productos caducados", 
                                 resultadoEdicion.getMensaje(),
                                 Alert.AlertType.WARNING);
                     }else{
@@ -228,6 +228,10 @@ public class FXMLAdministracionProductosController implements Initializable {
                             Alert.AlertType.ERROR);
                 }
             }
+        }else{
+            Utilidades.mostrarDialogoSimple("Error", 
+                    "Por favor seleccione el producto a eliminar y vuelva a intentarlo", 
+                    Alert.AlertType.WARNING);
         }
     }
 
@@ -256,7 +260,7 @@ public class FXMLAdministracionProductosController implements Initializable {
             irAFormulario(productoSeleccionado);
         }else{
             Utilidades.mostrarDialogoSimple("Error de selección", "Por favor seleccione un producto para editar", 
-                    Alert.AlertType.ERROR);
+                    Alert.AlertType.WARNING);
         }
     }
 
