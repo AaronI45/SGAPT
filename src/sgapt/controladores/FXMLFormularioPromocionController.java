@@ -1,6 +1,8 @@
 package sgapt.controladores;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -16,6 +18,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,7 +30,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 import sgapt.interfaz.INotificacionOperacion;
 import sgapt.modelo.dao.ProductoDAO;
 import sgapt.modelo.dao.PromocionDAO;
@@ -45,19 +50,9 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
     @FXML
     private Label lbTitulo;
     @FXML
-    private Label lbErrorTipo;
-    @FXML
-    private Label lbErrorFechaInicio;
-    @FXML
-    private Label lbErrorFechaFin;
-    @FXML
     private ComboBox<Producto> cbIdProducto;
     private ObservableList<Producto> productos;
      private ObservableList<Promocion> promociones;
-    @FXML
-    private Label lbErrorSucursal;
-    @FXML
-    private Label lbErrorProducto;
     private Promocion promocionEdicion;
     private boolean esEdicion;
     @FXML
@@ -71,6 +66,9 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
     
     String estiloError="-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 2;";
     String estiloNormal="-fx-border-width: 0;";
+    @FXML
+    private ImageView ivFotoPromocion;
+    private File archivoFoto;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -394,4 +392,23 @@ public class FXMLFormularioPromocionController implements Initializable, INotifi
         cbIdProducto.setStyle(estiloNormal);
     }
 
+    @FXML
+    private void clicBtnFotoPromocion(ActionEvent event) {
+        FileChooser dialogoImagen= new FileChooser();
+        dialogoImagen.setTitle("Selecciona una imagen");
+        FileChooser.ExtensionFilter filtroImg = 
+                new FileChooser.ExtensionFilter("Archivos PNG(*.png)","Archivos JPG(*.jpg)", "*.PNG","*.JPG");
+        dialogoImagen.getExtensionFilters().add(filtroImg);
+        Stage escenarioActual = (Stage) tfPorcentaje.getScene().getWindow();
+        archivoFoto = dialogoImagen.showOpenDialog(escenarioActual);
+        if(archivoFoto!=null){
+            try{
+                BufferedImage bufferImg=ImageIO.read(archivoFoto);
+                Image imagenFoto = SwingFXUtils.toFXImage(bufferImg, null);
+                ivFotoPromocion.setImage(imagenFoto);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
 }
